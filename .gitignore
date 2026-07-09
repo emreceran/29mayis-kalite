@@ -1,0 +1,5 @@
+# Local Netlify folder
+.netlify
+
+# Yerel yedekler
+index.backup.*.html
