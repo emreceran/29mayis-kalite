@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İstanbul 29 Mayıs Üniversitesi — Kalite Göstergeleri Panosu</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --navy:#1c355e; --mid:#4bb5e8; --gold:#c8a84b; --border:#dce3ef; --muted:#5a6a80; --text:#334155; --light:#f8fafc; --shadow:0 1px 3px rgba(0,0,0,.05); }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:'Roboto Slab',serif; color:var(--text); background:#f1f5f9; }
+  a{ text-decoration:none; }
+  /* Header */
+  .dash-header{ background:var(--navy); color:#fff; }
+  .dash-header .wrap{ max-width:1400px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:16px; }
+  .dash-header img{ height:44px;background:#fff;border-radius:8px;padding:4px; }
+  .dash-header h1{ font-size:16px;font-weight:700;margin:0;line-height:1.25; }
+  .dash-header .sub{ font-size:11.5px;color:#a9c2e3;letter-spacing:.08em;text-transform:uppercase; }
+  .back-link{ margin-left:auto;color:#cfe0f5;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.1);padding:8px 15px;border-radius:8px;transition:background .2s; }
+  .back-link:hover{ background:rgba(255,255,255,.2); }
+  /* Layout */
+  .dash-layout{ max-width:1400px;margin:0 auto;display:grid;grid-template-columns:250px 1fr;gap:24px;padding:24px 22px; }
+  /* Sidebar */
+  .dash-nav{ position:sticky;top:20px;align-self:start;background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px;box-shadow:var(--shadow);max-height:calc(100vh - 40px);overflow-y:auto; }
+  .nav-group-lbl{ font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;padding:12px 12px 6px; }
+  .nav-item{ display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;margin-bottom:2px; }
+  .nav-item i{ width:18px;text-align:center;font-size:14px;color:#94a3b8;transition:color .15s; }
+  .nav-item:hover{ background:var(--light);color:var(--navy); }
+  .nav-item.active{ background:var(--navy);color:#fff; }
+  .nav-item.active i{ color:var(--gold); }
+  /* Content */
+  .dash-main{ min-width:0; }
+  .page-title{ font-size:22px;font-weight:800;color:var(--navy);margin:0 0 4px;display:flex;align-items:center;gap:11px; }
+  .page-title i{ color:var(--gold); }
+  .page-desc{ font-size:13.5px;color:var(--muted);margin:0 0 22px; }
+  /* KPI */
+  .kpi-grid{ display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:26px; }
+  .kpi{ background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);border-left:4px solid var(--kc,#1c355e); }
+  .kpi-val{ font-size:26px;font-weight:800;color:var(--navy);line-height:1; }
+  .kpi-lbl{ font-size:12.5px;color:var(--text);font-weight:600;margin-top:6px; }
+  .kpi-sub{ font-size:11px;color:#94a3b8;margin-top:3px; }
+  /* Toggle chart card */
+  .tc-card{ background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);margin-bottom:18px; }
+  .tc-head{ display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:12px; }
+  .tc-head h4{ margin:0;font-size:15px;font-weight:700;color:var(--navy);display:flex;align-items:center; }
+  .tc-sub{ font-size:11.5px;color:#94a3b8; }
+  .tc-toggles{ display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px; }
+  .tpill{ display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);color:#94a3b8;font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;cursor:pointer;transition:all .15s;line-height:1.1; }
+  .tpill .tdot{ width:9px;height:9px;border-radius:50%;background:currentColor;opacity:.45;flex-shrink:0; }
+  .tpill:hover{ border-color:var(--pc); }
+  .tpill.on{ color:#fff;background:var(--pc);border-color:var(--pc); }
+  .tpill.on .tdot{ background:#fff;opacity:1; }
+  .tpill:not(.on){ text-decoration:line-through;text-decoration-color:#cbd5e1; }
+  .chart-wrap{ position:relative;width:100%; }
+  .tc-grid{ display:grid;grid-template-columns:1fr 1fr;gap:18px; }
+  .src-note{ font-size:11.5px;color:#94a3b8;margin-top:6px;text-align:right; }
+  .info-box{ background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid var(--mid);border-radius:8px;padding:12px 16px;font-size:13px;color:#1e40af;margin-bottom:18px; }
+  /* Fakülte/Birim panosu */
+  .chart-card{ background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow); }
+  .chart-card h4{ font-size:14px;font-weight:700;color:var(--navy);margin:0 0 2px;display:flex;align-items:center;gap:8px; }
+  .chart-card .sub{ font-size:11px;color:#94a3b8;margin-bottom:12px; }
+  .dash-select{ appearance:none;background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;color:var(--navy);cursor:pointer;font-family:inherit;transition:border-color .2s; }
+  .dash-select:focus{ outline:none;border-color:var(--mid);box-shadow:0 0 0 3px rgba(75,181,232,.15); }
+  .dash-select:disabled{ opacity:.5;cursor:not-allowed; }
+  .dash-table{ width:100%;border-collapse:collapse;font-size:13px; }
+  .dash-table thead th{ background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px; }
+  .dash-table thead th:not(:first-child){ text-align:right; }
+  .dash-table tbody td{ padding:9px 12px;border-bottom:1px solid var(--border); }
+  .dash-table tbody td:not(:first-child){ text-align:right;font-variant-numeric:tabular-nums; }
+  .dash-table tbody td:first-child{ font-weight:600;color:var(--navy); }
+  .dash-table tbody tr:hover{ background:var(--light); }
+  .dash-bar{ display:inline-block;height:7px;border-radius:4px;background:var(--mid);vertical-align:middle;margin-left:8px; }
+  /* Mobile */
+  .nav-toggle{ display:none; }
+  @media (max-width:900px){
+    .dash-layout{ grid-template-columns:1fr; }
+    .dash-nav{ position:static;max-height:none; }
+    .tc-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="dash-header">
+  <div class="wrap">
+    <img src="../logo.png" alt="Logo">
+    <div>
+      <h1>İstanbul 29 Mayıs Üniversitesi</h1>
+      <div class="sub">Kalite Göstergeleri Panosu</div>
+    </div>
+    <a class="back-link" href="../index.html"><i class="fas fa-arrow-left"></i> Kalite Sitesi</a>
+  </div>
+</header>
+
+<div class="dash-layout">
+  <nav class="dash-nav" id="dash-nav"></nav>
+  <main class="dash-main" id="dash-content"></main>
+</div>
+
+<script src="yokak-data.js"></script>
+<script>
+/* ── Gerçek zaman-serisi veriler (Kaynak: Sayılarla İstanbul 29 Mayıs Üniversitesi) ── */
+const Y9  = ['2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+const Y11 = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+const SAYILARLA = [
+  { id:'ogrenci', title:'Öğrenci Sayıları', sub:'2017 – 2025', icon:'fa-user-graduate', accent:'#1c355e', type:'line', labels:Y9, series:[
+    { label:'Toplam Öğrenci', color:'#1c355e', on:true,  data:[1797,1844,1908,2190,2670,3363,4405,5100,5545] },
+    { label:'Lisans',         color:'#4bb5e8', on:true,  data:[1481,1504,1575,1745,2168,2847,3852,4580,4986] },
+    { label:'Yüksek Lisans',  color:'#7c3aed', on:false, data:[259,277,251,344,392,402,432,400,359] },
+    { label:'Doktora',        color:'#059669', on:false, data:[57,63,82,101,110,114,121,120,124] },
+    { label:'Ön Lisans',      color:'#c8a84b', on:false, data:[0,0,0,0,0,0,0,0,76] },
+    { label:'Yabancı Uyruklu',color:'#e11d48', on:true,  data:[211,197,210,223,262,308,354,329,333] },
+  ]},
+  { id:'birim', title:'Akademik Birimler', sub:'2017 – 2025', icon:'fa-building-columns', accent:'#0891b2', type:'line', labels:Y9, series:[
+    { label:'Fakülte',   color:'#1c355e', on:true, data:[6,6,6,7,7,7,8,8,8] },
+    { label:'Enstitü',   color:'#4bb5e8', on:true, data:[3,3,3,3,3,3,3,3,3] },
+    { label:'Yüksekokul',color:'#059669', on:true, data:[1,1,1,1,1,1,1,1,1] },
+    { label:'Meslek Yüksekokulu', color:'#c8a84b', on:true, data:[0,0,0,0,0,0,0,0,1] },
+    { label:'Uyg. ve Araştırma Merkezi', color:'#7c3aed', on:true, data:[5,6,6,6,6,6,6,7,8] },
+  ]},
+  { id:'program', title:'Program Sayıları', sub:'2017 – 2025', icon:'fa-diagram-project', accent:'#7c3aed', type:'line', labels:Y9, series:[
+    { label:'Lisans',        color:'#1c355e', on:true, data:[11,11,12,16,19,22,22,22,23] },
+    { label:'Yüksek Lisans', color:'#4bb5e8', on:true, data:[14,15,15,24,29,29,29,31,33] },
+    { label:'Doktora',       color:'#059669', on:true, data:[5,5,5,5,6,6,6,6,7] },
+    { label:'Ön Lisans',     color:'#c8a84b', on:true, data:[0,0,0,0,0,0,0,0,2] },
+  ]},
+  { id:'personel', title:'Akademik ve İdari Personel', sub:'2015 – 2025', icon:'fa-users', accent:'#059669', type:'line', labels:Y11, series:[
+    { label:'Akademik Personel', color:'#1c355e', on:true,  data:[95,109,110,104,99,121,145,156,165,165,179] },
+    { label:'İdari Personel',    color:'#4bb5e8', on:true,  data:[76,76,75,68,66,66,66,68,66,72,81] },
+    { label:'Yabancı Akademik',  color:'#c8a84b', on:false, data:[22,32,34,28,18,17,15,16,13,9,8] },
+    { label:'Yabancı İdari',     color:'#e11d48', on:false, data:[1,1,1,1,2,3,3,3,3,1,2] },
+  ]},
+  { id:'kutuphane', title:'Kütüphane', sub:'2017 – 2025', icon:'fa-book', accent:'#c8a84b', type:'line', labels:Y9, series:[
+    { label:'Toplam Kitap',        color:'#1c355e', on:true,  axis:'y',  data:[70535,76393,87823,97295,113865,119808,129887,141468,148745] },
+    { label:'Fiziki Alan (m²)',    color:'#4bb5e8', on:false, axis:'y',  data:[800,833,6243,6567,6567,6567,6567,6567,10560] },
+    { label:'Öğrenci Başına Kitap',color:'#059669', on:false, axis:'y1', data:[39.25,41.43,46.03,44.43,42.65,35.63,29.49,28.32,26.56] },
+    { label:'Veri Tabanı Üyeliği', color:'#e11d48', on:false, axis:'y1', data:[2,1,1,2,4,4,4,3,3] },
+  ]},
+  { id:'mezun', title:'Yıllara Göre Mezun Sayıları', sub:'2017 – 2025 · toplam 2.701', icon:'fa-user-check', accent:'#e11d48', type:'bar', labels:Y9, series:[
+    { label:'Mezun', color:'#1c355e', on:true, data:[108,188,294,242,250,250,258,544,567] },
+  ]},
+];
+
+/* ── Toggle grafik bileşeni ── */
+const TC = {};
+function tcCard(g){
+  const pills = g.series.map((s,i)=>
+    `<button class="tpill ${s.on?'on':''}" style="--pc:${s.color}" onclick="tcToggle('${g.id}',${i},this)"><span class="tdot"></span>${s.label}</button>`
+  ).join('');
+  return `<div class="tc-card">
+    <div class="tc-head"><h4><i class="fas ${g.icon||'fa-chart-line'} mr-2" style="color:${g.accent||'#4bb5e8'}"></i>${g.title}</h4><span class="tc-sub">${g.sub||''}</span></div>
+    <div class="tc-toggles">${pills}</div>
+    <div class="chart-wrap" style="height:300px"><canvas id="tc-${g.id}"></canvas></div>
+  </div>`;
+}
+function tcBuild(g){
+  const el=document.getElementById('tc-'+g.id); if(!el||typeof Chart==='undefined') return;
+  const gridColor='rgba(0,0,0,.05)', bar=(g.type==='bar');
+  const usesRight=g.series.some(s=>s.axis==='y1');
+  const datasets=g.series.map(s=>({
+    label:s.label,data:s.data,hidden:!s.on,borderColor:s.color,
+    backgroundColor: bar? s.color : s.color+'22', yAxisID:s.axis||'y',
+    tension:.35,borderWidth:2.2,pointRadius:2.4,pointHoverRadius:4,pointBackgroundColor:s.color,fill:false,maxBarThickness:30,borderRadius:5 }));
+  if(TC[g.id]){ try{TC[g.id].destroy();}catch(e){} }
+  TC[g.id]=new Chart(el,{ type:g.type||'line', data:{labels:g.labels,datasets},
+    options:{ responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>` ${c.dataset.label}: ${Number(c.parsed.y).toLocaleString('tr-TR')}`}}},
+      scales:{ x:{grid:{display:false}},
+        y:{position:'left',beginAtZero:true,grid:{color:gridColor},ticks:{callback:(v)=>Number(v).toLocaleString('tr-TR')}},
+        y1:{display:usesRight?'auto':false,position:'right',beginAtZero:true,grid:{drawOnChartArea:false}} } } });
+}
+function tcToggle(gid,idx,btn){ const ch=TC[gid]; if(!ch) return; const ds=ch.data.datasets[idx]; ds.hidden=!ds.hidden; ch.update(); if(btn) btn.classList.toggle('on',!ds.hidden); }
+
+/* ── YÖKAK bölümlerini "group" yapısına çevir ── */
+function yokakGroups(sec){
+  return sec.cards.map((c,ci)=>({
+    id:`y-${sec.id}-${ci}`, title:c.title, sub:`${YOKAK.years[0]} – ${YOKAK.years[YOKAK.years.length-1]}`,
+    icon:sec.icon, accent:'#1c355e', type:c.type||'line', labels:YOKAK.years, series:c.series
+  }));
+}
+
+/* ── Navigasyon (fonksiyona göre) ── */
+const NAV = [
+  { grp:'Genel', items:[ {id:'genel', icon:'fa-gauge-high', text:'Genel Bakış'} ] },
+  { grp:'Sayılarla Üniversitemiz', items:[
+    {id:'s-ogrenci',   icon:'fa-user-graduate',   text:'Öğrenci Sayıları'},
+    {id:'s-akademik',  icon:'fa-building-columns', text:'Akademik Birim & Program'},
+    {id:'s-personel',  icon:'fa-users',            text:'Personel'},
+    {id:'s-kutuphane', icon:'fa-book',             text:'Kütüphane'},
+    {id:'s-mezun',     icon:'fa-user-check',       text:'Mezunlar'},
+    {id:'fakulte-birim', icon:'fa-sitemap',        text:'Fakülte / Birim Bazlı'},
+  ]},
+  { grp:'YÖKAK Performans Göstergeleri', items:[
+    {id:'yokak-kuruma-ait', icon:'fa-building-columns', text:'Kuruma Ait Bilgiler'},
+    {id:'yokak-kalite-guvence', icon:'fa-shield-halved', text:'Kalite Güvence Sistemi'},
+    {id:'yokak-egitim-ogretim', icon:'fa-graduation-cap', text:'Eğitim-Öğretim'},
+    {id:'yokak-arastirma', icon:'fa-flask', text:'Araştırma-Geliştirme'},
+    {id:'yokak-toplumsal', icon:'fa-hands-helping', text:'Toplumsal Katkı'},
+  ]},
+];
+
+/* Sayılarla alt bölümleri → hangi grafikleri gösterir */
+const SAY_SECTIONS = {
+  's-ogrenci':   {title:'Öğrenci Sayıları', icon:'fa-user-graduate', ids:['ogrenci']},
+  's-akademik':  {title:'Akademik Birimler ve Programlar', icon:'fa-building-columns', ids:['birim','program']},
+  's-personel':  {title:'Akademik ve İdari Personel', icon:'fa-users', ids:['personel']},
+  's-kutuphane': {title:'Kütüphane', icon:'fa-book', ids:['kutuphane']},
+  's-mezun':     {title:'Mezunlar', icon:'fa-user-check', ids:['mezun']},
+};
+
+function renderNav(active){
+  document.getElementById('dash-nav').innerHTML = NAV.map(g=>`
+    <div class="nav-group-lbl">${g.grp}</div>
+    ${g.items.map(it=>`<div class="nav-item ${it.id===active?'active':''}" onclick="go('${it.id}')"><i class="fas ${it.icon}"></i>${it.text}</div>`).join('')}
+  `).join('');
+}
+
+function go(id){
+  if(location.hash!=='#'+id){ try{ history.replaceState(null,'','#'+id); }catch(e){} }
+  renderNav(id);
+  const c=document.getElementById('dash-content');
+  let groups=[], title='', desc='', icon='fa-chart-line', pre='';
+  if(id==='genel'){ return renderGenel(); }
+  if(id==='fakulte-birim'){ return renderFakulteBirim(); }
+  if(SAY_SECTIONS[id]){
+    const s=SAY_SECTIONS[id]; title=s.title; icon=s.icon;
+    desc='İstanbul 29 Mayıs Üniversitesi’ne ait yıllara göre kurumsal veriler. Her grafikte istatistikleri etiketlere tıklayarak açıp kapatabilirsiniz.';
+    groups=SAYILARLA.filter(g=>s.ids.includes(g.id));
+    pre=`<div class="src-note">Kaynak: Sayılarla İstanbul 29 Mayıs Üniversitesi</div>`;
+  } else {
+    const sid=id.replace('yokak-','');
+    const sec=YOKAK.sections.find(s=>s.id===sid);
+    title=sec.title; icon=sec.icon;
+    desc='YÖKAK performans göstergeleri (2018–2024). Grafiklerde göstergeleri etiketlere tıklayarak açıp kapatabilirsiniz.';
+    groups=yokakGroups(sec);
+    pre=`<div class="src-note">Kaynak: YÖKAK Performans Göstergeleri (mis.yokak.gov.tr)</div>`;
+  }
+  c.innerHTML = `<h2 class="page-title"><i class="fas ${icon}"></i>${title}</h2><p class="page-desc">${desc}</p>${groups.map(tcCard).join('')}${pre}`;
+  groups.forEach(tcBuild);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderGenel(){
+  const c=document.getElementById('dash-content');
+  const kpis=[
+    {c:'#1c355e',val:'5.545',lbl:'Toplam Öğrenci',sub:'2025'},
+    {c:'#4bb5e8',val:'179',lbl:'Akademik Personel',sub:'2025'},
+    {c:'#7c3aed',val:'40',lbl:'Program Sayısı',sub:'Lisans+Lisansüstü+Ön Lisans'},
+    {c:'#059669',val:'1.244',lbl:'İşe Yerleşmiş Mezun',sub:'2024 (kümülatif)'},
+    {c:'#c8a84b',val:'148.745',lbl:'Kütüphane Kitap',sub:'2025'},
+    {c:'#e11d48',val:'340',lbl:'Uluslararası Öğrenci',sub:'YÖKAK 2024'},
+  ];
+  const feat=[SAYILARLA[0], yokakGroups(YOKAK.sections.find(s=>s.id==='egitim-ogretim'))[3]];
+  c.innerHTML = `
+    <h2 class="page-title"><i class="fas fa-gauge-high"></i>Genel Bakış</h2>
+    <p class="page-desc">İstanbul 29 Mayıs Üniversitesi kalite ve performans göstergeleri panosu. Soldaki menüden fonksiyona göre bölümleri inceleyebilirsiniz.</p>
+    <div class="kpi-grid">${kpis.map(k=>`<div class="kpi" style="--kc:${k.c}"><div class="kpi-val">${k.val}</div><div class="kpi-lbl">${k.lbl}</div><div class="kpi-sub">${k.sub}</div></div>`).join('')}</div>
+    <div class="info-box"><i class="fas fa-circle-info mr-1"></i> Bu pano iki veri kümesi sunar: <strong>Sayılarla Üniversitemiz</strong> (kurumsal yıllık veriler) ve <strong>YÖKAK Performans Göstergeleri</strong> (2018–2024). Grafiklerdeki istatistikler etiketlere tıklanarak açılıp kapatılabilir.</div>
+    ${feat.map(tcCard).join('')}`;
+  feat.forEach(tcBuild);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── Fakülte / Birim bazlı interaktif pano (temsili) ── */
+let DASH = {
+  donem:'2024-2025',
+  trend:{ labels:['2017','2018','2019','2020','2021','2022','2023','2024','2025'],
+    ogrenci:[1797,1844,1908,2190,2670,3363,4405,5100,5545],
+    akademik:[110,104,99,121,145,156,165,165,179],
+    uluslararasi:[211,197,210,223,262,308,354,329,333] },
+  faculties:[
+    { id:'ilahiyat', ad:'İlahiyat Fakültesi', kisa:'İlahiyat', renk:'#1c355e', kadin:600, erkek:700, uluslararasi:90,
+      unvan:{prof:9,docent:8,drOgr:14,ogrGor:6,arasGor:9},
+      bolumler:[{ad:'İlahiyat',ogrenci:950,akademik:30},{ad:'İlahiyat (M.T.O.K.)',ogrenci:200,akademik:9},{ad:'Uluslararası İlahiyat',ogrenci:150,akademik:7}] },
+    { id:'edebiyat', ad:'Edebiyat Fakültesi', kisa:'Edebiyat', renk:'#4bb5e8', kadin:730, erkek:400, uluslararasi:40,
+      unvan:{prof:8,docent:7,drOgr:13,ogrGor:5,arasGor:9},
+      bolumler:[{ad:'Türk Dili ve Edebiyatı',ogrenci:230,akademik:8},{ad:'Tarih',ogrenci:200,akademik:7},{ad:'Psikoloji',ogrenci:250,akademik:8},{ad:'Felsefe',ogrenci:110,akademik:5},{ad:'İngiliz Dili ve Edebiyatı',ogrenci:140,akademik:6},{ad:'Sosyoloji',ogrenci:120,akademik:5},{ad:'Bilgi ve Belge Yönetimi',ogrenci:80,akademik:3}] },
+    { id:'hukuk', ad:'Hukuk Fakültesi', kisa:'Hukuk', renk:'#c8a84b', kadin:520, erkek:420, uluslararasi:55,
+      unvan:{prof:5,docent:4,drOgr:9,ogrGor:3,arasGor:7}, bolumler:[{ad:'Hukuk',ogrenci:940,akademik:28}] },
+    { id:'egitim', ad:'Eğitim Fakültesi', kisa:'Eğitim', renk:'#7c3aed', kadin:500, erkek:230, uluslararasi:25,
+      unvan:{prof:4,docent:4,drOgr:8,ogrGor:3,arasGor:5},
+      bolumler:[{ad:'Rehberlik ve Psikolojik Danışmanlık',ogrenci:250,akademik:8},{ad:'İngilizce Öğretmenliği',ogrenci:200,akademik:7},{ad:'Okul Öncesi Öğretmenliği',ogrenci:165,akademik:5},{ad:'Türkçe Öğretmenliği',ogrenci:115,akademik:4}] },
+    { id:'iibf', ad:'İktisadi ve İdari Bilimler Fakültesi', kisa:'İİBF', renk:'#d97706', kadin:360, erkek:340, uluslararasi:45,
+      unvan:{prof:5,docent:5,drOgr:10,ogrGor:3,arasGor:8},
+      bolumler:[{ad:'Siyaset Bilimi ve Uluslararası İlişkiler',ogrenci:230,akademik:9},{ad:'Ekonomi (İngilizce)',ogrenci:150,akademik:7},{ad:'Sosyal Hizmet',ogrenci:200,akademik:8},{ad:'Yönetim Bilişim Sistemleri',ogrenci:120,akademik:5}] },
+    { id:'muhendislik', ad:'Mühendislik ve Doğa Bilimleri Fakültesi', kisa:'Mühendislik', renk:'#0d9488', kadin:120, erkek:190, uluslararasi:20,
+      unvan:{prof:2,docent:2,drOgr:6,ogrGor:2,arasGor:4},
+      bolumler:[{ad:'Bilgisayar Mühendisliği',ogrenci:150,akademik:6},{ad:'Elektrik-Elektronik Mühendisliği',ogrenci:90,akademik:5},{ad:'Endüstri Mühendisliği',ogrenci:70,akademik:4}] },
+    { id:'myo', ad:'Bilişim Teknolojileri Meslek Yüksekokulu', kisa:'MYO', renk:'#9333ea', kadin:30, erkek:46, uluslararasi:5,
+      unvan:{prof:0,docent:0,drOgr:2,ogrGor:4,arasGor:0},
+      bolumler:[{ad:'Bilgisayar Programcılığı',ogrenci:46,akademik:3},{ad:'Kurumsal Bilişim Uzmanlığı',ogrenci:30,akademik:2}] },
+    { id:'yabancidiller', ad:'Yabancı Diller Yüksekokulu', kisa:'Yab. Diller', renk:'#059669', kadin:270, erkek:192, uluslararasi:35,
+      unvan:{prof:0,docent:1,drOgr:2,ogrGor:12,arasGor:1},
+      bolumler:[{ad:'İngilizce Hazırlık',ogrenci:350,akademik:12},{ad:'Arapça Hazırlık',ogrenci:112,akademik:4}] },
+    { id:'enstitu', ad:'Sosyal Bilimler Enstitüsü', kisa:'Enstitü', renk:'#e11d48', kadin:250, erkek:233, uluslararasi:10,
+      unvan:{prof:1,docent:1,drOgr:2,ogrGor:0,arasGor:1},
+      bolumler:[{ad:'Tezli Yüksek Lisans',ogrenci:359,akademik:3},{ad:'Doktora',ogrenci:124,akademik:2}] }
+  ]
+};
+function normalizeDash(){ DASH.faculties.forEach(f=>{ const u=f.unvan||{}; f.ogrenci=(f.kadin||0)+(f.erkek||0); f.akademik=(u.prof||0)+(u.docent||0)+(u.drOgr||0)+(u.ogrGor||0)+(u.arasGor||0); }); }
+normalizeDash();
+const UNVAN_LABELS={prof:'Profesör',docent:'Doçent',drOgr:'Dr. Öğr. Üyesi',ogrGor:'Öğr. Görevlisi',arasGor:'Araştırma Görevlisi'};
+const UNVAN_RENK={prof:'#1c355e',docent:'#2d5986',drOgr:'#4bb5e8',ogrGor:'#c8a84b',arasGor:'#94a3b8'};
+function nf(n){ return n.toLocaleString('tr-TR'); }
+function dashTotals(list){ const t={ogrenci:0,kadin:0,erkek:0,akademik:0,uluslararasi:0,bolum:0,unvan:{prof:0,docent:0,drOgr:0,ogrGor:0,arasGor:0}};
+  list.forEach(f=>{ t.ogrenci+=f.ogrenci;t.kadin+=f.kadin;t.erkek+=f.erkek;t.akademik+=f.akademik;t.uluslararasi+=f.uluslararasi;t.bolum+=f.bolumler.length; for(const k in t.unvan) t.unvan[k]+=f.unvan[k]; }); return t; }
+let DASH_CHARTS=[];
+function dashDestroy(){ DASH_CHARTS.forEach(c=>{try{c.destroy();}catch(e){}}); DASH_CHARTS=[]; }
+function dashRender(){
+  const fSel=document.getElementById('dash-fac'), bSel=document.getElementById('dash-bol');
+  if(!fSel) return;
+  const fac=DASH.faculties.find(f=>f.id===fSel.value);
+  if(fac){ bSel.disabled=false; bSel.innerHTML='<option value="">Tüm Bölümler</option>'+fac.bolumler.map((b,i)=>`<option value="${i}">${b.ad}</option>`).join(''); }
+  else { bSel.disabled=true; bSel.innerHTML='<option value="">Tüm Bölümler</option>'; }
+  dashUpdate();
+}
+function dashUpdate(){
+  dashDestroy();
+  const fSel=document.getElementById('dash-fac'), bSel=document.getElementById('dash-bol');
+  const fac=DASH.faculties.find(f=>f.id===fSel.value);
+  const bolIdx=bSel.value===''?-1:parseInt(bSel.value,10);
+  const scope=fac?[fac]:DASH.faculties; const t=dashTotals(scope);
+  let ogrenciVal=t.ogrenci,bolumVal=t.bolum,akademikVal=t.akademik,kapsamEtiket=fac?fac.ad:'Tüm Üniversite';
+  if(fac&&bolIdx>=0){ const b=fac.bolumler[bolIdx]; ogrenciVal=b.ogrenci;bolumVal=1;akademikVal=b.akademik;kapsamEtiket=fac.kisa+' · '+b.ad; }
+  const kadinOran=t.ogrenci?Math.round(t.kadin/t.ogrenci*100):0;
+  const oranOA=akademikVal?(ogrenciVal/akademikVal).toFixed(1):'0';
+  const kpis=[
+    {c:'#1c355e',val:nf(ogrenciVal),lbl:'Öğrenci',sub:kapsamEtiket},
+    {c:'#4bb5e8',val:nf(akademikVal),lbl:'Akademik Personel',sub:DASH.donem},
+    {c:'#7c3aed',val:nf(bolumVal),lbl:(fac&&bolIdx>=0)?'Program':'Bölüm / Program',sub:fac?fac.kisa:(DASH.faculties.length+' Akademik Birim')},
+    {c:'#0891b2',val:nf(fac?fac.uluslararasi:t.uluslararasi),lbl:'Uluslararası Öğrenci',sub:kapsamEtiket},
+    {c:'#e11d48',val:'%'+kadinOran,lbl:'Kadın Öğrenci Oranı',sub:nf(t.kadin)+' / '+nf(t.ogrenci)},
+    {c:'#059669',val:oranOA,lbl:'Öğrenci / Akd. Personel',sub:'oran'}
+  ];
+  document.getElementById('dash-kpi').innerHTML=kpis.map(k=>`<div class="kpi" style="--kc:${k.c}"><div class="kpi-val">${k.val}</div><div class="kpi-lbl">${k.lbl}</div><div class="kpi-sub">${k.sub}</div></div>`).join('');
+  const gridColor='rgba(0,0,0,.05)';
+  const distLabels=fac?fac.bolumler.map(b=>b.ad):DASH.faculties.map(f=>f.kisa);
+  const distData=fac?fac.bolumler.map(b=>b.ogrenci):DASH.faculties.map(f=>f.ogrenci);
+  const distColors=fac?fac.bolumler.map(()=>fac.renk):DASH.faculties.map(f=>f.renk);
+  DASH_CHARTS.push(new Chart(document.getElementById('ch-dist'),{ type:'bar',
+    data:{labels:distLabels,datasets:[{label:'Öğrenci',data:distData,backgroundColor:distColors,borderRadius:6,maxBarThickness:46}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{maxRotation:38,autoSkip:false,font:{size:10}}},y:{grid:{color:gridColor},beginAtZero:true}}} }));
+  DASH_CHARTS.push(new Chart(document.getElementById('ch-gender'),{ type:'doughnut',
+    data:{labels:['Kadın','Erkek'],datasets:[{data:[t.kadin,t.erkek],backgroundColor:['#e11d48','#1c355e'],borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:14}}}} }));
+  const uKeys=['prof','docent','drOgr','ogrGor','arasGor'];
+  DASH_CHARTS.push(new Chart(document.getElementById('ch-unvan'),{ type:'bar',
+    data:{labels:uKeys.map(k=>UNVAN_LABELS[k]),datasets:[{data:uKeys.map(k=>t.unvan[k]),backgroundColor:uKeys.map(k=>UNVAN_RENK[k]),borderRadius:5,maxBarThickness:24}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridColor},beginAtZero:true},y:{grid:{display:false}}}} }));
+  DASH_CHARTS.push(new Chart(document.getElementById('ch-trend'),{ type:'line',
+    data:{labels:DASH.trend.labels,datasets:[
+      {label:'Öğrenci',data:DASH.trend.ogrenci,borderColor:'#1c355e',backgroundColor:'rgba(28,53,94,.08)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,yAxisID:'y'},
+      {label:'Uluslararası Öğrenci',data:DASH.trend.uluslararasi,borderColor:'#c8a84b',backgroundColor:'rgba(200,168,75,.10)',fill:true,tension:.35,borderWidth:2,pointRadius:3,yAxisID:'y1'},
+      {label:'Akademik Personel',data:DASH.trend.akademik,borderColor:'#4bb5e8',backgroundColor:'transparent',tension:.35,borderWidth:2,pointRadius:3,yAxisID:'y1'} ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:14,usePointStyle:true}}},
+      scales:{x:{grid:{display:false}},y:{position:'left',grid:{color:gridColor},beginAtZero:true,title:{display:true,text:'Öğrenci'}},y1:{position:'right',grid:{display:false},beginAtZero:true,title:{display:true,text:'Personel / Ulus.'}}}} }));
+  const rows=fac?fac.bolumler.map(b=>({ad:b.ad,ogrenci:b.ogrenci,akademik:b.akademik})):DASH.faculties.map(f=>({ad:f.ad,ogrenci:f.ogrenci,akademik:f.akademik}));
+  const maxO=Math.max.apply(null,rows.map(r=>r.ogrenci));
+  document.getElementById('dash-tbody').innerHTML=rows.map(r=>`<tr><td>${r.ad}</td><td>${nf(r.ogrenci)}<span class="dash-bar" style="width:${Math.max(6,Math.round(r.ogrenci/maxO*70))}px"></span></td><td>${nf(r.akademik)}</td><td>${r.akademik?(r.ogrenci/r.akademik).toFixed(1):'—'}</td></tr>`).join('')+
+    `<tr style="background:#f4f6fb;font-weight:700"><td style="font-weight:800">${fac?fac.kisa+' Toplam':'GENEL TOPLAM'}</td><td>${nf(rows.reduce((s,r)=>s+r.ogrenci,0))}</td><td>${nf(rows.reduce((s,r)=>s+r.akademik,0))}</td><td>${(rows.reduce((s,r)=>s+r.ogrenci,0)/Math.max(1,rows.reduce((s,r)=>s+r.akademik,0))).toFixed(1)}</td></tr>`;
+}
+function renderFakulteBirim(){
+  const c=document.getElementById('dash-content');
+  c.innerHTML=`
+    <h2 class="page-title"><i class="fas fa-sitemap"></i>Fakülte / Birim Bazlı Dağılım</h2>
+    <p class="page-desc">Fakülte ve bölüm seçerek öğrenci, cinsiyet, akademik unvan ve bölüm kırılımını inceleyin.</p>
+    <div class="info-box"><i class="fas fa-circle-info mr-1"></i> Fakülte/birim bazlı kırılım (cinsiyet, akademik unvan ve bölüm dağılımı) <strong>temsilîdir</strong>; kurumsal toplamlar ve resmi rakamlar diğer bölümlerdeki grafiklerde yer almaktadır.</div>
+    <div style="display:flex;flex-wrap:wrap;align-items:end;gap:14px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px;box-shadow:var(--shadow)">
+      <div><label style="display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px">Fakülte / Birim</label>
+        <select id="dash-fac" class="dash-select" style="min-width:240px"><option value="">Tüm Fakülteler / Birimler</option>${DASH.faculties.map(f=>`<option value="${f.id}">${f.ad}</option>`).join('')}</select></div>
+      <div><label style="display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px">Bölüm / Program</label>
+        <select id="dash-bol" class="dash-select" style="min-width:240px" disabled><option value="">Tüm Bölümler</option></select></div>
+      <button id="dash-reset" class="dash-select" style="cursor:pointer;font-weight:600;color:var(--muted)"><i class="fas fa-rotate-left mr-1"></i>Sıfırla</button>
+      <div style="margin-left:auto;align-self:center;font-size:11px;color:#94a3b8"><i class="far fa-calendar-alt mr-1"></i>Dönem: <strong style="color:var(--navy)">${DASH.donem}</strong></div>
+    </div>
+    <div id="dash-kpi" class="kpi-grid"></div>
+    <div class="tc-grid" style="margin-bottom:18px">
+      <div class="chart-card"><h4><i class="fas fa-chart-column" style="color:#4bb5e8"></i> Öğrenci Dağılımı</h4><div class="sub">Öğrenci sayısı</div><div class="chart-wrap" style="height:300px"><canvas id="ch-dist"></canvas></div></div>
+      <div class="chart-card"><h4><i class="fas fa-venus-mars" style="color:#e11d48"></i> Cinsiyet Dağılımı</h4><div class="sub">Öğrenci</div><div class="chart-wrap" style="height:300px"><canvas id="ch-gender"></canvas></div></div>
+    </div>
+    <div class="tc-grid" style="margin-bottom:18px">
+      <div class="chart-card"><h4><i class="fas fa-user-tie" style="color:#7c3aed"></i> Akademik Unvan Dağılımı</h4><div class="sub">Öğretim elemanı sayısı</div><div class="chart-wrap" style="height:280px"><canvas id="ch-unvan"></canvas></div></div>
+      <div class="chart-card"><h4><i class="fas fa-chart-line" style="color:#1c355e"></i> Yıllara Göre Değişim</h4><div class="sub">2017 – 2025 · üniversite geneli</div><div class="chart-wrap" style="height:280px"><canvas id="ch-trend"></canvas></div></div>
+    </div>
+    <div class="chart-card" style="padding:0;overflow:hidden">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--border)"><h4 style="margin:0"><i class="fas fa-table-list" style="color:#c8a84b"></i> Fakülte / Birim Detayı</h4></div>
+      <div style="overflow-x:auto"><table class="dash-table"><thead><tr><th>Birim / Bölüm</th><th>Öğrenci</th><th>Akademik</th><th>Öğr./Akd.</th></tr></thead><tbody id="dash-tbody"></tbody></table></div>
+    </div>`;
+  const fSel=document.getElementById('dash-fac'), bSel=document.getElementById('dash-bol'), reset=document.getElementById('dash-reset');
+  fSel.addEventListener('change',dashRender);
+  bSel.addEventListener('change',dashUpdate);
+  reset.addEventListener('click',()=>{ fSel.value=''; dashRender(); });
+  dashRender();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* init */
+const _allIds = NAV.flatMap(g=>g.items.map(i=>i.id));
+const _h = location.hash.replace('#','');
+go(_allIds.includes(_h) ? _h : 'genel');
+</script>
+</body>
+</html>
