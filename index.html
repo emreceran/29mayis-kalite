@@ -386,9 +386,10 @@
             <div class="text-[#4bb5e8] text-xs">Kalite Güvence Sistemi</div>
           </div>
         </div>
-        <p class="text-gray-400 text-sm">Elmalıkent Mah. Elmalıkent Cad. No:4</p>
-        <p class="text-gray-400 text-sm">Ümraniye / İstanbul</p>
-        <p class="text-gray-400 text-sm mt-1">Tel: +90 216 474 08 60</p>
+        <p class="text-gray-400 text-sm" id="ft-addr1">Elmalıkent Mah. Elmalıkent Cad. No:4</p>
+        <p class="text-gray-400 text-sm" id="ft-addr2">Ümraniye / İstanbul</p>
+        <p class="text-gray-400 text-sm mt-1" id="ft-phone">Tel: +90 216 474 08 60</p>
+        <p class="text-gray-400 text-sm" id="ft-email">E-posta: kalite@29mayis.edu.tr</p>
       </div>
       <div>
         <h4 class="text-[#c8a84b] text-xs font-bold uppercase tracking-wider mb-4">Kalite Güvencesi</h4>
@@ -410,7 +411,7 @@
       </div>
     </div>
     <div class="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-gray-500">
-      <span>© 2025 İstanbul 29 Mayıs Üniversitesi. Tüm hakları saklıdır.</span>
+      <span id="ft-copyright">© 2025 İstanbul 29 Mayıs Üniversitesi. Tüm hakları saklıdır.</span>
       <span>KVKK | Çerez Politikası | Erişilebilirlik</span>
     </div>
   </div>
@@ -2376,7 +2377,10 @@ function submitPaydasForm(e){
 
 function applyCMS(data){
   window.CMS = data;
-  if(data.dashboard){ DASH = data.dashboard; normalizeDash(); }
+  if(data.dashboard){ DASH = data.dashboard; normalizeDash(); if(Array.isArray(data.dashboard.groups) && data.dashboard.groups.length) DASH_GROUPS = data.dashboard.groups; }
+  if(data.settings){ const st=data.settings, set=(id,v)=>{ const el=document.getElementById(id); if(el&&v) el.textContent=v; };
+    set('ft-addr1', st.address_line1); set('ft-addr2', st.address_line2);
+    set('ft-phone', st.phone?('Tel: '+st.phone):''); set('ft-email', st.email?('E-posta: '+st.email):''); set('ft-copyright', st.copyright); }
   if(data.navGroups) NAV_GROUPS = data.navGroups;
   if(data.pageToGroup) PAGE_TO_GROUP = data.pageToGroup;
   (data.pages||[]).forEach(p=>{

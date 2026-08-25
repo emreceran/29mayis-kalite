@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Kalite Sitesi — Yönetim Paneli</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{--navy:#1c355e;--blue:#4bb5e8;--gold:#c8a84b;--bg:#f4f6fa;--line:#e2e7f0;--ink:#243b53;--muted:#6b7a90;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  header.top{background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:50}
+  header.top h1{font-size:16px;margin:0;font-weight:600;letter-spacing:.02em}
+  header.top .sub{font-size:12px;color:#b9c6dd}
+  header.top .spacer{flex:1}
+  .badge-dirty{font-size:12px;padding:4px 10px;border-radius:20px;background:#7a2e2e;color:#fff;display:none}
+  .badge-dirty.on{display:inline-block}
+  .badge-ok{font-size:12px;padding:4px 10px;border-radius:20px;background:#26543b;color:#fff}
+  .btn{border:0;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+  .btn-gold{background:var(--gold);color:#3a2f0e}
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-line{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .btn-danger{background:#fff;border:1px solid #e6b8b8;color:#9a2b2b}
+  .btn-sm{padding:5px 9px;font-size:12px}
+  .wrap{display:flex;min-height:calc(100vh - 49px)}
+  nav.side{width:230px;background:#fff;border-right:1px solid var(--line);padding:12px 0;flex-shrink:0}
+  nav.side a{display:flex;align-items:center;gap:10px;padding:11px 20px;color:var(--ink);text-decoration:none;font-size:14px;cursor:pointer;border-left:3px solid transparent}
+  nav.side a i{width:18px;text-align:center;color:var(--muted)}
+  nav.side a:hover{background:#f0f4fa}
+  nav.side a.active{background:#eef3fb;border-left-color:var(--gold);font-weight:600}
+  nav.side a.active i{color:var(--navy)}
+  nav.side .count{margin-left:auto;background:#eef1f6;color:var(--muted);font-size:11px;border-radius:10px;padding:1px 8px}
+  main{flex:1;padding:24px 28px;max-width:1000px}
+  .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .sec-head h2{margin:0;font-size:20px;color:var(--navy)}
+  .sec-desc{color:var(--muted);font-size:13px;margin:0 0 18px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
+  .card .grow{flex:1;min-width:0}
+  .card .t{font-weight:600;font-size:14px;color:var(--navy)}
+  .card .d{font-size:13px;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .card .meta{font-size:11px;color:#93a1b5;margin-top:6px}
+  .card .ops{display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+  .pill{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;background:#eef1f6;color:var(--muted);margin-right:5px}
+  .pill.imp{background:#fbeecf;color:#7a5b12}
+  .empty{color:var(--muted);font-style:italic;padding:20px;text-align:center}
+  /* form modal */
+  .overlay{position:fixed;inset:0;background:rgba(20,30,50,.5);display:none;align-items:flex-start;justify-content:center;z-index:100;padding:30px 16px;overflow:auto}
+  .overlay.on{display:flex}
+  .modal{background:#fff;border-radius:12px;width:100%;max-width:720px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .modal .mh{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center}
+  .modal .mh h3{margin:0;font-size:16px;color:var(--navy)}
+  .modal .mb{padding:18px 20px;max-height:70vh;overflow:auto}
+  .modal .mf{padding:14px 20px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--ink)}
+  .field .hint{font-size:12px;color:var(--muted);font-weight:400;margin-left:4px}
+  .field input[type=text],.field input[type=email],.field input[type=number],.field select,.field textarea{
+    width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:14px;font-family:inherit;color:var(--ink)}
+  .field textarea{resize:vertical;min-height:80px}
+  .field textarea.big{min-height:280px;font-family:'Consolas',monospace;font-size:13px;line-height:1.5}
+  .field.row2{display:flex;gap:12px}
+  .field.row2>div{flex:1}
+  .chk{display:flex;align-items:center;gap:8px}
+  .chk input{width:18px;height:18px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+  .toolbar button{font-size:12px;padding:5px 9px;border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer}
+  .toolbar button:hover{background:#f0f4fa}
+  .prev{border:1px solid var(--line);border-radius:8px;margin-top:10px;background:#fff}
+  .prev .ph{background:#f6f8fc;padding:6px 12px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line)}
+  .prev iframe{width:100%;border:0;height:300px}
+  .load-box{max-width:520px;margin:60px auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px;text-align:center}
+  .load-box i{font-size:34px;color:var(--gold)}
+  .load-box h3{color:var(--navy)}
+  .filter{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:14px;margin-bottom:14px}
+  .note{background:#eef3fb;border:1px solid #d4e0f2;border-radius:8px;padding:10px 14px;font-size:13px;color:#33507a;margin-bottom:16px}
+  .note i{color:var(--navy)}
+  code{background:#eef1f6;padding:1px 5px;border-radius:4px;font-size:12px}
+</style>
+</head>
+<body>
+<header class="top">
+  <i class="fa-solid fa-sliders" style="color:var(--gold)"></i>
+  <div><h1>Kalite Sitesi — Yönetim Paneli</h1><div class="sub" id="loadedInfo">yükleniyor…</div></div>
+  <div class="spacer"></div>
+  <span class="badge-dirty" id="dirtyBadge"><i class="fa-solid fa-circle-exclamation"></i> Kaydedilmemiş değişiklik</span>
+  <button class="btn btn-line btn-sm" onclick="document.getElementById('fileIn').click()"><i class="fa-solid fa-folder-open"></i> Dosya Yükle</button>
+  <button class="btn btn-gold" onclick="downloadJson()"><i class="fa-solid fa-download"></i> Değişiklikleri İndir</button>
+  <input type="file" id="fileIn" accept=".json" style="display:none" onchange="onFilePick(event)">
+</header>
+
+<div id="loader" class="load-box">
+  <i class="fa-solid fa-cloud-arrow-down"></i>
+  <h3>İçerik dosyası bekleniyor</h3>
+  <p style="color:var(--muted)">Panel <code>data/site.json</code> dosyasını otomatik açmayı dener. Açılmazsa aşağıdan yükleyin.</p>
+  <button class="btn btn-navy" onclick="document.getElementById('fileIn').click()"><i class="fa-solid fa-folder-open"></i> site.json Yükle</button>
+  <p id="loadErr" style="color:#9a2b2b;font-size:13px;margin-top:14px"></p>
+</div>
+
+<div class="wrap" id="app" style="display:none">
+  <nav class="side" id="sideNav"></nav>
+  <main id="main"></main>
+</div>
+
+<!-- form modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="mh"><h3 id="modalTitle">Düzenle</h3></div>
+    <div class="mb" id="modalBody"></div>
+    <div class="mf">
+      <button class="btn btn-line" onclick="closeModal()">İptal</button>
+      <button class="btn btn-navy" onclick="saveForm()"><i class="fa-solid fa-check"></i> Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================ STATE ============================ */
+let DATA=null, dirty=false, curSection=null, editCtx=null;
+
+const SECTIONS=[
+  {id:'duyurular', title:'Duyurular', icon:'fa-bullhorn', desc:'Ana sayfada ve duyuru bandında görünen duyurular.',
+   path:d=>d.announcements, label:i=>i.baslik,
+   sub:i=>i.ozet, meta:i=>`<span class="pill">${esc(i.tarih||'')}</span><span class="pill">${esc(i.kat||'')}</span>${i.onemli?'<span class="pill imp">Öne çıkan</span>':''}`,
+   fields:[
+     {k:'baslik',l:'Başlık',t:'text',req:1},
+     {k:'ozet',l:'Özet',t:'textarea',req:1},
+     {row:[{k:'tarih',l:'Tarih',t:'text',hint:'ör. 10 Haziran 2026'},{k:'kat',l:'Kategori',t:'text',hint:'ör. Toplantı'}]},
+     {row:[{k:'ikon',l:'İkon (FontAwesome)',t:'text',def:'fa-bullhorn',hint:'ör. fa-users'},{k:'renk',l:'Renk',t:'color',def:'#1c355e'}]},
+     {k:'page',l:'Bağlı Sayfa',t:'page',hint:'tıklayınca gidilecek sayfa (opsiyonel)'},
+     {k:'onemli',l:'Öne çıkan duyuru',t:'check'},
+   ]},
+  {id:'haberler', title:'Haberler', icon:'fa-newspaper', desc:'Ana sayfa alt bölümündeki haber kartları.',
+   path:d=>d.home.news, label:i=>i.baslik, sub:i=>i.ozet,
+   meta:i=>`<span class="pill">${esc(i.gun||'')} ${esc(i.ay||'')}</span>`,
+   fields:[
+     {k:'baslik',l:'Başlık',t:'text',req:1},
+     {k:'ozet',l:'Özet',t:'textarea',req:1},
+     {row:[{k:'gun',l:'Gün',t:'text',hint:'ör. 12'},{k:'ay',l:'Ay (kısaltma)',t:'text',hint:'ör. HAZ'}]},
+     {k:'page',l:'Bağlı Sayfa',t:'page'},
+   ]},
+  {id:'etkinlikler', title:'Kalite Etkinlikleri', icon:'fa-calendar-check', desc:'Etkinlik kartları ve detay sayfaları.',
+   path:d=>d.home.events, label:i=>i.baslik, sub:i=>i.ozet,
+   meta:i=>`<span class="pill">${esc(i.tarih||'')}</span><span class="pill">${esc(i.kategori||'')}</span>${i.foto?`<span class="pill"><i class="fa-solid fa-image"></i> ${i.foto} foto</span>`:''}`,
+   note:'Fotoğraf dosyaları sunucuda <code>assets/etkinlikler/&lt;kısa-ad&gt;/</code> klasöründe tutulur. Panel foto <b>sayısını</b> ve metinleri düzenler; fotoğraf eklemek/çıkarmak site sorumlusunun işidir.',
+   fields:[
+     {k:'baslik',l:'Başlık',t:'text',req:1},
+     {k:'ozet',l:'Kısa Özet',t:'textarea',req:1,hint:'kartta görünen'},
+     {k:'detay',l:'Detay Metni',t:'textarea',hint:'etkinlik detay sayfasında görünen uzun açıklama'},
+     {row:[{k:'tarih',l:'Tarih',t:'text',hint:'ör. 28-29 Temmuz 2026'},{k:'kategori',l:'Kategori',t:'text'}]},
+     {row:[{k:'icon',l:'İkon',t:'text',def:'fa-calendar-check'},{k:'color',l:'Renk',t:'color',def:'#1c355e'}]},
+     {row:[{k:'slug',l:'Kısa Ad (klasör)',t:'text',hint:'foto klasörü adı; boşluksuz-küçük harf'},{k:'foto',l:'Fotoğraf Sayısı',t:'number'}]},
+   ]},
+  {id:'quicklinks', title:'Hızlı Erişim', icon:'fa-bolt', desc:'Ana sayfadaki hızlı erişim bağlantıları.',
+   path:d=>d.home.quickLinks, label:i=>i.label, sub:i=>'',
+   meta:i=>`<span class="pill">→ ${esc(i.page||'')}</span>`,
+   fields:[
+     {k:'label',l:'Etiket',t:'text',req:1},
+     {k:'page',l:'Bağlı Sayfa',t:'page',req:1},
+     {row:[{k:'icon',l:'İkon',t:'text',def:'fa-file-lines'},{k:'color',l:'Renk',t:'color',def:'#1c355e'}]},
+   ]},
+  {id:'istatistik', title:'İstatistik Kartları', icon:'fa-chart-simple', desc:'Ana sayfadaki sayı kartları (Kayıtlı Öğrenci vb.).',
+   path:d=>d.home.stats, label:i=>i.label, sub:i=>'',
+   meta:i=>`<span class="pill" style="font-size:14px">${esc(i.val||'')}</span>`,
+   fields:[
+     {row:[{k:'val',l:'Değer',t:'text',req:1,hint:'ör. 5.545'},{k:'label',l:'Etiket',t:'text',req:1}]},
+     {row:[{k:'icon',l:'İkon',t:'text',def:'fa-chart-simple'},{k:'color',l:'Renk',t:'color',def:'#1c355e'}]},
+   ]},
+  {id:'carousel', title:'Öne Çıkan Slaytlar', icon:'fa-images', desc:'Ana sayfa üst slayt/carousel içerikleri.',
+   path:d=>d.home.carousel, label:i=>i.title, sub:i=>i.body,
+   meta:i=>`<span class="pill">${esc(i.tag||'')}</span>`,
+   fields:[
+     {k:'tag',l:'Etiket',t:'text',hint:'ör. YÖKAK 2025'},
+     {k:'title',l:'Başlık',t:'text',req:1},
+     {k:'body',l:'Metin',t:'textarea',req:1},
+     {k:'bg',l:'Arka Plan (CSS)',t:'text',hint:'ör. linear-gradient(135deg,#0f2444,#1c355e)'},
+   ]},
+  {id:'sayfalar', title:'Sayfalar', icon:'fa-file-lines', desc:'İç sayfa başlık ve içerikleri (HTML).', special:'pages'},
+  {id:'ayarlar', title:'Site Ayarları', icon:'fa-gear', desc:'İletişim ve alt bilgi.', special:'settings'},
+  {id:'ham', title:'Gelişmiş (Ham JSON)', icon:'fa-code', desc:'Tüm veriyi doğrudan düzenle. Dikkatli kullanın.', special:'raw'},
+];
+
+/* ============================ HELPERS ============================ */
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function setDirty(v){dirty=v;document.getElementById('dirtyBadge').classList.toggle('on',v);}
+function pageOptions(sel){
+  const ps=(DATA.pages||[]).slice().sort((a,b)=>(a.title||'').localeCompare(b.title||'','tr'));
+  return '<option value="">— yok —</option>'+ps.map(p=>`<option value="${esc(p.slug)}" ${p.slug===sel?'selected':''}>${esc(p.title)} (${esc(p.slug)})</option>`).join('');
+}
+function navGroupOptions(sel){
+  return Object.entries(DATA.navGroups||{}).map(([k,v])=>`<option value="${esc(k)}" ${k===sel?'selected':''}>${esc(v.label||k)}</option>`).join('');
+}
+
+/* ============================ LOAD / SAVE ============================ */
+async function tryAutoLoad(){
+  try{
+    const r=await fetch('data/site.json',{cache:'no-store'});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    loadData(await r.json(),'data/site.json (otomatik)');
+  }catch(e){
+    document.getElementById('loadErr').textContent='Otomatik açılamadı ('+e.message+'). Lütfen dosyayı elle yükleyin. (İpucu: paneli http sunucuyla açın ya da site.json’ı seçin.)';
+  }
+}
+function onFilePick(ev){
+  const f=ev.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{try{loadData(JSON.parse(rd.result),f.name);}catch(e){alert('Geçersiz JSON: '+e.message);}};
+  rd.readAsText(f); ev.target.value='';
+}
+function loadData(obj,src){
+  DATA=obj; setDirty(false);
+  document.getElementById('loader').style.display='none';
+  document.getElementById('app').style.display='flex';
+  document.getElementById('loadedInfo').textContent='Kaynak: '+src+' · '+(DATA.pages?.length||0)+' sayfa';
+  renderNav(); selectSection(SECTIONS[0].id);
+}
+function downloadJson(){
+  if(!DATA){alert('Önce içerik yükleyin.');return;}
+  DATA.generatedAt=new Date().toISOString();
+  const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='site.json'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+  setDirty(false);
+}
+
+/* ============================ NAV ============================ */
+function renderNav(){
+  document.getElementById('sideNav').innerHTML=SECTIONS.map(s=>{
+    let cnt='';
+    if(!s.special){const arr=s.path(DATA)||[];cnt=`<span class="count">${arr.length}</span>`;}
+    else if(s.special==='pages'){cnt=`<span class="count">${(DATA.pages||[]).length}</span>`;}
+    return `<a data-id="${s.id}" onclick="selectSection('${s.id}')"><i class="fa-solid ${s.icon}"></i> ${s.title}${cnt}</a>`;
+  }).join('');
+}
+function selectSection(id){
+  curSection=id;
+  document.querySelectorAll('#sideNav a').forEach(a=>a.classList.toggle('active',a.dataset.id===id));
+  const s=SECTIONS.find(x=>x.id===id);
+  if(s.special==='settings') return renderSettings(s);
+  if(s.special==='raw') return renderRaw(s);
+  if(s.special==='pages') return renderPages(s);
+  renderList(s);
+}
+
+/* ============================ LIST SECTIONS ============================ */
+function renderList(s){
+  const arr=s.path(DATA)||[];
+  let h=`<div class="sec-head"><h2><i class="fa-solid ${s.icon}"></i> ${s.title}</h2>
+    <button class="btn btn-gold btn-sm" style="margin-left:auto" onclick="openForm('${s.id}',null)"><i class="fa-solid fa-plus"></i> Yeni Ekle</button></div>
+    <p class="sec-desc">${s.desc}</p>`;
+  if(s.note) h+=`<div class="note"><i class="fa-solid fa-circle-info"></i> ${s.note}</div>`;
+  if(!arr.length){h+='<div class="empty">Henüz kayıt yok. “Yeni Ekle” ile ekleyin.</div>';}
+  arr.forEach((it,i)=>{
+    h+=`<div class="card">
+      <div class="grow">
+        <div class="t">${esc(s.label(it))||'(başlıksız)'}</div>
+        ${s.sub(it)?`<div class="d">${esc(s.sub(it))}</div>`:''}
+        <div class="meta">${s.meta?s.meta(it):''}</div>
+      </div>
+      <div class="ops">
+        <button class="btn btn-line btn-sm" onclick="openForm('${s.id}',${i})"><i class="fa-solid fa-pen"></i> Düzenle</button>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-line btn-sm" title="Yukarı" onclick="moveItem('${s.id}',${i},-1)" ${i===0?'disabled':''}><i class="fa-solid fa-arrow-up"></i></button>
+          <button class="btn btn-line btn-sm" title="Aşağı" onclick="moveItem('${s.id}',${i},1)" ${i===arr.length-1?'disabled':''}><i class="fa-solid fa-arrow-down"></i></button>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="delItem('${s.id}',${i})"><i class="fa-solid fa-trash"></i> Sil</button>
+      </div>
+    </div>`;
+  });
+  document.getElementById('main').innerHTML=h;
+}
+function moveItem(sid,i,dir){
+  const s=SECTIONS.find(x=>x.id===sid), arr=s.path(DATA), j=i+dir;
+  if(j<0||j>=arr.length) return;
+  [arr[i],arr[j]]=[arr[j],arr[i]]; setDirty(true); renderList(s);
+}
+function delItem(sid,i){
+  const s=SECTIONS.find(x=>x.id===sid), arr=s.path(DATA);
+  if(!confirm('Bu kaydı silmek istediğinize emin misiniz?\n\n"'+(s.label(arr[i])||'')+'"')) return;
+  arr.splice(i,1); setDirty(true); renderList(s);
+}
+
+/* ============================ FORM MODAL ============================ */
+function flatFields(fields){const o=[];fields.forEach(f=>f.row?f.row.forEach(x=>o.push(x)):o.push(f));return o;}
+function openForm(sid,idx){
+  const s=SECTIONS.find(x=>x.id===sid);
+  const arr=s.path(DATA);
+  const isNew=idx===null;
+  const item=isNew?{}:JSON.parse(JSON.stringify(arr[idx]));
+  editCtx={sid,idx,fields:s.fields};
+  document.getElementById('modalTitle').textContent=(isNew?'Yeni Ekle — ':'Düzenle — ')+s.title;
+  let h='';
+  s.fields.forEach(f=>{
+    if(f.row){h+='<div class="field row2">'+f.row.map(x=>`<div>${fieldHtml(x,item)}</div>`).join('')+'</div>';}
+    else h+='<div class="field">'+fieldHtml(f,item)+'</div>';
+  });
+  document.getElementById('modalBody').innerHTML=h;
+  document.getElementById('overlay').classList.add('on');
+}
+function fieldHtml(f,item){
+  const v=item[f.k]!==undefined?item[f.k]:(f.def!==undefined?f.def:'');
+  const lbl=`<label>${f.l}${f.req?' *':''}${f.hint?`<span class="hint">— ${f.hint}</span>`:''}</label>`;
+  if(f.t==='textarea') return lbl+`<textarea data-k="${f.k}">${esc(v)}</textarea>`;
+  if(f.t==='check') return `<div class="chk"><input type="checkbox" data-k="${f.k}" ${v?'checked':''}><label style="margin:0">${f.l}</label></div>`;
+  if(f.t==='color') return lbl+`<input type="color" data-k="${f.k}" value="${esc(v||'#1c355e')}" style="width:60px;height:38px;padding:2px">`;
+  if(f.t==='number') return lbl+`<input type="number" data-k="${f.k}" value="${esc(v)}">`;
+  if(f.t==='page') return lbl+`<select data-k="${f.k}">${pageOptions(v)}</select>`;
+  if(f.t==='navgroup') return lbl+`<select data-k="${f.k}">${navGroupOptions(v)}</select>`;
+  return lbl+`<input type="text" data-k="${f.k}" value="${esc(v)}">`;
+}
+function collectForm(){
+  const o={};
+  document.querySelectorAll('#modalBody [data-k]').forEach(el=>{
+    const k=el.dataset.k;
+    if(el.type==='checkbox') o[k]=el.checked;
+    else if(el.type==='number') o[k]=el.value===''?'':Number(el.value);
+    else o[k]=el.value;
+  });
+  return o;
+}
+function saveForm(){
+  const {sid,idx,fields}=editCtx;
+  const s=SECTIONS.find(x=>x.id===sid), arr=s.path(DATA);
+  const vals=collectForm();
+  for(const f of flatFields(fields)){if(f.req&&!String(vals[f.k]??'').trim()){alert(f.l+' zorunludur.');return;}}
+  // boş opsiyonelleri temizle (page vb.)
+  Object.keys(vals).forEach(k=>{if(vals[k]==='') delete vals[k];});
+  if(idx===null) arr.push(vals); else arr[idx]={...arr[idx],...vals};
+  // silinen anahtarlar (checkbox false / boşalan) düzelt
+  if(idx!==null){flatFields(fields).forEach(f=>{if(!(f.k in vals)) delete arr[idx][f.k];});}
+  setDirty(true); closeModal(); renderList(s);
+}
+function closeModal(){document.getElementById('overlay').classList.remove('on');editCtx=null;}
+
+/* ============================ SETTINGS ============================ */
+function renderSettings(s){
+  const st=DATA.settings||(DATA.settings={});
+  const F=[['address_line1','Adres 1'],['address_line2','Adres 2'],['phone','Telefon'],['email','E-posta'],['copyright','Alt Bilgi (Copyright)']];
+  let h=`<div class="sec-head"><h2><i class="fa-solid ${s.icon}"></i> ${s.title}</h2></div><p class="sec-desc">${s.desc}</p>`;
+  F.forEach(([k,l])=>{h+=`<div class="field"><label>${l}</label><input type="text" id="set_${k}" value="${esc(st[k]||'')}"></div>`;});
+  h+=`<button class="btn btn-navy" onclick="saveSettings()"><i class="fa-solid fa-check"></i> Ayarları Uygula</button>`;
+  document.getElementById('main').innerHTML=h;
+}
+function saveSettings(){
+  ['address_line1','address_line2','phone','email','copyright'].forEach(k=>{DATA.settings[k]=document.getElementById('set_'+k).value;});
+  setDirty(true); alert('Ayarlar güncellendi. Yayınlamak için “Değişiklikleri İndir”e basıp dosyayı site sorumlusuna iletin.');
+}
+
+/* ============================ PAGES ============================ */
+let pageFilter='';
+function renderPages(s){
+  const pages=(DATA.pages||[]);
+  let h=`<div class="sec-head"><h2><i class="fa-solid ${s.icon}"></i> ${s.title}</h2>
+    <button class="btn btn-gold btn-sm" style="margin-left:auto" onclick="newPage()"><i class="fa-solid fa-plus"></i> Yeni Sayfa</button></div>
+    <p class="sec-desc">${s.desc} Özel sayfalar (ana sayfa, gösterge panosu, PÜKÖ) buradan düzenlenmez.</p>
+    <input class="filter" placeholder="Sayfa ara…" value="${esc(pageFilter)}" oninput="pageFilter=this.value;renderPages(SECTIONS.find(x=>x.id==='sayfalar'))">`;
+  const list=pages.map((p,i)=>({p,i})).filter(({p})=>{
+    const q=pageFilter.toLowerCase();
+    return !q||(p.title||'').toLowerCase().includes(q)||(p.slug||'').toLowerCase().includes(q);
+  });
+  list.forEach(({p,i})=>{
+    const editable=p.render_type==='normal'||p.render_type===undefined;
+    h+=`<div class="card">
+      <div class="grow">
+        <div class="t">${esc(p.title)}</div>
+        <div class="meta"><span class="pill">${esc(p.slug)}</span><span class="pill">${esc(p.render_type||'normal')}</span>${p.nav_group?`<span class="pill">${esc(p.nav_group)}</span>`:''}</div>
+      </div>
+      <div class="ops">
+        ${editable?`<button class="btn btn-line btn-sm" onclick="editPage(${i})"><i class="fa-solid fa-pen"></i> Düzenle</button>`
+                  :`<button class="btn btn-line btn-sm" disabled title="Özel sayfa">Özel</button>`}
+        ${editable?`<button class="btn btn-danger btn-sm" onclick="delPage(${i})"><i class="fa-solid fa-trash"></i> Sil</button>`:''}
+      </div>
+    </div>`;
+  });
+  if(!list.length) h+='<div class="empty">Eşleşen sayfa yok.</div>';
+  document.getElementById('main').innerHTML=h;
+}
+function editPage(i){
+  const p=DATA.pages[i];
+  document.getElementById('modalTitle').textContent='Sayfayı Düzenle — '+p.title;
+  const h=`
+    <div class="field"><label>Başlık *</label><input type="text" id="pg_title" value="${esc(p.title)}"></div>
+    <div class="field row2">
+      <div><label>Kısa Ad (slug)<span class="hint">— değiştirmeyin, bağlantılar bozulur</span></label><input type="text" id="pg_slug" value="${esc(p.slug)}" readonly style="background:#f4f6fa"></div>
+      <div><label>Menü Grubu</label><select id="pg_group">${navGroupOptions(p.nav_group)}</select></div>
+    </div>
+    <div class="field"><label>İçerik (HTML)</label>
+      <div class="toolbar">
+        <button onclick="ins('<h3 class=&quot;sh&quot;>Başlık</h3>')">+ Başlık</button>
+        <button onclick="ins('<p>Metin…</p>')">+ Paragraf</button>
+        <button onclick="ins('<div class=&quot;info-box&quot;><strong>Not:</strong> …</div>')">+ Bilgi Kutusu</button>
+        <button onclick="ins('<ul><li>Madde</li><li>Madde</li></ul>')">+ Liste</button>
+        <button onclick="ins('<strong></strong>')">+ Kalın</button>
+        <button onclick="togglePrev()" style="margin-left:auto"><i class="fa-solid fa-eye"></i> Önizleme</button>
+      </div>
+      <textarea class="big" id="pg_body">${esc(p.body||'')}</textarea>
+      <div class="prev" id="pg_prev" style="display:none"><div class="ph">Önizleme (site stiline yakın)</div><iframe id="pg_prev_f"></iframe></div>
+    </div>`;
+  editCtx={page:i};
+  document.getElementById('modalBody').innerHTML=h;
+  // Kaydet butonunu sayfa moduna al
+  document.querySelector('#overlay .mf .btn-navy').setAttribute('onclick','savePage()');
+  document.getElementById('overlay').classList.add('on');
+}
+function ins(txt){
+  const ta=document.getElementById('pg_body');
+  const s=ta.selectionStart, e=ta.selectionEnd;
+  ta.value=ta.value.slice(0,s)+txt+ta.value.slice(e);
+  ta.focus(); ta.selectionStart=ta.selectionEnd=s+txt.length;
+}
+const PREV_CSS=`body{font-family:'Segoe UI',Arial,sans-serif;color:#243b53;padding:14px;line-height:1.6}
+h2,h3,.sh{color:#1c355e} .sh{border-left:4px solid #c8a84b;padding-left:10px}
+.info-box{background:#eef3fb;border:1px solid #d4e0f2;border-left:4px solid #1c355e;border-radius:8px;padding:12px 16px;margin:12px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0} td,th{border:1px solid #e2e7f0;padding:8px 10px;font-size:14px}
+.member-table th{background:#1c355e;color:#fff} .chair-badge{background:#c8a84b;color:#3a2f0e;padding:1px 8px;border-radius:10px;font-size:12px}
+a{color:#2563eb}`;
+function togglePrev(){
+  const box=document.getElementById('pg_prev');
+  const on=box.style.display==='none';
+  box.style.display=on?'block':'none';
+  if(on){document.getElementById('pg_prev_f').srcdoc=`<style>${PREV_CSS}</style>`+document.getElementById('pg_body').value;}
+}
+function savePage(){
+  const i=editCtx.page, p=DATA.pages[i];
+  const t=document.getElementById('pg_title').value.trim();
+  if(!t){alert('Başlık zorunludur.');return;}
+  p.title=t; p.body=document.getElementById('pg_body').value; p.nav_group=document.getElementById('pg_group').value;
+  setDirty(true); restoreSaveBtn(); closeModal(); renderPages(SECTIONS.find(x=>x.id==='sayfalar'));
+}
+function newPage(){
+  const title=prompt('Yeni sayfa başlığı:'); if(!title) return;
+  let slug=title.toLowerCase().replace(/ı/g,'i').replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  if((DATA.pages||[]).some(p=>p.slug===slug)){alert('Bu slug zaten var: '+slug);return;}
+  const groups=Object.keys(DATA.navGroups||{});
+  const grp=groups[0]||'';
+  DATA.pages.push({slug,title,icon:'fa-file-lines',breadcrumb:[title],render_type:'normal',nav_group:grp,
+    body:'<div class="info-box"><strong>Not:</strong> Bu sayfanın içeriği yakında eklenecektir.</div>'});
+  if(!DATA.pageToGroup) DATA.pageToGroup={}; DATA.pageToGroup[slug]=grp;
+  setDirty(true); renderNav();
+  const i=DATA.pages.length-1; editPage(i);
+}
+function delPage(i){
+  const p=DATA.pages[i];
+  if(!confirm('“'+p.title+'” sayfasını silmek üzeresiniz.\nMenüde bu sayfaya bağlantı varsa elle temizlemeniz gerekebilir.\nDevam edilsin mi?'))return;
+  DATA.pages.splice(i,1);
+  if(DATA.pageToGroup) delete DATA.pageToGroup[p.slug];
+  setDirty(true); renderNav(); renderPages(SECTIONS.find(x=>x.id==='sayfalar'));
+}
+function restoreSaveBtn(){document.querySelector('#overlay .mf .btn-navy').setAttribute('onclick','saveForm()');}
+
+/* ============================ RAW JSON ============================ */
+function renderRaw(s){
+  document.getElementById('main').innerHTML=`<div class="sec-head"><h2><i class="fa-solid ${s.icon}"></i> ${s.title}</h2></div>
+    <div class="note"><i class="fa-solid fa-triangle-exclamation"></i> Bu alan tüm veriyi doğrudan düzenler. Yanlış düzenleme siteyi bozabilir. Emin değilseniz kullanmayın.</div>
+    <textarea class="big" id="raw" style="min-height:440px;width:100%">${esc(JSON.stringify(DATA,null,2))}</textarea>
+    <div style="margin-top:10px;display:flex;gap:10px">
+      <button class="btn btn-navy" onclick="applyRaw()"><i class="fa-solid fa-check"></i> Doğrula ve Uygula</button>
+      <span id="rawMsg" style="align-self:center;font-size:13px"></span></div>`;
+}
+function applyRaw(){
+  try{const o=JSON.parse(document.getElementById('raw').value);DATA=o;setDirty(true);
+    document.getElementById('rawMsg').innerHTML='<span style="color:#26543b">✔ Geçerli JSON, uygulandı.</span>';renderNav();
+  }catch(e){document.getElementById('rawMsg').innerHTML='<span style="color:#9a2b2b">✖ Hata: '+esc(e.message)+'</span>';}
+}
+
+/* ============================ INIT ============================ */
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay'){restoreSaveBtn();closeModal();}});
+tryAutoLoad();
+</script>
+</body>
+</html>

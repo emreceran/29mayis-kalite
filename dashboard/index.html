@@ -105,7 +105,7 @@
 /* ── Gerçek zaman-serisi veriler (Kaynak: Sayılarla İstanbul 29 Mayıs Üniversitesi) ── */
 const Y9  = ['2017','2018','2019','2020','2021','2022','2023','2024','2025'];
 const Y11 = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
-const SAYILARLA = [
+let SAYILARLA = [
   { id:'ogrenci', title:'Öğrenci Sayıları', sub:'2017 – 2025', icon:'fa-user-graduate', accent:'#1c355e', type:'line', labels:Y9, series:[
     { label:'Toplam Öğrenci', color:'#1c355e', on:true,  data:[1797,1844,1908,2190,2670,3363,4405,5100,5545] },
     { label:'Lisans',         color:'#4bb5e8', on:true,  data:[1481,1504,1575,1745,2168,2847,3852,4580,4986] },
@@ -397,10 +397,24 @@ function renderFakulteBirim(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* init */
-const _allIds = NAV.flatMap(g=>g.items.map(i=>i.id));
-const _h = location.hash.replace('#','');
-go(_allIds.includes(_h) ? _h : 'genel');
+/* init — önce panelden üretilen veriyi çek (yoksa gömülü veriyle çalışır) */
+function _boot(){
+  const _allIds = NAV.flatMap(g=>g.items.map(i=>i.id));
+  const _h = location.hash.replace('#','');
+  go(_allIds.includes(_h) ? _h : 'genel');
+}
+(async ()=>{
+  try{
+    const r = await fetch('../data/dashboard.json',{cache:'no-store'});
+    if(r.ok){
+      const d = await r.json();
+      if(Array.isArray(d.groups) && d.groups.length) SAYILARLA = d.groups;
+      if(d.yokak && Array.isArray(d.yokak.sections)){ YOKAK.years = d.yokak.years; YOKAK.sections = d.yokak.sections; }
+      if(d.dash && Array.isArray(d.dash.faculties) && d.dash.faculties.length){ DASH = d.dash; normalizeDash(); }
+    }
+  }catch(e){ console.warn('dashboard.json yüklenemedi, gömülü veri kullanılıyor:', e.message); }
+  _boot();
+})();
 </script>
 </body>
 </html>
