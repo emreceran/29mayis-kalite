@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Veri Denetim Raporu</title>
+<style>
+ body{font-family:Georgia,'Times New Roman',serif;color:#20262e;background:#fff;margin:0;line-height:1.6;font-size:14px}
+ .wrap{max-width:960px;margin:0 auto;padding:0 46px}
+ .hdr{display:flex;align-items:center;gap:18px;border-bottom:3px solid #1c355e;padding:24px 0 16px}
+ .hdr img{height:64px;width:auto}
+ .hdr .uni{font-family:Arial,Helvetica,sans-serif;font-weight:700;color:#1c355e;font-size:17px;letter-spacing:.3px}
+ .hdr .sub{font-family:Arial,Helvetica,sans-serif;color:#5b6673;font-size:13px;margin-top:2px}
+ .doc-title{font-family:Arial,Helvetica,sans-serif;font-size:22px;color:#1c355e;margin:26px 0 4px;font-weight:700}
+ .doc-meta{font-family:Arial,Helvetica,sans-serif;color:#5b6673;font-size:12.5px;margin-bottom:18px}
+ h2{font-family:Arial,Helvetica,sans-serif;color:#1c355e;font-size:16px;margin:26px 0 8px;padding-bottom:5px;border-bottom:1px solid #d7dee6}
+ .cnt{font-family:Arial,Helvetica,sans-serif;font-weight:400;color:#5b6673;font-size:13px}
+ p{margin:8px 0}
+ .ozet{background:#f4f6f9;border-left:4px solid #1c355e;padding:14px 18px;margin:10px 0}
+ table{width:100%;border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;font-size:12px;margin:10px 0}
+ th,td{text-align:left;padding:7px 10px;border:1px solid #d7dee6;vertical-align:top}
+ th{background:#1c355e;color:#fff;font-weight:600;font-size:11.5px}
+ tbody tr:nth-child(even){background:#f7f9fb}
+ td.m{font-family:ui-monospace,Consolas,monospace;color:#334;white-space:nowrap}
+ .not,.rec{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;background:#f4f6f9;border:1px solid #e0e6ec;padding:10px 16px;margin:10px 0}
+ ul,ol{margin:6px 0;padding-left:20px} li{margin:5px 0}
+ .foot{font-family:Arial,Helvetica,sans-serif;border-top:2px solid #1c355e;margin-top:34px;padding:14px 0 30px;font-size:12px;color:#5b6673}
+ .foot b{color:#1c355e}
+ @media print{.wrap{padding:0 24px}}
+</style></head><body><div class="wrap">
+<div class="hdr">
+  <img src="logo.png" alt="İstanbul 29 Mayıs Üniversitesi">
+  <div>
+    <div class="uni">İSTANBUL 29 MAYIS ÜNİVERSİTESİ</div>
+    <div class="sub">Kalite Güvence Sistemi</div>
+  </div>
+</div>
+<div class="doc-title">Dashboard Grafik Verileri Denetim Raporu</div>
+<div class="doc-meta">Sayılarla Üniversitemiz ve YÖKAK Performans Göstergeleri grafiklerinin tutarlılık kontrolü. 1 Eylül 2026.</div>
+<main>
+<h2>Yönetici Özeti</h2>
+<div class=exec><p><b>Kontrol:</b> Dashboard'daki tüm grafik serileri tek tek tarandı.</p>
+<p><b>Sonuç:</b> "Sayılarla Üniversitemiz" göstergeleri büyük ölçüde tutarlı ve 2025'e kadar dolu. Asıl sorun <b>YÖKAK Performans Göstergeleri</b> verisinde:</p>
+<ul>
+<li><b>10 seride son yıl (2024) = 0</b>. 2024 verisi henüz girilmemiş; grafik son yılda dibe iniyor.</li>
+<li><b>16 seri yalnızca tek yıl (çoğu 2023) dolu</b>. grafik tek sivri olarak yanıltıcı.</li>
+<li><b>6 seride ortada 0</b>. gerçek sıfır mı eksik mi teyit gerek.</li>
+</ul></div>
+<h2>A. Son Yıl (2024) = 0 <span class="cnt">(10 seri)</span></h2>
+<p>2018–2023 dolu, 2024 = 0. Grafik son yılda sıfıra düşüyor.</p>
+<table><thead><tr><th>Grafik / Seri</th><th>Veri (2018-2024)</th><th></th></tr></thead><tbody><tr><td>Kalite Güvence Sistemi / Uluslararası Değişim / Gelen Öğrenci</td><td class='m'>[3, 6, 5, 0, 6, 1, 0]</td><td></td></tr><tr><td>Kalite Güvence Sistemi / Uluslararası Değişim / Gönderilen Öğrenci</td><td class='m'>[1, 4, 1, 0, 10, 10, 0]</td><td></td></tr><tr><td>Kalite Güvence Sistemi / Uluslararası Değişim / Gelen Öğretim Elemanı</td><td class='m'>[1, 1, 1, 1, 1, 1, 0]</td><td></td></tr><tr><td>Eğitim-Öğretim / Öğrenci Oranları (%) / Doktora Öğrenci Oranı</td><td class='m'>[3.53, 3.72, 4.83, 4.42, 4.08, 3.51, 0]</td><td></td></tr><tr><td>Eğitim-Öğretim / Öğretim Üyesi Başına Öğrenci / Lisans</td><td class='m'>[20.23, 20.66, 16.28, 19.34, 23.25, 26.59, 0]</td><td></td></tr><tr><td>Eğitim-Öğretim / Öğretim Üyesi Başına Öğrenci / Tezli Yüksek Lisans</td><td class='m'>[4.03, 4.4, 2.96, 3.48, 4, 3.67, 0]</td><td></td></tr><tr><td>Eğitim-Öğretim / Öğretim Üyesi Başına Öğrenci / Doktora</td><td class='m'>[0.89, 0.97, 0.98, 1.06, 1.16, 1.1, 0]</td><td></td></tr><tr><td>Araştırma-Geliştirme / Yayın Sayıları / Endeksli Yayın</td><td class='m'>[4, 3, 4, 6, 17, 15, 0]</td><td></td></tr><tr><td>Araştırma-Geliştirme / Atıf Göstergeleri / Ulusal Yayınlara Atıf</td><td class='m'>[22, 32, 86, 153, 205, 180, 0]</td><td></td></tr><tr><td>Araştırma-Geliştirme / Atıf Göstergeleri / Atıf Sayısı</td><td class='m'>[19.2, 17.8, 10, 4.8, 5.6, 5.4, 0]</td><td></td></tr></tbody></table>
+<h2>B. Yalnızca Tek Yıl Dolu <span class="cnt">(16 seri)</span></h2>
+<p>Tek yıl dışında tüm değerler 0.</p>
+<table><thead><tr><th>Grafik / Seri</th><th>Veri</th><th>Dolu yıl</th></tr></thead><tbody><tr><td>Kuruma Ait Bilgiler / Öğretim Kadrosu ve Personel / İdari Personel</td><td class='m'>[0, 0, 0, 0, 0, 0, 76]</td><td>2024</td></tr><tr><td>Kuruma Ait Bilgiler / Öğretim Kadrosu ve Personel / Uluslararası Öğretim Elemanı</td><td class='m'>[0, 0, 0, 0, 0, 0, 11]</td><td>2024</td></tr><tr><td>Kalite Güvence Sistemi / Kalite ve Paydaş Faaliyetleri / Dış Destekli Proje</td><td class='m'>[0, 0, 0, 0, 0, 14, 0]</td><td>2023</td></tr><tr><td>Kalite Güvence Sistemi / Kalite ve Paydaş Faaliyetleri / İç Paydaş Toplantısı</td><td class='m'>[0, 0, 0, 0, 0, 2, 0]</td><td>2023</td></tr><tr><td>Kalite Güvence Sistemi / Kalite ve Paydaş Faaliyetleri / Dış Paydaş Toplantısı</td><td class='m'>[0, 0, 0, 0, 0, 0, 2]</td><td>2024</td></tr><tr><td>Kalite Güvence Sistemi / Hedef Gerçekleştirme (%) / Eğitim-Öğretim Hedefi</td><td class='m'>[0, 0, 0, 0, 0, 76, 0]</td><td>2023</td></tr><tr><td>Kalite Güvence Sistemi / Hedef Gerçekleştirme (%) / Araştırma Hedefi</td><td class='m'>[0, 0, 0, 0, 0, 65, 0]</td><td>2023</td></tr><tr><td>Eğitim-Öğretim / Mezun ve İstihdam / İş Dünyası Memnuniyeti (%)</td><td class='m'>[0, 0, 0, 0, 0, 0, 75]</td><td>2024</td></tr><tr><td>Eğitim-Öğretim / Program Kalitesi ve Öğrenci Etkinlikleri / Kulüplere Kayıtlı Öğrenci</td><td class='m'>[0, 0, 0, 0, 0, 543, 0]</td><td>2023</td></tr><tr><td>Eğitim-Öğretim / Program Kalitesi ve Öğrenci Etkinlikleri / Öğrenci Kulüp Sayısı</td><td class='m'>[0, 0, 0, 0, 0, 63, 0]</td><td>2023</td></tr><tr><td>Araştırma-Geliştirme / Yayın Sayıları / Açık Erişimli Yayın</td><td class='m'>[0, 0, 0, 0, 0, 0, 9]</td><td>2024</td></tr><tr><td>Araştırma-Geliştirme / Projeler, Patent ve Ödüller / TÜBİTAK Burs</td><td class='m'>[0, 0, 0, 0, 0, 0, 61]</td><td>2024</td></tr><tr><td>Araştırma-Geliştirme / Projeler, Patent ve Ödüller / Uluslararası Ödüller</td><td class='m'>[0, 0, 0, 0, 0, 0, 3]</td><td>2024</td></tr><tr><td>Araştırma-Geliştirme / Projeler, Patent ve Ödüller / Olumlu Patent</td><td class='m'>[0, 0, 0, 0, 0, 0, 1]</td><td>2024</td></tr><tr><td>Toplumsal Katkı / Toplumsal Katkı Faaliyetleri / SEM/TÖMER/DİLMER Sertifika</td><td class='m'>[0, 0, 0, 0, 0, 0, 134]</td><td>2024</td></tr><tr><td>Toplumsal Katkı / Toplumsal Katkı Faaliyetleri / Toplam Sosyal Sorumluluk Projesi</td><td class='m'>[0, 0, 0, 0, 0, 0, 4]</td><td>2024</td></tr></tbody></table>
+<h2>C. Ortada Sıfır (Teyit) <span class="cnt">(6 seri)</span></h2>
+<table><thead><tr><th>Grafik / Seri</th><th>Veri</th><th>0 olan yıl</th></tr></thead><tbody><tr><td>Kalite Güvence Sistemi / Uluslararası Değişim / Gelen Öğrenci</td><td class='m'>[3, 6, 5, 0, 6, 1, 0]</td><td>2021</td></tr><tr><td>Kalite Güvence Sistemi / Uluslararası Değişim / Gönderilen Öğrenci</td><td class='m'>[1, 4, 1, 0, 10, 10, 0]</td><td>2021</td></tr><tr><td>Eğitim-Öğretim / Öğretim Elemanı Gelişimi / Uluslararası Öğr. Elemanı Oranı (%)</td><td class='m'>[19.23, 20.2, 0, 12.5, 10.71, 10.32, 6.75]</td><td>2020</td></tr><tr><td>Araştırma-Geliştirme / Yayın Sayıları / Q1 Yayın</td><td class='m'>[0, 0, 1, 0, 2, 3, 2]</td><td>2021</td></tr><tr><td>Araştırma-Geliştirme / Yayın Oranları (%) / Q1 Yayın Oranı</td><td class='m'>[0, 0, 100, 0, 33.33, 25, 13.33]</td><td>2021</td></tr><tr><td>Araştırma-Geliştirme / Projeler, Patent ve Ödüller / Uluslararası Sempozyum/Sergi</td><td class='m'>[4, 6, 1, 8, 0, 1, 2]</td><td>2022</td></tr></tbody></table>
+<h2>D. Sayılarla Üniversitemiz. Notlar</h2>
+<div class=note><ul>
+<li>Bölüm sağlam (2015/2017–2025 dolu; mezun toplamı 2.701 birebir).</li>
+<li><b>Ön Lisans / Meslek Yüksekokulu</b> yalnızca 2025'te dolu. yeni açıldığı için normal.</li>
+<li><b>Mezun 2024 = 544</b> (2023: 258). iki katına çıkış; teyit edilebilir.</li>
+<li><b>Kaynak tutarsızlığı:</b> "Sayılarla"  ile  YÖKAK öğrenci sayıları farklı (2018: 1.844  ile  1.559). farklı kapsam/tanım; hangisi esas netleşmeli.</li>
+</ul></div>
+<h2>Öneriler</h2>
+<div class=rec><ol>
+<li><b>2024 boş serileri:</b> gerçek 2024 rakamlarını gir; girilemiyorsa 2024 sütununu kaldır ya da 0'ı çizme.</li>
+<li><b>Tek-yıl serileri:</b> eksik yıllar girilsin; girilemiyorsa gösterge geçici kaldırılsın.</li>
+<li><b>Ortada-0:</b> YÖKAK kaynağından teyit; gerçekse dipnot.</li>
+<li><b>İki kaynağı uyumla:</b> "Sayılarla" ve YÖKAK farkının tanımı netleştirilsin.</li>
+</ol></div>
+</main>
+<div class="foot"><b>İstanbul 29 Mayıs Üniversitesi, Kalite Güvence Sistemi Web Sitesi</b><br>Dashboard Grafik Verileri Denetim Raporu. 1 Eylül 2026. Hazırlayan: Emre Ceran</div>
+</div></body></html>

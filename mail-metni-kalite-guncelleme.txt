@@ -1,0 +1,43 @@
+Konu: Kalite Web Sitesi, Son Güncellemeler ve Canlıya Geçiş Öncesi Gereken İçerikler
+
+Sayın Hocam,
+
+Kalite Güvence Sistemi web sitesinde yapılan son güncellemeler ve sitenin resmî olarak tam yayına alınabilmesi için kurumdan temin edilmesi gereken içerikler aşağıda özetlenmiştir. Ayrıntılar ekteki iki raporda yer almaktadır.
+
+SON YAPILAN GÜNCELLEMELER
+
+1. Dashboard'a "Akademik Yayın İstatistikleri" bölümü eklendi. Öğretim üyelerimizin yayınları (6 fakülte, toplam 5.211 yayın) YÖK Akademik'ten derlenerek yıllara göre üretim, tür, fakülte ve en üretken öğretim üyeleri grafikleriyle sunuldu.
+
+2. Dashboard grafik verileri baştan sona kontrol edildi. YÖKAK performans göstergelerinde bazı tutarsızlıklar tespit edildi (özellikle son yıl verilerinin girilmemiş olması ve bazı göstergelerin yalnızca tek yıl dolu olması). Bu veriler resmî olduğu için tarafımızca değiştirilmemiş, teyit ve güncelleme amacıyla ekteki denetim raporu hazırlanmıştır.
+
+Güncel site: https://29mayis-kalite.netlify.app
+
+CANLIYA GEÇİŞ ÖNCESİ GEREKEN İÇERİKLER
+
+Sitenin yapısı ve tasarımı hazırdır; ancak bazı bölümlerde halihazırda örnek/geçici içerik bulunmaktadır. Tam yayına geçiş için aşağıdaki içeriklerin temin edilmesi gerekmektedir:
+
+1. 13 menü sayfasının gerçek içeriği ve belgeleri. Bu sayfalarda şu anda "yakında yer alacaktır" biçiminde geçici metin bulunmaktadır (İyileştirme, Geleceğe Bakış, akreditasyon, öz ve akran değerlendirme başlıkları vb.). Stratejik Plan sayfası ise doludur.
+
+2. Gerçek duyuru, haber ve etkinlik içerikleri (görselleriyle birlikte).
+
+3. YÖKAK göstergelerindeki eksik veya şüpheli değerlerin teyidi (denetim raporundaki liste).
+
+4. Fakülte bazlı gerçek dashboard rakamları. Genel toplamlar gerçektir; yalnızca fakülte bazlı kırılım temsilîdir ve gerçek rakamlar mevcutsa güncellenebilir.
+
+5. Paydaş Katılım Formu için Google Forms bağlantısı.
+
+6. Opsiyonel olarak vektörel veya yüksek çözünürlüklü logo ile ek fotoğraflar. Kurumsal logo halihazırda kullanılmaktadır.
+
+Kalemlerin ayrıntılı listesi ve öncelikleri, ekteki "Canlıya Geçiş Öncesi Gereken Veriler" raporunda yer almaktadır.
+
+Söz konusu içerikler temin edildikçe siteye işlenebilir. İçeriklerin ileride kurum ekibi tarafından bir yönetim panelinden güncellenebilmesi için gerekli altyapı da hazırlanmıştır.
+
+Uygun görülmesi hâlinde çalışma kısaca sunulabilir ve eksik içeriklerin nasıl toplanabileceği birlikte değerlendirilebilir.
+
+Saygılarımla,
+Emre Ceran
+eceran@29mayis.edu.tr
+
+Ekler:
+- Canlıya Geçiş Öncesi Gereken Veriler.pdf
+- Dashboard Veri Denetim Raporu.pdf

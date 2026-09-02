@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İstanbul 29 Mayıs Üniversitesi — Kalite Göstergeleri Panosu</title>
+<title>İstanbul 29 Mayıs Üniversitesi Kalite Göstergeleri Panosu</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -30,11 +30,10 @@
   .nav-item i{ width:18px;text-align:center;font-size:14px;color:#94a3b8;transition:color .15s; }
   .nav-item:hover{ background:var(--light);color:var(--navy); }
   .nav-item.active{ background:var(--navy);color:#fff; }
-  .nav-item.active i{ color:var(--gold); }
+  .nav-item.active i{ color:#cfe0f5; }
   /* Content */
   .dash-main{ min-width:0; }
-  .page-title{ font-size:22px;font-weight:800;color:var(--navy);margin:0 0 4px;display:flex;align-items:center;gap:11px; }
-  .page-title i{ color:var(--gold); }
+  .page-title{ font-size:22px;font-weight:800;color:var(--navy);margin:0 0 4px; }
   .page-desc{ font-size:13.5px;color:var(--muted);margin:0 0 22px; }
   /* KPI */
   .kpi-grid{ display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:26px; }
@@ -48,7 +47,7 @@
   .tc-head h4{ margin:0;font-size:15px;font-weight:700;color:var(--navy);display:flex;align-items:center; }
   .tc-sub{ font-size:11.5px;color:#94a3b8; }
   .tc-toggles{ display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px; }
-  .tpill{ display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);color:#94a3b8;font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;cursor:pointer;transition:all .15s;line-height:1.1; }
+  .tpill{ display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);color:#94a3b8;font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:6px;cursor:pointer;transition:all .15s;line-height:1.1; }
   .tpill .tdot{ width:9px;height:9px;border-radius:50%;background:currentColor;opacity:.45;flex-shrink:0; }
   .tpill:hover{ border-color:var(--pc); }
   .tpill.on{ color:#fff;background:var(--pc);border-color:var(--pc); }
@@ -57,7 +56,7 @@
   .chart-wrap{ position:relative;width:100%; }
   .tc-grid{ display:grid;grid-template-columns:1fr 1fr;gap:18px; }
   .src-note{ font-size:11.5px;color:#94a3b8;margin-top:6px;text-align:right; }
-  .info-box{ background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid var(--mid);border-radius:8px;padding:12px 16px;font-size:13px;color:#1e40af;margin-bottom:18px; }
+  .info-box{ background:#f4f6f9;border:1px solid #e0e6ec;border-left:4px solid var(--navy);border-radius:8px;padding:12px 16px;font-size:13px;color:#42505f;margin-bottom:18px; }
   /* Fakülte/Birim panosu */
   .chart-card{ background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow); }
   .chart-card h4{ font-size:14px;font-weight:700;color:var(--navy);margin:0 0 2px;display:flex;align-items:center;gap:8px; }
@@ -101,12 +100,13 @@
 </div>
 
 <script src="yokak-data.js"></script>
+<script src="yayin-data.js"></script>
 <script>
 /* ── Gerçek zaman-serisi veriler (Kaynak: Sayılarla İstanbul 29 Mayıs Üniversitesi) ── */
 const Y9  = ['2017','2018','2019','2020','2021','2022','2023','2024','2025'];
 const Y11 = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
 let SAYILARLA = [
-  { id:'ogrenci', title:'Öğrenci Sayıları', sub:'2017 – 2025', icon:'fa-user-graduate', accent:'#1c355e', type:'line', labels:Y9, series:[
+  { id:'ogrenci', title:'Öğrenci Sayıları', sub:'2017-2025', icon:'fa-user-graduate', accent:'#1c355e', type:'line', labels:Y9, series:[
     { label:'Toplam Öğrenci', color:'#1c355e', on:true,  data:[1797,1844,1908,2190,2670,3363,4405,5100,5545] },
     { label:'Lisans',         color:'#4bb5e8', on:true,  data:[1481,1504,1575,1745,2168,2847,3852,4580,4986] },
     { label:'Yüksek Lisans',  color:'#7c3aed', on:false, data:[259,277,251,344,392,402,432,400,359] },
@@ -114,32 +114,32 @@ let SAYILARLA = [
     { label:'Ön Lisans',      color:'#c8a84b', on:false, data:[0,0,0,0,0,0,0,0,76] },
     { label:'Yabancı Uyruklu',color:'#e11d48', on:true,  data:[211,197,210,223,262,308,354,329,333] },
   ]},
-  { id:'birim', title:'Akademik Birimler', sub:'2017 – 2025', icon:'fa-building-columns', accent:'#0891b2', type:'line', labels:Y9, series:[
+  { id:'birim', title:'Akademik Birimler', sub:'2017-2025', icon:'fa-building-columns', accent:'#0891b2', type:'bar', stacked:true, labels:Y9, series:[
     { label:'Fakülte',   color:'#1c355e', on:true, data:[6,6,6,7,7,7,8,8,8] },
     { label:'Enstitü',   color:'#4bb5e8', on:true, data:[3,3,3,3,3,3,3,3,3] },
     { label:'Yüksekokul',color:'#059669', on:true, data:[1,1,1,1,1,1,1,1,1] },
     { label:'Meslek Yüksekokulu', color:'#c8a84b', on:true, data:[0,0,0,0,0,0,0,0,1] },
     { label:'Uyg. ve Araştırma Merkezi', color:'#7c3aed', on:true, data:[5,6,6,6,6,6,6,7,8] },
   ]},
-  { id:'program', title:'Program Sayıları', sub:'2017 – 2025', icon:'fa-diagram-project', accent:'#7c3aed', type:'line', labels:Y9, series:[
+  { id:'program', title:'Program Sayıları', sub:'2017-2025', icon:'fa-diagram-project', accent:'#7c3aed', type:'bar', stacked:true, labels:Y9, series:[
     { label:'Lisans',        color:'#1c355e', on:true, data:[11,11,12,16,19,22,22,22,23] },
     { label:'Yüksek Lisans', color:'#4bb5e8', on:true, data:[14,15,15,24,29,29,29,31,33] },
     { label:'Doktora',       color:'#059669', on:true, data:[5,5,5,5,6,6,6,6,7] },
     { label:'Ön Lisans',     color:'#c8a84b', on:true, data:[0,0,0,0,0,0,0,0,2] },
   ]},
-  { id:'personel', title:'Akademik ve İdari Personel', sub:'2015 – 2025', icon:'fa-users', accent:'#059669', type:'line', labels:Y11, series:[
+  { id:'personel', title:'Akademik ve İdari Personel', sub:'2015-2025', icon:'fa-users', accent:'#059669', type:'line', labels:Y11, series:[
     { label:'Akademik Personel', color:'#1c355e', on:true,  data:[95,109,110,104,99,121,145,156,165,165,179] },
     { label:'İdari Personel',    color:'#4bb5e8', on:true,  data:[76,76,75,68,66,66,66,68,66,72,81] },
     { label:'Yabancı Akademik',  color:'#c8a84b', on:false, data:[22,32,34,28,18,17,15,16,13,9,8] },
     { label:'Yabancı İdari',     color:'#e11d48', on:false, data:[1,1,1,1,2,3,3,3,3,1,2] },
   ]},
-  { id:'kutuphane', title:'Kütüphane', sub:'2017 – 2025', icon:'fa-book', accent:'#c8a84b', type:'line', labels:Y9, series:[
+  { id:'kutuphane', title:'Kütüphane', sub:'2017-2025', icon:'fa-book', accent:'#c8a84b', type:'line', labels:Y9, series:[
     { label:'Toplam Kitap',        color:'#1c355e', on:true,  axis:'y',  data:[70535,76393,87823,97295,113865,119808,129887,141468,148745] },
     { label:'Fiziki Alan (m²)',    color:'#4bb5e8', on:false, axis:'y',  data:[800,833,6243,6567,6567,6567,6567,6567,10560] },
     { label:'Öğrenci Başına Kitap',color:'#059669', on:false, axis:'y1', data:[39.25,41.43,46.03,44.43,42.65,35.63,29.49,28.32,26.56] },
     { label:'Veri Tabanı Üyeliği', color:'#e11d48', on:false, axis:'y1', data:[2,1,1,2,4,4,4,3,3] },
   ]},
-  { id:'mezun', title:'Yıllara Göre Mezun Sayıları', sub:'2017 – 2025 · toplam 2.701', icon:'fa-user-check', accent:'#e11d48', type:'bar', labels:Y9, series:[
+  { id:'mezun', title:'Yıllara Göre Mezun Sayıları', sub:'2017-2025, toplam 2.701', icon:'fa-user-check', accent:'#e11d48', type:'bar', labels:Y9, series:[
     { label:'Mezun', color:'#1c355e', on:true, data:[108,188,294,242,250,250,258,544,567] },
   ]},
 ];
@@ -151,14 +151,14 @@ function tcCard(g){
     `<button class="tpill ${s.on?'on':''}" style="--pc:${s.color}" onclick="tcToggle('${g.id}',${i},this)"><span class="tdot"></span>${s.label}</button>`
   ).join('');
   return `<div class="tc-card">
-    <div class="tc-head"><h4><i class="fas ${g.icon||'fa-chart-line'} mr-2" style="color:${g.accent||'#4bb5e8'}"></i>${g.title}</h4><span class="tc-sub">${g.sub||''}</span></div>
+    <div class="tc-head"><h4>${g.title}</h4><span class="tc-sub">${g.sub||''}</span></div>
     <div class="tc-toggles">${pills}</div>
     <div class="chart-wrap" style="height:300px"><canvas id="tc-${g.id}"></canvas></div>
   </div>`;
 }
 function tcBuild(g){
   const el=document.getElementById('tc-'+g.id); if(!el||typeof Chart==='undefined') return;
-  const gridColor='rgba(0,0,0,.05)', bar=(g.type==='bar');
+  const gridColor='rgba(0,0,0,.05)', bar=(g.type==='bar'), stacked=!!g.stacked;
   const usesRight=g.series.some(s=>s.axis==='y1');
   const datasets=g.series.map(s=>({
     label:s.label,data:s.data,hidden:!s.on,borderColor:s.color,
@@ -168,8 +168,8 @@ function tcBuild(g){
   TC[g.id]=new Chart(el,{ type:g.type||'line', data:{labels:g.labels,datasets},
     options:{ responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>` ${c.dataset.label}: ${Number(c.parsed.y).toLocaleString('tr-TR')}`}}},
-      scales:{ x:{grid:{display:false}},
-        y:{position:'left',beginAtZero:true,grid:{color:gridColor},ticks:{callback:(v)=>Number(v).toLocaleString('tr-TR')}},
+      scales:{ x:{grid:{display:false},stacked},
+        y:{position:'left',beginAtZero:true,stacked,grid:{color:gridColor},ticks:{callback:(v)=>Number(v).toLocaleString('tr-TR')}},
         y1:{display:usesRight?'auto':false,position:'right',beginAtZero:true,grid:{drawOnChartArea:false}} } } });
 }
 function tcToggle(gid,idx,btn){ const ch=TC[gid]; if(!ch) return; const ds=ch.data.datasets[idx]; ds.hidden=!ds.hidden; ch.update(); if(btn) btn.classList.toggle('on',!ds.hidden); }
@@ -177,7 +177,7 @@ function tcToggle(gid,idx,btn){ const ch=TC[gid]; if(!ch) return; const ds=ch.da
 /* ── YÖKAK bölümlerini "group" yapısına çevir ── */
 function yokakGroups(sec){
   return sec.cards.map((c,ci)=>({
-    id:`y-${sec.id}-${ci}`, title:c.title, sub:`${YOKAK.years[0]} – ${YOKAK.years[YOKAK.years.length-1]}`,
+    id:`y-${sec.id}-${ci}`, title:c.title, sub:`${YOKAK.years[0]}-${YOKAK.years[YOKAK.years.length-1]}`,
     icon:sec.icon, accent:'#1c355e', type:c.type||'line', labels:YOKAK.years, series:c.series
   }));
 }
@@ -192,6 +192,9 @@ const NAV = [
     {id:'s-kutuphane', icon:'fa-book',             text:'Kütüphane'},
     {id:'s-mezun',     icon:'fa-user-check',       text:'Mezunlar'},
     {id:'fakulte-birim', icon:'fa-sitemap',        text:'Fakülte / Birim Bazlı'},
+  ]},
+  { grp:'Akademik Yayınlar', items:[
+    {id:'yayinlar', icon:'fa-book-open', text:'Yayın İstatistikleri'},
   ]},
   { grp:'YÖKAK Performans Göstergeleri', items:[
     {id:'yokak-kuruma-ait', icon:'fa-building-columns', text:'Kuruma Ait Bilgiler'},
@@ -225,6 +228,7 @@ function go(id){
   let groups=[], title='', desc='', icon='fa-chart-line', pre='';
   if(id==='genel'){ return renderGenel(); }
   if(id==='fakulte-birim'){ return renderFakulteBirim(); }
+  if(id==='yayinlar'){ return renderYayinlar(); }
   if(SAY_SECTIONS[id]){
     const s=SAY_SECTIONS[id]; title=s.title; icon=s.icon;
     desc='İstanbul 29 Mayıs Üniversitesi’ne ait yıllara göre kurumsal veriler. Her grafikte istatistikleri etiketlere tıklayarak açıp kapatabilirsiniz.';
@@ -234,11 +238,11 @@ function go(id){
     const sid=id.replace('yokak-','');
     const sec=YOKAK.sections.find(s=>s.id===sid);
     title=sec.title; icon=sec.icon;
-    desc='YÖKAK performans göstergeleri (2018–2024). Grafiklerde göstergeleri etiketlere tıklayarak açıp kapatabilirsiniz.';
+    desc='YÖKAK performans göstergeleri (2018-2024). Grafiklerde göstergeleri etiketlere tıklayarak açıp kapatabilirsiniz.';
     groups=yokakGroups(sec);
     pre=`<div class="src-note">Kaynak: YÖKAK Performans Göstergeleri (mis.yokak.gov.tr)</div>`;
   }
-  c.innerHTML = `<h2 class="page-title"><i class="fas ${icon}"></i>${title}</h2><p class="page-desc">${desc}</p>${groups.map(tcCard).join('')}${pre}`;
+  c.innerHTML = `<h2 class="page-title">${title}</h2><p class="page-desc">${desc}</p>${groups.map(tcCard).join('')}${pre}`;
   groups.forEach(tcBuild);
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -255,12 +259,43 @@ function renderGenel(){
   ];
   const feat=[SAYILARLA[0], yokakGroups(YOKAK.sections.find(s=>s.id==='egitim-ogretim'))[3]];
   c.innerHTML = `
-    <h2 class="page-title"><i class="fas fa-gauge-high"></i>Genel Bakış</h2>
+    <h2 class="page-title">Genel Bakış</h2>
     <p class="page-desc">İstanbul 29 Mayıs Üniversitesi kalite ve performans göstergeleri panosu. Soldaki menüden fonksiyona göre bölümleri inceleyebilirsiniz.</p>
     <div class="kpi-grid">${kpis.map(k=>`<div class="kpi" style="--kc:${k.c}"><div class="kpi-val">${k.val}</div><div class="kpi-lbl">${k.lbl}</div><div class="kpi-sub">${k.sub}</div></div>`).join('')}</div>
-    <div class="info-box"><i class="fas fa-circle-info mr-1"></i> Bu pano iki veri kümesi sunar: <strong>Sayılarla Üniversitemiz</strong> (kurumsal yıllık veriler) ve <strong>YÖKAK Performans Göstergeleri</strong> (2018–2024). Grafiklerdeki istatistikler etiketlere tıklanarak açılıp kapatılabilir.</div>
+    <div class="info-box">Bu pano iki veri kümesi sunar: <strong>Sayılarla Üniversitemiz</strong> (kurumsal yıllık veriler) ve <strong>YÖKAK Performans Göstergeleri</strong> (2018-2024). Grafiklerdeki istatistikler etiketlere tıklanarak açılıp kapatılabilir.</div>
     ${feat.map(tcCard).join('')}`;
   feat.forEach(tcBuild);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── Akademik Yayın İstatistikleri (YÖK Akademik envanteri) ── */
+let YCH = {};
+function renderYayinlar(){
+  const c=document.getElementById('dash-content'); const Y=YAYIN;
+  const kpis=[
+    {c:'#1c355e',val:Y.toplam.toLocaleString('tr-TR'),lbl:'Toplam Yayın',sub:'2000-2025'},
+    {c:'#4bb5e8',val:Y.nhoca,lbl:'Öğretim Üyesi',sub:'6 fakülte'},
+    {c:'#7c3aed',val:Y.nfak,lbl:'Fakülte',sub:''},
+    {c:'#c8a84b',val:Y.enYil,lbl:'En Üretken Yıl',sub:Y.enYilN+' yayın'},
+  ];
+  const card=(id,title,icon,h)=>`<div class="tc-card"><div class="tc-head"><h4>${title}</h4></div><div class="chart-wrap" style="height:${h||320}px"><canvas id="${id}"></canvas></div></div>`;
+  c.innerHTML=`
+    <h2 class="page-title">Akademik Yayın İstatistikleri</h2>
+    <p class="page-desc">Üniversitemizdeki öğretim üyelerinin makale, bildiri, kitap ve kitap bölümü yayınlarının YÖK Akademik'ten derlenmiş envanteri.</p>
+    <div class="kpi-grid">${kpis.map(k=>`<div class="kpi" style="--kc:${k.c}"><div class="kpi-val">${k.val}</div><div class="kpi-lbl">${k.lbl}</div><div class="kpi-sub">${k.sub}</div></div>`).join('')}</div>
+    ${card('yc-year','Yıllara Göre Üretim','fa-chart-column')}
+    ${card('yc-type','Türe Göre Dağılım','fa-chart-pie',300)}
+    ${card('yc-fac','Fakülteye Göre','fa-building-columns',300)}
+    ${card('yc-auth','En Üretken Öğretim Üyeleri (ilk 12)','fa-user-pen',400)}
+    <div class="src-note">Kaynak: YÖK Akademik — öğretim üyesi yayın envanteri (Eylül 2026)</div>`;
+  Object.values(YCH).forEach(ch=>{try{ch.destroy()}catch(e){}}); YCH={};
+  if(typeof Chart==='undefined') return;
+  const PAL=['#1c355e','#4bb5e8','#c8a84b','#7c3aed','#059669','#e11d48','#0891b2'];
+  const tl=(v)=>Number(v).toLocaleString('tr-TR'), grid='rgba(0,0,0,.05)';
+  YCH.year=new Chart(document.getElementById('yc-year'),{type:'bar',data:{labels:Y.years,datasets:[{data:Y.yearData,backgroundColor:'#1c355e',borderRadius:5,maxBarThickness:26}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(x)=>' '+tl(x.parsed.y)+' yayın'}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:grid},ticks:{callback:tl}}}}});
+  YCH.type=new Chart(document.getElementById('yc-type'),{type:'doughnut',data:{labels:Y.type.labels,datasets:[{data:Y.type.data,backgroundColor:PAL,borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:'right'}}}});
+  YCH.fac=new Chart(document.getElementById('yc-fac'),{type:'bar',data:{labels:Y.fac.labels,datasets:[{data:Y.fac.data,backgroundColor:'#4bb5e8',borderRadius:5,maxBarThickness:34}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:grid},ticks:{callback:tl}},y:{grid:{display:false}}}}});
+  YCH.auth=new Chart(document.getElementById('yc-auth'),{type:'bar',data:{labels:Y.authors.labels,datasets:[{data:Y.authors.data,backgroundColor:'#7c3aed',borderRadius:5}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:grid}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -324,7 +359,7 @@ function dashUpdate(){
   const bolIdx=bSel.value===''?-1:parseInt(bSel.value,10);
   const scope=fac?[fac]:DASH.faculties; const t=dashTotals(scope);
   let ogrenciVal=t.ogrenci,bolumVal=t.bolum,akademikVal=t.akademik,kapsamEtiket=fac?fac.ad:'Tüm Üniversite';
-  if(fac&&bolIdx>=0){ const b=fac.bolumler[bolIdx]; ogrenciVal=b.ogrenci;bolumVal=1;akademikVal=b.akademik;kapsamEtiket=fac.kisa+' · '+b.ad; }
+  if(fac&&bolIdx>=0){ const b=fac.bolumler[bolIdx]; ogrenciVal=b.ogrenci;bolumVal=1;akademikVal=b.akademik;kapsamEtiket=fac.kisa+' / '+b.ad; }
   const kadinOran=t.ogrenci?Math.round(t.kadin/t.ogrenci*100):0;
   const oranOA=akademikVal?(ogrenciVal/akademikVal).toFixed(1):'0';
   const kpis=[
@@ -365,28 +400,28 @@ function dashUpdate(){
 function renderFakulteBirim(){
   const c=document.getElementById('dash-content');
   c.innerHTML=`
-    <h2 class="page-title"><i class="fas fa-sitemap"></i>Fakülte / Birim Bazlı Dağılım</h2>
+    <h2 class="page-title">Fakülte / Birim Bazlı Dağılım</h2>
     <p class="page-desc">Fakülte ve bölüm seçerek öğrenci, cinsiyet, akademik unvan ve bölüm kırılımını inceleyin.</p>
-    <div class="info-box"><i class="fas fa-circle-info mr-1"></i> Fakülte/birim bazlı kırılım (cinsiyet, akademik unvan ve bölüm dağılımı) <strong>temsilîdir</strong>; kurumsal toplamlar ve resmi rakamlar diğer bölümlerdeki grafiklerde yer almaktadır.</div>
+    <div class="info-box">Fakülte/birim bazlı kırılım (cinsiyet, akademik unvan ve bölüm dağılımı) <strong>temsilîdir</strong>; kurumsal toplamlar ve resmi rakamlar diğer bölümlerdeki grafiklerde yer almaktadır.</div>
     <div style="display:flex;flex-wrap:wrap;align-items:end;gap:14px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px;box-shadow:var(--shadow)">
       <div><label style="display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px">Fakülte / Birim</label>
         <select id="dash-fac" class="dash-select" style="min-width:240px"><option value="">Tüm Fakülteler / Birimler</option>${DASH.faculties.map(f=>`<option value="${f.id}">${f.ad}</option>`).join('')}</select></div>
       <div><label style="display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px">Bölüm / Program</label>
         <select id="dash-bol" class="dash-select" style="min-width:240px" disabled><option value="">Tüm Bölümler</option></select></div>
       <button id="dash-reset" class="dash-select" style="cursor:pointer;font-weight:600;color:var(--muted)"><i class="fas fa-rotate-left mr-1"></i>Sıfırla</button>
-      <div style="margin-left:auto;align-self:center;font-size:11px;color:#94a3b8"><i class="far fa-calendar-alt mr-1"></i>Dönem: <strong style="color:var(--navy)">${DASH.donem}</strong></div>
+      <div style="margin-left:auto;align-self:center;font-size:11px;color:#94a3b8">Dönem: <strong style="color:var(--navy)">${DASH.donem}</strong></div>
     </div>
     <div id="dash-kpi" class="kpi-grid"></div>
     <div class="tc-grid" style="margin-bottom:18px">
-      <div class="chart-card"><h4><i class="fas fa-chart-column" style="color:#4bb5e8"></i> Öğrenci Dağılımı</h4><div class="sub">Öğrenci sayısı</div><div class="chart-wrap" style="height:300px"><canvas id="ch-dist"></canvas></div></div>
-      <div class="chart-card"><h4><i class="fas fa-venus-mars" style="color:#e11d48"></i> Cinsiyet Dağılımı</h4><div class="sub">Öğrenci</div><div class="chart-wrap" style="height:300px"><canvas id="ch-gender"></canvas></div></div>
+      <div class="chart-card"><h4>Öğrenci Dağılımı</h4><div class="sub">Öğrenci sayısı</div><div class="chart-wrap" style="height:300px"><canvas id="ch-dist"></canvas></div></div>
+      <div class="chart-card"><h4>Cinsiyet Dağılımı</h4><div class="sub">Öğrenci</div><div class="chart-wrap" style="height:300px"><canvas id="ch-gender"></canvas></div></div>
     </div>
     <div class="tc-grid" style="margin-bottom:18px">
-      <div class="chart-card"><h4><i class="fas fa-user-tie" style="color:#7c3aed"></i> Akademik Unvan Dağılımı</h4><div class="sub">Öğretim elemanı sayısı</div><div class="chart-wrap" style="height:280px"><canvas id="ch-unvan"></canvas></div></div>
-      <div class="chart-card"><h4><i class="fas fa-chart-line" style="color:#1c355e"></i> Yıllara Göre Değişim</h4><div class="sub">2017 – 2025 · üniversite geneli</div><div class="chart-wrap" style="height:280px"><canvas id="ch-trend"></canvas></div></div>
+      <div class="chart-card"><h4>Akademik Unvan Dağılımı</h4><div class="sub">Öğretim elemanı sayısı</div><div class="chart-wrap" style="height:280px"><canvas id="ch-unvan"></canvas></div></div>
+      <div class="chart-card"><h4>Yıllara Göre Değişim</h4><div class="sub">2017-2025, üniversite geneli</div><div class="chart-wrap" style="height:280px"><canvas id="ch-trend"></canvas></div></div>
     </div>
     <div class="chart-card" style="padding:0;overflow:hidden">
-      <div style="padding:16px 20px;border-bottom:1px solid var(--border)"><h4 style="margin:0"><i class="fas fa-table-list" style="color:#c8a84b"></i> Fakülte / Birim Detayı</h4></div>
+      <div style="padding:16px 20px;border-bottom:1px solid var(--border)"><h4 style="margin:0">Fakülte / Birim Detayı</h4></div>
       <div style="overflow-x:auto"><table class="dash-table"><thead><tr><th>Birim / Bölüm</th><th>Öğrenci</th><th>Akademik</th><th>Öğr./Akd.</th></tr></thead><tbody id="dash-tbody"></tbody></table></div>
     </div>`;
   const fSel=document.getElementById('dash-fac'), bSel=document.getElementById('dash-bol'), reset=document.getElementById('dash-reset');

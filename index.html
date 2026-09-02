@@ -561,6 +561,7 @@ function tcBuild(g){
   const gridColor='rgba(0,0,0,.05)';
   const usesRight = g.series.some(s=>s.axis==='y1');
   const bar = (g.type==='bar');
+  const stacked = !!g.stacked;
   const datasets = g.series.map(s=>({
     label:s.label, data:s.data, hidden:!s.on,
     borderColor:s.color, backgroundColor: bar ? s.color : s.color+'22',
@@ -576,8 +577,8 @@ function tcBuild(g){
       plugins:{ legend:{display:false},
         tooltip:{ callbacks:{ label:(c)=>` ${c.dataset.label}: ${Number(c.parsed.y).toLocaleString('tr-TR')}` } } },
       scales:{
-        x:{ grid:{display:false} },
-        y:{ position:'left', beginAtZero:true, grid:{color:gridColor},
+        x:{ grid:{display:false}, stacked },
+        y:{ position:'left', beginAtZero:true, stacked, grid:{color:gridColor},
             ticks:{ callback:(v)=>Number(v).toLocaleString('tr-TR') } },
         y1:{ display: usesRight?'auto':false, position:'right', beginAtZero:true, grid:{drawOnChartArea:false} }
       }
@@ -605,14 +606,14 @@ let DASH_GROUPS = [
     { label:'Ön Lisans',      color:'#c8a84b', on:false, data:[0,0,0,0,0,0,0,0,76] },
     { label:'Yabancı Uyruklu',color:'#e11d48', on:true,  data:[211,197,210,223,262,308,354,329,333] },
   ]},
-  { id:'birim', title:'Akademik Birimler', sub:'2017 – 2025', icon:'fa-building-columns', accent:'#0891b2', type:'line', labels:Y9, series:[
+  { id:'birim', title:'Akademik Birimler', sub:'2017 – 2025', icon:'fa-building-columns', accent:'#0891b2', type:'bar', stacked:true, labels:Y9, series:[
     { label:'Fakülte',   color:'#1c355e', on:true, data:[6,6,6,7,7,7,8,8,8] },
     { label:'Enstitü',   color:'#4bb5e8', on:true, data:[3,3,3,3,3,3,3,3,3] },
     { label:'Yüksekokul',color:'#059669', on:true, data:[1,1,1,1,1,1,1,1,1] },
     { label:'Meslek Yüksekokulu', color:'#c8a84b', on:true, data:[0,0,0,0,0,0,0,0,1] },
     { label:'Uyg. ve Araştırma Merkezi', color:'#7c3aed', on:true, data:[5,6,6,6,6,6,6,7,8] },
   ]},
-  { id:'program', title:'Program Sayıları', sub:'2017 – 2025', icon:'fa-diagram-project', accent:'#7c3aed', type:'line', labels:Y9, series:[
+  { id:'program', title:'Program Sayıları', sub:'2017 – 2025', icon:'fa-diagram-project', accent:'#7c3aed', type:'bar', stacked:true, labels:Y9, series:[
     { label:'Lisans',        color:'#1c355e', on:true, data:[11,11,12,16,19,22,22,22,23] },
     { label:'Yüksek Lisans', color:'#4bb5e8', on:true, data:[14,15,15,24,29,29,29,31,33] },
     { label:'Doktora',       color:'#059669', on:true, data:[5,5,5,5,6,6,6,6,7] },
