@@ -214,7 +214,7 @@
 <!-- ── HEADER ── -->
 <header class="bg-[#1c355e] border-b border-[#2a4a7f]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col items-center text-center py-5 cursor-pointer" onclick="loadPage('misyon-vizyon')">
+    <div class="flex flex-col items-center text-center py-5 cursor-pointer" onclick="loadPage('home')" title="Ana Sayfa">
       <img src="assets/logo.png" alt="İstanbul 29 Mayıs Üniversitesi" class="h-16 w-auto mb-2.5">
       <span class="uni-title text-white text-lg md:text-2xl leading-tight">İstanbul 29 Mayıs Üniversitesi</span>
       <span class="uni-title text-[#4bb5e8] text-lg md:text-2xl leading-tight tracking-[0.1em] mt-1 uppercase">Kalite Güvence Sistemi</span>
@@ -226,6 +226,11 @@
 <nav class="bg-white shadow-md sticky top-0 z-40 border-b border-gray-200 relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <ul id="top-menu" class="flex flex-wrap items-center text-xs font-bold uppercase tracking-wide">
+
+      <li class="nav-item relative mr-1">
+        <a href="#" onclick="loadPage('home')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">
+          ANA SAYFA</a>
+      </li>
 
       <li class="nav-item relative mr-1">
         <a href="#" onclick="loadPage('misyon-vizyon')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">
@@ -346,7 +351,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
     <h1 id="page-title" class="text-2xl font-extrabold text-[#1c355e] tracking-tight">Misyon ve Vizyon</h1>
     <nav class="text-sm text-gray-500 mt-1.5 flex items-center gap-2 flex-wrap">
-      <a href="#" onclick="loadPage('home')" class="hover:text-[#1c355e] transition-colors"></a>
+      <a href="#" onclick="loadPage('home')" class="hover:text-[#1c355e] transition-colors font-medium">Ana Sayfa</a>
       <span class="text-gray-300">/</span>
       <span id="bc-section" class="text-gray-500">Geleceğe Bakış</span>
       <span id="bc-sep" class="text-gray-300">/</span>
@@ -2348,7 +2353,8 @@ function renderTopMenu(menu){
     return `<li class="nav-item mr-1 nav-item-mega${megaSide}">
       <a href="#" onclick="loadPage('${esc(m.page)}')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">${m.label||''}${caret}</a>${dd}</li>`;
   }).join('');
-  rightLi.insertAdjacentHTML('beforebegin', html);
+  const homeItem = `<li class="nav-item relative mr-1"><a href="#" onclick="loadPage('home')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">ANA SAYFA</a></li>`;
+  rightLi.insertAdjacentHTML('beforebegin', homeItem + html);
 }
 
 function submitPaydasForm(e){
