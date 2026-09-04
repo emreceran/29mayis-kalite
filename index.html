@@ -919,34 +919,28 @@ render:()=>`
 
 'degerlerimiz':{ title:'Kurumsal Değerlerimiz', breadcrumb:['Geleceğe Bakış','Değerlerimiz'], icon:'fa-star',
 render:()=>`
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-    ${[
-      {icon:'fa-user-graduate',title:'Öğrenci Odaklılık',body:'Her bir öğrenciye saygı ve sevgi ile yaklaşan, farklılaşan ihtiyaçları ve beklentileri etkin biçimde karşılamaya çalışan bir kurum olmak istiyoruz.'},
-      {icon:'fa-lightbulb',title:'Yenilikçilik',body:'Mevcut yöntemlerle kendimizi sınırlamayıp iş yapış biçimimize yenilikler getirmeyi temel tarzımız olarak benimsiyoruz.'},
-      {icon:'fa-users',title:'Ortak Akıl Oluşturma',body:'Tüm çalışanlarımızın fikirlerinden yararlanmayı, konuları müzakere ederek karar almayı bir çalışma kültürü olarak benimsiyoruz.'},
-      {icon:'fa-hands-helping',title:'Sahiplenme ve İnisiyatif',body:'İşimizde kurumumuzu benimseyerek ve sorunları etki alanımıza almaya çalışarak var olmak istiyoruz.'},
-      {icon:'fa-eye',title:'Şeffaflık ve Hesap Verebilirlik',body:'Üniversite faaliyetlerinin tüm paydaşlara karşı açık ve dürüst biçimde yürütülmesi temel değerlerimizden biridir.'},
-      {icon:'fa-sync-alt',title:'Sürekli Gelişim',body:'Kalite güvence süreçlerini sürekli iyileştirme ve gelişime açık olma ilkesi tüm birimlerimizde benimsenmektedir.'},
-    ].map(v=>`
-      <div class="border border-gray-100 bg-white p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-        <h4 class="font-bold text-[#1c355e] mb-2 flex items-center">${v.title}</h4>
-        <p class="text-sm text-gray-600 leading-relaxed">${v.body}</p>
+  <div class="prose mb-5"><p>İstanbul 29 Mayıs Üniversitesi, tüm faaliyetlerini aşağıdaki kurumsal değerler doğrultusunda yürütür.</p></div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    ${['İnançlara saygı','Etik değerlere bağlılık','Katılımcılık','Toplumsal sorumluluk','Eleştirel düşünce','Yeniliklere açıklık','Bilimsel üretkenlik ve özgünlük','Disiplinlerarası yaklaşım','Doğa ve çevre bilinci'].map(v=>`
+      <div class="border border-gray-100 bg-white p-4 rounded-lg shadow-sm" style="border-left:3px solid #1c355e">
+        <h4 class="font-bold text-[#1c355e]">${v}</h4>
       </div>`).join('')}
   </div>`},
 
 'kalite-politikasi':{ title:'Kalite Politikası', breadcrumb:['Kalite Politikaları','Kalite Politikası'], icon:'fa-award',
 render:()=>`
-  <div class="prose"><p>İstanbul 29 Mayıs Üniversitesi'nin kalite yaklaşımı; <strong>eğitim öğretim, araştırma ve yönetim faaliyetlerinin ortak akıl çerçevesinde tüm paydaşlarımızca benimsenen sürekli iyileştirme</strong> ilkelerine dayanmaktadır.</p></div>
-  <p class="sh">Politikanın Temel Bileşenleri</p>
+  <div class="prose"><p>Kalite politikamız, üniversitemizin misyon ve vizyonu doğrultusunda eğitim öğretim, araştırma ve yönetim faaliyetlerinin ortak akıl çerçevesinde tüm paydaşlarımızca benimsenen sürekli iyileştirme ve verimlilik esaslı uygulamalar ile geleceğe yön veren bir kurumsal kimliği inşa etmektir.</p></div>
+  <p class="sh">Kalite Politikamızın Unsurları</p>
   <div class="policy-grid">
     ${[
-      {title:'1. Ölçülebilir Politikalar',body:'Kurumsal etkinlik alanlarında somut standartlar belirleme ve bu standartların düzenli olarak ölçülmesi.'},
-      {title:'2. Bilimsel Yönelim',body:'Özgün bilgi üretim kapasitesinin ön plana alınması; keşfedici ve inşa edici nitelikte akademik çalışmalar yürütülmesi.'},
-      {title:'3. Paydaş Memnuniyeti',body:'İç ve dış paydaşların beklentilerine odaklanma; memnuniyet düzeylerinin uygun ölçme yöntemleriyle tespiti.',gold:true},
-      {title:'4. Sosyal Sorumluluk',body:'Dış paydaşlarla işbirliğinde toplumsal projeler gerçekleştirme; ülke, bölge ve insanlığın gelişimine katkı sunma.',gold:true},
-      {title:'5. Katılımcı Yaklaşım',body:'Öğrenci ve personelin kurumsal faaliyetlere dahil edilmesi; tüm paydaşların kalite süreçlerine aktif katılımının sağlanması.'},
-      {title:'6. Eleştirel Düşünce',body:'Eğitim ve akademik çalışmalarda analitik bakış açısının öncelendirilmesi; sorgulamayı teşvik eden bir öğrenme ortamının oluşturulması.'},
-    ].map(c=>`<div class="policy-card ${c.gold?'gold':''}"><h3>${c.title}</h3><p>${c.body}</p></div>`).join('')}
+      'Kurumsal etkinlik alanlarımızda ölçülebilir ve değerlendirilebilir politikalar tanımlamak',
+      'Bilimsel bilgi üretebilen özgün bir kurumsal yönelimi ön planda tutmak',
+      'İç ve dış paydaşlarımızın memnuniyetini esas alan uygulamalara öncelik vermek',
+      'Toplumsal sorumluluğumuza uygun sosyal projeleri dış paydaşlarımızla eş güdümle gerçekleştirmek',
+      'Etkinliklerde öğrenci, akademik ve idari personelin tümünün katılımını sağlamak',
+      'Eğitim öğretim ve akademik faaliyetlerde eleştirel düşünceyi öncelemek',
+      'Kalite yönetim sistemi ile tüm kurumsal işleyişimizi sürekli iyileştirmek',
+    ].map(c=>`<div class="policy-card"><p>${c}</p></div>`).join('')}
   </div>`},
 
 'arastirma-gelistirme':{ title:'Araştırma-Geliştirme Politikası', breadcrumb:['Kalite Politikaları','Araştırma-Geliştirme Politikası'], icon:'fa-flask',
