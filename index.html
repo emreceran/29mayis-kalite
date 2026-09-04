@@ -530,13 +530,12 @@ let PAGE_TO_GROUP = {
 
 /* ── KALİTE ETKİNLİKLERİ (global) ── */
 let EVENTS = [
-  { tarih:'28-29 Temmuz 2026', kategori:'Akreditasyon', baslik:'Fakülteler Akreditasyon Değerlendirme Toplantıları', ozet:'Üniversitemiz fakültelerinin program akreditasyon süreçlerine yönelik değerlendirme toplantıları iki gün boyunca gerçekleştirildi.', icon:'fa-clipboard-check', color:'#1c355e', slug:'temmuz-2026-fakulte-akreditasyon', foto:17, detay:'Kalite Güvencesi ve Akreditasyon Koordinatörlüğü koordinasyonunda, fakülte kalite temsilcileri ve akademik birim yöneticilerinin katılımıyla düzenlenen toplantılarda; program akreditasyonuna hazırlık, öz değerlendirme çalışmaları ve gelişmeye açık alanlar iki gün boyunca ele alındı.' },
-  { tarih:'8 Haziran 2026', kategori:'Akreditasyon', baslik:'Edebiyat Fakültesi Akreditasyon Süreci', ozet:'Edebiyat Fakültesi programlarının akreditasyon değerlendirmesi ve akreditasyon belgesi takdimi gerçekleştirildi.', icon:'fa-award', color:'#4bb5e8', slug:'edebiyat-akreditasyon-haziran-2026', foto:14, detay:'Edebiyat Fakültesi programlarının dış değerlendirme sürecinde; program çıktıları, eğitim-öğretim kalitesi ve sürekli iyileştirme çalışmaları değerlendirildi. Süreç, akreditasyon belgesinin takdimiyle taçlandırıldı.' },
-  { tarih:'14 Nisan 2026', kategori:'Toplantı', baslik:'Kalite Değerlendirme Toplantısı', ozet:'Kalite Güvence Sistemi kapsamında akademik birimlerle kalite süreçleri değerlendirme toplantısı yapıldı.', icon:'fa-people-group', color:'#059669', slug:'nisan-2026-kalite-toplantisi', foto:6, detay:'Kalite Güvence Sistemi kapsamında akademik birim temsilcilerinin katılımıyla düzenlenen toplantıda; kalite süreçlerinin işleyişi, performans göstergeleri ve iyileştirme çalışmaları görüşüldü.' },
-  { tarih:'18 Haziran 2026', kategori:'Toplantı', baslik:'Kalite Komisyonu Olağan Toplantısı', ozet:'2025-2026 bahar dönemi kalite komisyonu üyeleri Senato Salonu\'nda bir araya geldi.', icon:'fa-people-group', color:'#1c355e' },
-  { tarih:'30 Mayıs 2026', kategori:'Eğitim', baslik:'Akademik Birim Kalite Temsilcileri Bilgilendirme Eğitimi', ozet:'YÖKAK süreçleri ve KİDR hazırlığına yönelik bilgilendirme eğitimi gerçekleştirildi.', icon:'fa-chalkboard-user', color:'#2563eb' },
-  { tarih:'12 Mayıs 2026', kategori:'Çalıştay', baslik:'Stratejik Plan İzleme Çalıştayı', ozet:'2024-2028 stratejik planın birinci yıl göstergeleri paydaş katılımıyla değerlendirildi.', icon:'fa-diagram-project', color:'#059669' },
-  { tarih:'24 Nisan 2026', kategori:'Ödül', baslik:'YÖK Engelsiz Üniversite Bayrak Töreni', ozet:'Üniversitemiz erişilebilirlik çalışmalarıyla turuncu bayrak ödülüne layık görüldü.', icon:'fa-award', color:'#c8a84b' },
+  { tarih:"28-29 Temmuz 2026", kategori:"Akreditasyon", baslik:"Fakülteler Akreditasyon Değerlendirme Toplantıları", ozet:"Üniversitemiz fakültelerinin program akreditasyon süreçlerine yönelik değerlendirme toplantıları iki gün boyunca gerçekleştirildi.", icon:"fa-clipboard-check", color:"#1c355e", slug:"temmuz-2026-fakulte-akreditasyon", foto:17, detay:"Kalite Güvencesi ve Akreditasyon Koordinatörlüğü koordinasyonunda, fakülte kalite temsilcileri ve akademik birim yöneticilerinin katılımıyla düzenlenen toplantılarda; program akreditasyonuna hazırlık, öz değerlendirme çalışmaları ve gelişmeye açık alanlar iki gün boyunca ele alındı." },
+  { tarih:"1 Temmuz 2026", kategori:"Eğitim", baslik:"Program ve Ders Bilgi Paketlerinin Hazırlanması Eğitimi", ozet:"Program ve ders bilgi paketlerinin hazırlanmasına yönelik eğitim, Dr. Öğr. Üyesi Yunus Emre Ömür tarafından AE114 No'lu Salon'da gerçekleştirildi.", icon:"fa-chalkboard-user", color:"#1c355e", slug:"program-ders-bilgi-paketi-egitimi", foto:1, detay:"1 Temmuz 2026 tarihinde saat 14.00'te AE114 No'lu Salon'da düzenlenen eğitimde; program ve ders bilgi paketlerinin hazırlanma esasları, öğrenme çıktıları ve ders içeriklerinin bilgi paketine işlenmesi Dr. Öğr. Üyesi Yunus Emre Ömür tarafından ele alındı." },
+  { tarih:"8 Haziran 2026", kategori:"Akreditasyon", baslik:"Edebiyat Fakültesi Akreditasyon Süreci", ozet:"Edebiyat Fakültesi programlarının akreditasyon değerlendirmesi ve akreditasyon belgesi takdimi gerçekleştirildi.", icon:"fa-award", color:"#4bb5e8", slug:"edebiyat-akreditasyon-haziran-2026", foto:14, detay:"Edebiyat Fakültesi programlarının dış değerlendirme sürecinde; program çıktıları, eğitim-öğretim kalitesi ve sürekli iyileştirme çalışmaları değerlendirildi. Süreç, akreditasyon belgesinin takdimiyle taçlandırıldı." },
+  { tarih:"21 Mayıs 2026", kategori:"Eğitim", baslik:"Hizmet İçi Eğitim: Yükseköğretimde Uluslararasılaşma Süreçleri", ozet:"Yükseköğretimde uluslararasılaşma süreçlerine yönelik hizmet içi eğitim semineri, Dr. Öğr. Üyesi Mehtap Güven Çoban tarafından gerçekleştirildi.", icon:"fa-globe", color:"#4bb5e8", slug:"uluslararasilasma-surecleri-egitimi", foto:1, detay:"21 Mayıs 2026 tarihinde saat 16.00'da B213B'de düzenlenen hizmet içi eğitim seminerinde; yükseköğretimde uluslararasılaşma politikaları, süreçleri ve iyi uygulamalar Dr. Öğr. Üyesi Mehtap Güven Çoban tarafından paylaşıldı." },
+  { tarih:"18 Mayıs 2026", kategori:"Eğitim", baslik:"Hizmet İçi Eğitim: Bilgi Paketi Eğitimi", ozet:"Bilgi paketi hazırlama sürecine yönelik hizmet içi eğitim semineri çevrim içi (ZOOM) olarak gerçekleştirildi.", icon:"fa-laptop", color:"#059669", slug:"bilgi-paketi-egitimi-mayis-2026", foto:1, detay:"18 Mayıs 2026 tarihinde saat 14.00'te çevrim içi (ZOOM) düzenlenen hizmet içi eğitim seminerinde; AKTS bilgi paketinin hazırlanması, güncellenmesi ve kalite süreçleriyle ilişkisi ele alındı." },
+  { tarih:"14 Nisan 2026", kategori:"Toplantı", baslik:"Kalite Değerlendirme Toplantısı", ozet:"Kalite Güvence Sistemi kapsamında akademik birimlerle kalite süreçleri değerlendirme toplantısı yapıldı.", icon:"fa-people-group", color:"#059669", slug:"nisan-2026-kalite-toplantisi", foto:6, detay:"Kalite Güvence Sistemi kapsamında akademik birim temsilcilerinin katılımıyla düzenlenen toplantıda; kalite süreçlerinin işleyişi, performans göstergeleri ve iyileştirme çalışmaları görüşüldü." },
 ];
 
 /* ── Birleşik grafik + aç/kapa (toggle) bileşeni ── */
@@ -690,8 +689,8 @@ render:()=>{
   ];
 
   const stats = (window.CMS&&CMS.home&&CMS.home.stats&&CMS.home.stats.length) ? CMS.home.stats : [
-    { val:'5.545',  label:'Kayıtlı Öğrenci', icon:'fa-user-graduate', color:'#1c355e' },
-    { val:'179',    label:'Akademik Personel', icon:'fa-chalkboard-teacher', color:'#2563eb' },
+    { val:'5.846',  label:'Kayıtlı Öğrenci', icon:'fa-user-graduate', color:'#1c355e' },
+    { val:'197',    label:'Akademik Personel', icon:'fa-chalkboard-teacher', color:'#2563eb' },
     { val:'333',    label:'Uluslararası Öğrenci', icon:'fa-globe', color:'#7c3aed' },
     { val:'6',      label:'Akredite Program', icon:'fa-certificate', color:'#c8a84b' },
   ];
@@ -708,22 +707,13 @@ render:()=>{
   const events = (window.CMS&&CMS.home&&CMS.home.events&&CMS.home.events.length) ? CMS.home.events : EVENTS;
 
   const duyurular = (window.CMS&&CMS.announcements&&CMS.announcements.length) ? CMS.announcements : [
-    { tarih:'10 Haziran 2026', kat:'Toplantı', ikon:'fa-users', renk:'#1c355e', onemli:true,
-      baslik:'2025-2026 Bahar Dönemi Kalite Komisyonu Olağan Toplantısı',
-      ozet:'Toplantı 18 Haziran 2026 Perşembe günü saat 14.00\'te Senato Salonu\'nda gerçekleştirilecektir. Tüm birim kalite temsilcilerinin katılımı beklenmektedir.',
-      page:'kalite-komisyonu' },
-    { tarih:'05 Haziran 2026', kat:'Anket', ikon:'fa-poll', renk:'#0891b2',
-      baslik:'2025-2026 Öğrenci Memnuniyet Anketi Erişime Açıldı',
-      ozet:'Tüm öğrencilerimizin 30 Haziran 2026 tarihine kadar memnuniyet anketini doldurmaları önemle rica olunur.',
-      page:'izleme-anketler' },
-    { tarih:'28 Mayıs 2026', kat:'Eğitim', ikon:'fa-chalkboard-teacher', renk:'#7c3aed',
-      baslik:'Akademik Birim Kalite Temsilcileri Bilgilendirme Eğitimi',
-      ozet:'YÖKAK süreçleri ve KİDR hazırlığına yönelik bilgilendirme eğitimi için kayıtlar başlamıştır.',
-      page:'ic-degerlendirme-raporlari' },
-    { tarih:'20 Mayıs 2026', kat:'İlan', ikon:'fa-bullhorn', renk:'#c8a84b',
-      baslik:'Öğrenci Kalite Komisyonu Yeni Üye Başvuruları Başladı',
-      ozet:'2026-2027 dönemi için gönüllü öğrenci üye başvuruları 10 Haziran 2026 tarihine kadar alınacaktır.',
-      page:'ogrenci-kalite-komisyonu' },
+    { tarih:"6 Ağustos 2026", kat:"Süreç", ikon:"fa-clipboard-check", renk:"#1c355e", onemli:true, baslik:"Program Akran Değerlendirme Süreçleri Başlatıldı", ozet:"Akredite olmayan öğretim programlarının güçlü ve gelişmeye açık yönlerinin belirlenmesi ve sürekli iyileştirme (PUKÖ) döngülerinin işletilmesi amacıyla Program Akran Değerlendirme Süreci başlatılmıştır.", page:"akran-degerlendirme" },
+    { tarih:"5 Ağustos 2026", kat:"Süreç", ikon:"fa-building", renk:"#0891b2", baslik:"2026 Yılı İdari Birimler İç Değerlendirme Süreci Başladı", ozet:"Kurumsal dönüşüm ve dijitalleşme vizyonu doğrultusunda İdari Birimler İç Değerlendirme Raporu (BİDR) Hazırlama Kılavuzu oluşturulmuştur.", page:"ic-degerlendirme-raporlari" },
+    { tarih:"31 Temmuz 2026", kat:"Rehber", ikon:"fa-book", renk:"#7c3aed", baslik:"Kurumsal Akreditasyon Hazırlık Rehberi Paylaşıldı", ozet:"Birimlerce gerçekleştirilmesi gereken faaliyetler, hazır olması gereken kanıtlar ve olası değerlendirici sorularına ilişkin Kurumsal Akreditasyon Hazırlık Rehberi paylaşılmıştır.", page:"kurum-akreditasyonlari" },
+    { tarih:"7 Temmuz 2026", kat:"Anket", ikon:"fa-poll", renk:"#c8a84b", baslik:"Mezun Görüş ve İşbirliği Anketi Erişime Açıldı", ozet:"Mezunlarımızın görüş ve önerilerini almak, memnuniyet düzeylerini ölçmek amacıyla Mezun Memnuniyet Anketi erişime açılmıştır.", page:"izleme-anketler" },
+    { tarih:"7 Temmuz 2026", kat:"Anket", ikon:"fa-poll", renk:"#c8a84b", baslik:"Akademik Personel Memnuniyet Anketi Erişime Açıldı", ozet:"Akademik personelimizin görüşlerini ve memnuniyet düzeylerini değerlendirmek amacıyla Akademik Personel Memnuniyet Anketi erişime açılmıştır.", page:"izleme-anketler" },
+    { tarih:"7 Temmuz 2026", kat:"Anket", ikon:"fa-poll", renk:"#c8a84b", baslik:"İdari Personel Memnuniyet Anketi Erişime Açıldı", ozet:"İdari personelimizin görüşlerini ve memnuniyet düzeylerini değerlendirmek amacıyla İdari Personel Memnuniyet Anketi erişime açılmıştır.", page:"izleme-anketler" },
+    { tarih:"17 Nisan 2026", kat:"Rehber", ikon:"fa-book", renk:"#059669", baslik:"Kurumsal Akreditasyon Hazırlık Rehberi Hazırlandı", ozet:"YÖKAK Kurumsal Akreditasyon Programı kapsamında kalite güvence sistemimizin güçlendirilmesi amacıyla İstanbul 29 Mayıs Üniversitesi Kurumsal Akreditasyon Hazırlık Rehberi hazırlanarak paylaşılmıştır.", page:"kurum-akreditasyonlari" },
   ];
 
   const duyurularHtml = duyurular.map(d=>`
@@ -1474,9 +1464,9 @@ render:()=>`
   <!-- ANA KPI -->
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:26px">
     ${[
-      {ico:'fa-user-graduate',c:'#1c355e',val:'5.545',lbl:'Toplam Öğrenci',sub:'2025'},
+      {ico:'fa-user-graduate',c:'#1c355e',val:'5.846',lbl:'Toplam Öğrenci',sub:'2026'},
       {ico:'fa-globe',c:'#0891b2',val:'333',lbl:'Uluslararası Öğrenci',sub:'2025'},
-      {ico:'fa-chalkboard-teacher',c:'#4bb5e8',val:'179',lbl:'Akademik Personel',sub:'8 yabancı uyruklu'},
+      {ico:'fa-chalkboard-teacher',c:'#4bb5e8',val:'197',lbl:'Akademik Personel',sub:'2026'},
       {ico:'fa-user-tie',c:'#7c3aed',val:'81',lbl:'İdari Personel',sub:'2 yabancı uyruklu'},
       {ico:'fa-user-check',c:'#059669',val:'2.701',lbl:'Toplam Mezun',sub:'2017-2025'},
       {ico:'fa-book',c:'#c8a84b',val:'148.745',lbl:'Kütüphane Kitap Sayısı',sub:'2025'}
@@ -1492,7 +1482,7 @@ render:()=>`
   <div class="tc-grid" style="margin-bottom:26px">
     <div class="chart-card">
       <h4>Öğrenci Düzeyi Dağılımı</h4>
-      <div class="sub">2025, toplam 5.545 öğrenci</div>
+      <div class="sub">2026, toplam 5.846 öğrenci</div>
       <div class="chart-wrap" style="height:280px"><canvas id="ist-level"></canvas></div>
     </div>
     <div class="chart-card">
@@ -1508,9 +1498,9 @@ render:()=>`
     </div>
   </div>
 
-  <!-- FAKÜLTE / BİRİM BAZLI DAĞILIM (TEMSİLİ) -->
+  <!-- FAKÜLTE / BİRİM BAZLI DAĞILIM (GERÇEK VERİ - 31.08.2026) -->
   <p class="sh">Fakülte / Birim Bazlı Dağılım</p>
-  <div class="info-box" style="margin-bottom:18px">Aşağıdaki fakülte/birim bazlı kırılım (cinsiyet, akademik unvan ve bölüm dağılımı) <strong>temsilîdir</strong>; kurumsal toplamlar ve resmi rakamlar yukarıdaki bölümlerde yer almaktadır.</div>
+  <div class="info-box" style="margin-bottom:18px">Fakülte/birim bazlı kırılım 31.08.2026 tarihli resmi öğrenci ve akademik personel verilerine dayanmaktadır.</div>
 
   <!-- FİLTRELER -->
   <div style="display:flex;flex-wrap:wrap;align-items:end;gap:14px;background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:22px">
@@ -1886,50 +1876,46 @@ function reportList(items) {
 
 /* ── DASHBOARD (SAYILARLA ÜNİVERSİTEMİZ) ── */
 let DASH = {
-  donem: '2024-2025',
+  donem: '2025-2026',
   trend: {
-    labels: ['2017','2018','2019','2020','2021','2022','2023','2024','2025'],
-    ogrenci:     [1797,1844,1908,2190,2670,3363,4405,5100,5545],
-    akademik:    [110,104,99,121,145,156,165,165,179],
-    uluslararasi:[211,197,210,223,262,308,354,329,333]
+    labels: ['2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+    ogrenci: [1797,1844,1908,2190,2670,3363,4405,5100,5545,5846],
+    akademik: [110,104,99,121,145,156,161,158,175,197],
+    uluslararasi: [211,197,210,223,262,308,354,329,333,298]
   },
-  faculties: [
-    { id:'ilahiyat', ad:'İlahiyat Fakültesi', kisa:'İlahiyat', renk:'#1c355e',
-      kadin:600, erkek:700, uluslararasi:90,
-      unvan:{ prof:9, docent:8, drOgr:14, ogrGor:6, arasGor:9 },
-      bolumler:[ {ad:'İlahiyat', ogrenci:950, akademik:30}, {ad:'İlahiyat (M.T.O.K.)', ogrenci:200, akademik:9}, {ad:'Uluslararası İlahiyat', ogrenci:150, akademik:7} ] },
-    { id:'edebiyat', ad:'Edebiyat Fakültesi', kisa:'Edebiyat', renk:'#4bb5e8',
-      kadin:730, erkek:400, uluslararasi:40,
-      unvan:{ prof:8, docent:7, drOgr:13, ogrGor:5, arasGor:9 },
-      bolumler:[ {ad:'Türk Dili ve Edebiyatı', ogrenci:230, akademik:8}, {ad:'Tarih', ogrenci:200, akademik:7}, {ad:'Psikoloji', ogrenci:250, akademik:8}, {ad:'Felsefe', ogrenci:110, akademik:5}, {ad:'İngiliz Dili ve Edebiyatı', ogrenci:140, akademik:6}, {ad:'Sosyoloji', ogrenci:120, akademik:5}, {ad:'Bilgi ve Belge Yönetimi', ogrenci:80, akademik:3} ] },
-    { id:'hukuk', ad:'Hukuk Fakültesi', kisa:'Hukuk', renk:'#c8a84b',
-      kadin:520, erkek:420, uluslararasi:55,
-      unvan:{ prof:5, docent:4, drOgr:9, ogrGor:3, arasGor:7 },
-      bolumler:[ {ad:'Hukuk', ogrenci:940, akademik:28} ] },
-    { id:'egitim', ad:'Eğitim Fakültesi', kisa:'Eğitim', renk:'#7c3aed',
-      kadin:500, erkek:230, uluslararasi:25,
-      unvan:{ prof:4, docent:4, drOgr:8, ogrGor:3, arasGor:5 },
-      bolumler:[ {ad:'Rehberlik ve Psikolojik Danışmanlık', ogrenci:250, akademik:8}, {ad:'İngilizce Öğretmenliği', ogrenci:200, akademik:7}, {ad:'Okul Öncesi Öğretmenliği', ogrenci:165, akademik:5}, {ad:'Türkçe Öğretmenliği', ogrenci:115, akademik:4} ] },
-    { id:'iibf', ad:'İktisadi ve İdari Bilimler Fakültesi', kisa:'İİBF', renk:'#d97706',
-      kadin:360, erkek:340, uluslararasi:45,
-      unvan:{ prof:5, docent:5, drOgr:10, ogrGor:3, arasGor:8 },
-      bolumler:[ {ad:'Siyaset Bilimi ve Uluslararası İlişkiler', ogrenci:230, akademik:9}, {ad:'Ekonomi (İngilizce)', ogrenci:150, akademik:7}, {ad:'Sosyal Hizmet', ogrenci:200, akademik:8}, {ad:'Yönetim Bilişim Sistemleri', ogrenci:120, akademik:5} ] },
-    { id:'muhendislik', ad:'Mühendislik ve Doğa Bilimleri Fakültesi', kisa:'Mühendislik', renk:'#0d9488',
-      kadin:120, erkek:190, uluslararasi:20,
-      unvan:{ prof:2, docent:2, drOgr:6, ogrGor:2, arasGor:4 },
-      bolumler:[ {ad:'Bilgisayar Mühendisliği', ogrenci:150, akademik:6}, {ad:'Elektrik-Elektronik Mühendisliği', ogrenci:90, akademik:5}, {ad:'Endüstri Mühendisliği', ogrenci:70, akademik:4} ] },
-    { id:'myo', ad:'Bilişim Teknolojileri Meslek Yüksekokulu', kisa:'MYO', renk:'#9333ea',
-      kadin:30, erkek:46, uluslararasi:5,
-      unvan:{ prof:0, docent:0, drOgr:2, ogrGor:4, arasGor:0 },
-      bolumler:[ {ad:'Bilgisayar Programcılığı', ogrenci:46, akademik:3}, {ad:'Kurumsal Bilişim Uzmanlığı', ogrenci:30, akademik:2} ] },
-    { id:'yabancidiller', ad:'Yabancı Diller Yüksekokulu', kisa:'Yab. Diller', renk:'#059669',
-      kadin:270, erkek:192, uluslararasi:35,
-      unvan:{ prof:0, docent:1, drOgr:2, ogrGor:12, arasGor:1 },
-      bolumler:[ {ad:'İngilizce Hazırlık', ogrenci:350, akademik:12}, {ad:'Arapça Hazırlık', ogrenci:112, akademik:4} ] },
-    { id:'enstitu', ad:'Sosyal Bilimler Enstitüsü', kisa:'Enstitü', renk:'#e11d48',
-      kadin:250, erkek:233, uluslararasi:10,
-      unvan:{ prof:1, docent:1, drOgr:2, ogrGor:0, arasGor:1 },
-      bolumler:[ {ad:'Tezli Yüksek Lisans', ogrenci:359, akademik:3}, {ad:'Doktora', ogrenci:124, akademik:2} ] }
+    faculties: [
+    { id:'ilahiyat', ad:"İlahiyat Fakültesi", kisa:"İlahiyat", renk:'#1c355e',
+      kadin:170, erkek:216, uluslararasi:80,
+      unvan:{ prof:10, docent:3, drOgr:11, ogrGor:0, arasGor:5 },
+      bolumler:[ {ad:"İlahiyat", ogrenci:383, akademik:0}, {ad:"İslam ve Din Bilimleri", ogrenci:3, akademik:0} ] },
+    { id:'edebiyat', ad:"Edebiyat Fakültesi", kisa:"Edebiyat", renk:'#4bb5e8',
+      kadin:1005, erkek:412, uluslararasi:55,
+      unvan:{ prof:10, docent:8, drOgr:21, ogrGor:1, arasGor:8 },
+      bolumler:[ {ad:"Arapça Mütercim ve Tercümanlık", ogrenci:185, akademik:10}, {ad:"Bilgi ve Belge Yönetimi", ogrenci:93, akademik:4}, {ad:"Felsefe", ogrenci:71, akademik:8}, {ad:"İngiliz Dili ve Edebiyatı", ogrenci:211, akademik:4}, {ad:"İngilizce Mütercim ve Tercümanlık", ogrenci:225, akademik:10}, {ad:"Mütercim-Tercümanlık (Arapça)", ogrenci:32, akademik:10}, {ad:"Mütercim-Tercümanlık (İngilizce)", ogrenci:42, akademik:10}, {ad:"Psikoloji", ogrenci:345, akademik:7}, {ad:"Tarih", ogrenci:108, akademik:8}, {ad:"Türk Dili ve Edebiyatı", ogrenci:105, akademik:7} ] },
+    { id:'egitim', ad:"Eğitim Fakültesi", kisa:"Eğitim", renk:'#7c3aed',
+      kadin:1215, erkek:336, uluslararasi:39,
+      unvan:{ prof:4, docent:5, drOgr:21, ogrGor:0, arasGor:8 },
+      bolumler:[ {ad:"Arapça Öğretmenliği", ogrenci:171, akademik:0}, {ad:"İlköğretim Matematik Öğretmenliği", ogrenci:97, akademik:0}, {ad:"İngilizce Öğretmenliği", ogrenci:263, akademik:0}, {ad:"Okul Öncesi Öğretmenliği", ogrenci:220, akademik:0}, {ad:"Özel Eğitim Öğretmenliği", ogrenci:209, akademik:4}, {ad:"Rehberlik ve Psikolojik Danışmanlık", ogrenci:198, akademik:0}, {ad:"Sınıf Öğretmenliği", ogrenci:211, akademik:0}, {ad:"Türkçe Öğretmenliği", ogrenci:182, akademik:0} ] },
+    { id:'hukuk', ad:"Hukuk Fakültesi", kisa:"Hukuk", renk:'#c8a84b',
+      kadin:443, erkek:340, uluslararasi:6,
+      unvan:{ prof:7, docent:3, drOgr:8, ogrGor:0, arasGor:7 },
+      bolumler:[ {ad:"Hukuk", ogrenci:783, akademik:11} ] },
+    { id:'iibf', ad:"İktisadi ve İdari Bilimler Fakültesi", kisa:"İİBF", renk:'#d97706',
+      kadin:539, erkek:404, uluslararasi:71,
+      unvan:{ prof:4, docent:2, drOgr:8, ogrGor:0, arasGor:3 },
+      bolumler:[ {ad:"Ekonomi (İngilizce)", ogrenci:237, akademik:6}, {ad:"Siyaset Bilimi ve Uluslararası İlişkiler (İngilizce)", ogrenci:254, akademik:4}, {ad:"Sosyal Hizmet", ogrenci:186, akademik:4}, {ad:"Yönetim Bilişim Sistemleri", ogrenci:266, akademik:3} ] },
+    { id:'muhendislik', ad:"Mühendislik ve Doğa Bilimleri Fakültesi", kisa:"Mühendislik", renk:'#0d9488',
+      kadin:33, erkek:42, uluslararasi:2,
+      unvan:{ prof:3, docent:0, drOgr:9, ogrGor:0, arasGor:2 },
+      bolumler:[ {ad:"Bilgisayar Mühendisliği", ogrenci:55, akademik:5}, {ad:"Elektrik-Elektronik Mühendisliği (İngilizce)", ogrenci:12, akademik:5}, {ad:"Yapay Zeka Mühendisliği", ogrenci:8, akademik:4} ] },
+    { id:'myo', ad:"Bilişim Teknolojileri Meslek Yüksekokulu", kisa:"MYO", renk:'#9333ea',
+      kadin:63, erkek:89, uluslararasi:4,
+      unvan:{ prof:0, docent:0, drOgr:0, ogrGor:12, arasGor:0 },
+      bolumler:[ {ad:"Bilgisayar Programcılığı", ogrenci:27, akademik:3}, {ad:"Büyük Veri Analistliği", ogrenci:60, akademik:0}, {ad:"Kurumsal Bilişim Uzmanlığı", ogrenci:51, akademik:0}, {ad:"Yapay Zeka Operatörlüğü", ogrenci:14, akademik:0} ] },
+    { id:'enstitu', ad:"Sosyal Bilimler Enstitüsü", kisa:"Enstitü", renk:'#e11d48',
+      kadin:311, erkek:203, uluslararasi:41,
+      unvan:{ prof:0, docent:0, drOgr:0, ogrGor:0, arasGor:0 },
+      bolumler:[ {ad:"Aile Danışmanlığı (Yüksek Lisans)", ogrenci:6, akademik:0}, {ad:"Arap Dili Eğitimi (Arapça) (Yüksek Lisans)", ogrenci:5, akademik:0}, {ad:"Arap Dili Eğitimi (Yüksek Lisans - Tezsiz)", ogrenci:1, akademik:0}, {ad:"Arap Dili Eğitimi (Yüksek Lisans)", ogrenci:19, akademik:0}, {ad:"Çeviribilim (İngilizce) (Doktora)", ogrenci:13, akademik:0}, {ad:"Çeviribilim (İngilizce) (Yüksek Lisans)", ogrenci:11, akademik:0}, {ad:"Çeviribilim Arapça (%30 Arapça) (Yüksek Lisans - Tezsiz)", ogrenci:1, akademik:0}, {ad:"Çeviribilim Arapça (%30 Arapça) (Yüksek Lisans)", ogrenci:18, akademik:0}, {ad:"Erken Çocuklukta Ahlak ve Değer Eğitimi (Yüksek Lisans - Tezsiz)", ogrenci:2, akademik:0}, {ad:"Erken Çocuklukta Ahlak ve Değer Eğitimi (Yüksek Lisans)", ogrenci:34, akademik:0}, {ad:"Felsefe (Doktora)", ogrenci:37, akademik:0}, {ad:"Felsefe (Yüksek Lisans)", ogrenci:38, akademik:0}, {ad:"Felsefe ve Din Bilimleri (Yüksek Lisans)", ogrenci:33, akademik:0}, {ad:"İslam Ekonomisi ve Finansı (Yüksek Lisans)", ogrenci:17, akademik:0}, {ad:"Kamu Hukuku (Yüksek Lisans)", ogrenci:16, akademik:0}, {ad:"Manevi Danışmanlık ve Rehberlik  (Yüksek Lisans - Tezsiz)", ogrenci:2, akademik:0}, {ad:"Manevi Danışmanlık ve Rehberlik (Yüksek Lisans)", ogrenci:33, akademik:0}, {ad:"Özel Hukuk (Yüksek Lisans)", ogrenci:21, akademik:0}, {ad:"Psikoloji (Yüksek Lisans)", ogrenci:13, akademik:0}, {ad:"Siyaset Bilimi ve Uluslararası İlişkiler (İngilizce) (Yüksek Lisans)", ogrenci:9, akademik:0}, {ad:"Siyaset Bilimi ve Uluslararası İlişkiler (Yüksek Lisans)", ogrenci:2, akademik:0}, {ad:"Tarih (Doktora)", ogrenci:6, akademik:0}, {ad:"Tarih (Yüksek Lisans)", ogrenci:25, akademik:0}, {ad:"Temel İslam Bilimleri (Doktora)", ogrenci:56, akademik:0}, {ad:"Temel İslam Bilimleri (Yüksek Lisans)", ogrenci:74, akademik:0}, {ad:"Türk Dili ve Edebiyatı (Doktora)", ogrenci:14, akademik:0}, {ad:"Türk Dili ve Edebiyatı (Yüksek Lisans)", ogrenci:8, akademik:0} ] }
   ]
 };
 function normalizeDash(){
