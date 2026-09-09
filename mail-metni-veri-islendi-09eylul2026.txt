@@ -1,0 +1,152 @@
+Konu: Kalite Web Sitesi — Gönderilen Veriler İşlendi, Teyit Talebimiz ve Yayın Adresi
+
+Sayın Hocam,
+
+Tarafımıza iletilen veri paketi (10 dosyalık arşiv) ile ayrıca gönderilen İstatistiki
+Bilgiler belgesinin tamamı web sitesine ve gösterge panosuna işlenmiştir. Yapılan
+çalışma, teyidinize sunduğumuz hususlar ve halen beklenen içerikler aşağıda
+özetlenmiştir. Ayrıntılar ekteki raporlarda yer almaktadır.
+
+
+1. GÜNCEL YAYIN ADRESİ
+
+https://emreceran.github.io/29mayis-kalite/
+
+Sitenin güncel sürümü bu adreste yayımlanmıştır. Daha önce iletilen netlify.app
+uzantılı adres teknik nedenlerle güncellenememiştir; lütfen değerlendirmelerinizde
+yukarıdaki adresi kullanınız. Yayının kurum altyapısına taşınmasına ilişkin teknik
+kılavuz ektedir.
+
+
+2. İŞLENEN VERİLER
+
+1. Duyurular. Gönderilen 7 duyurunun tamamı, tarih, kategori ve özetleriyle birlikte
+   ana sayfaya işlenmiş ve ilgili sayfalara bağlanmıştır.
+
+2. Etkinlikler. Gönderilen 3 etkinlik, tarih, saat, yer ve konuşmacı bilgileriyle
+   yayımlanmış, iletilen fotoğraflar eklenmiştir.
+
+3. Öğrenci verileri. 2026 rakamları panoya işlenmiştir: toplam 5.846 öğrenci,
+   3.797 kadın / 2.049 erkek, 298 yabancı uyruklu. Fakülte ve bölüm bazlı dağılım
+   31.08.2026 tarihli veriyle yenilenmiştir.
+
+4. Akademik personel verileri. 2023-2026 dönemi resmî personel tablolarından
+   işlenmiş, 2026 için 197 akademik personel gösterilmektedir. Ayrıca "Akademik
+   Personelin Unvana Göre Dağılımı" başlıklı yeni bir grafik eklenmiştir.
+
+5. Stratejik Plan İzleme ve Değerlendirme Tablosu. Stratejik Plan sayfasına
+   işlenmiştir.
+
+6. İstatistiki Bilgiler. Panoya "Araştırma ve Teşvikler" başlıklı yeni bir bölüm
+   eklenmiştir. Bu bölüm üç sayfa ve beş grafikten oluşmaktadır: bilimsel yayınların
+   dağılımı (SCIE/SSCI, AHCI, ESCI/Scopus, ULAKBİM TR Dizin), düzenlenen bilimsel
+   toplantılar ve tamamlanan projeler, bilimsel toplantı ve yayın teşvikleri
+   (2019-2025 döneminde 89 toplantı, 614 yayın, toplam 1.531.043 TL) ve öğrenci
+   bilimsel etkinlik katılım teşviki.
+
+Önemli bir not olarak, gösterge panosunda daha önce yer alan temsilî fakülte ve
+bölüm rakamları tamamen kaldırılmış, yerlerini kurumun resmî verileri almıştır.
+
+
+3. TEYİDİNİZE SUNULAN HUSUSLAR
+
+Veriler işlenirken kaynak dosyalar arasında birkaç noktada farklılık veya yorum
+gerektiren durum tespit edilmiştir. Bu noktalarda veriler tarafımızca
+değiştirilmemiş, en makul yorumla işlenmiş ve aşağıda teyidinize sunulmuştur.
+Teyit sonrası gerekiyorsa düzeltilecektir.
+
+1. Toplam öğrenci sayısı. "2026 Toplam Öğrenci Verileri" dosyası genel toplamı
+   5.846, "2026 Bölümlere Göre..." dosyasının bölüm toplamları ise 5.821
+   vermektedir (25 kişi fark). Hangisinin esas alınacağı teyit edilmelidir.
+
+2. Akademik personel sayısı. Resmî tablonun üniversite toplamı 197'dir; ancak
+   birim bazlı kırılımda yer alan sekiz akademik birimin toplamı 183 etmektedir.
+   Fark, kırılımı ayrıca verilmeyen birimlerden (Yabancı Diller Yüksekokulu vb.)
+   kaynaklanmaktadır. Bu birimin kırılımı iletilirse tablo tamamlanabilir.
+
+3. Geçmiş yıl akademik personel sayıları. "Sayılarla Üniversitemiz" kaynağında
+   2023-2025 için 165 / 165 / 179, resmî personel tablolarında ise 161 / 158 / 175
+   yer almaktadır. Panoda resmî personel tabloları esas alınmıştır; bu tercihin
+   uygunluğu teyit edilmelidir.
+
+4. Yabancı uyruklu öğrenci sayısı. 2025'te 333 iken 2026'da 298'e inmektedir.
+   Rakamın doğruluğu teyit edilmelidir.
+
+5. "31.08.2026 Bölümlere Göre Öğrenci Sayıları" dosyası. Dosya adı diğer öğrenci
+   dosyalarıyla aynı biçimde olmakla birlikte genel toplamı 298'dir ve toplam
+   öğrenci dosyasındaki "Yabancı Uyruklu Öğrenci Sayısı: 298" ile örtüşmektedir.
+   Bu nedenle yabancı uyruklu öğrenci kırılımı olarak değerlendirilmiştir.
+
+6. Uluslararası İslam ve Din Bilimleri Fakültesi. Üç öğrencisi bulunan bu birim,
+   panoda ayrı bir fakülte yerine İlahiyat Fakültesi altında bir bölüm olarak
+   gösterilmiştir. Ayrı listelenmesi tercih edilirse düzenlenebilir.
+
+7. 2026 mezun sayısı. Toplam öğrenci dosyasında "Mezun Sayımız: 772" bilgisi yer
+   almaktadır. Bu rakamın yıl mezunu mu yoksa kümülatif mi olduğu anlaşılamadığından
+   mezun grafiğine eklenmemiştir. Netleştirilmesi hâlinde eklenecektir.
+
+8. 2026 idari personel verisi. Personel grafiğinde akademik personel serisi 2026'ya
+   uzanmakta, idari personel ve yabancı uyruklu personel serileri 2025'te sona
+   ermektedir. 2026 verisi iletilirse tamamlanacaktır.
+
+9. Öğrenci teşviki tablosu. İstatistik belgesinde bu tablo iki kez yer almaktadır.
+   Aynı veri olduğundan tek sefer işlenmiştir.
+
+10. Duyuru ve etkinlik metinleri. Ana sayfada okunabilirlik için özetlenerek
+    yayımlanmış, tam metinler ilgili sayfalara bağlanmıştır. Özet metinlerin
+    uygunluğunun gözden geçirilmesi rica olunur.
+
+
+4. HALEN BEKLENEN İÇERİKLER
+
+1. On iki menü sayfasının gerçek içeriği ve belgeleri. Bu sayfalarda halen "yakında
+   yer alacaktır" biçiminde geçici metin bulunmaktadır: Program ve Kurum
+   Akreditasyonları, Öz Değerlendirme, Akran Değerlendirme, İyileştirme başlıkları
+   (beş sayfa), 2030 Vizyonu, Kurumsal Dönüşüm Kapasitesi ve Kurumsal Akreditasyon
+   Programı.
+
+2. Gerçek haber içerikleri. Duyurular ve etkinlikler gerçek içerikle
+   değiştirilmiştir; haberler, güncellenmemiş tek bölüm olarak kalmıştır. Ana
+   sayfadaki altı haber halen temsilîdir ve tarih bilgisi içermemektedir. Her haber
+   için başlık, tam tarih, kısa metin ve varsa görsel veya bağlantı gerekmektedir.
+
+3. Paydaş Katılım Formu bağlantısı. Kullanılacak form sisteminin (Google Forms vb.)
+   adresinin bildirilmesi gerekmektedir.
+
+4. YÖKAK performans göstergelerindeki eksik değerlerin teyidi. Ayrıntılı liste
+   ekteki denetim raporundadır. Mümkünse 2025 ve 2026 değerlerinin iletilmesi
+   grafiklerin güncellenmesini sağlayacaktır.
+
+
+5. BİLGİ İŞLEM DAİRE BAŞKANLIĞINA İLETİLMESİ RİCA OLUNAN HUSUS
+
+Site tamamen statiktir; sunucu tarafı kod, veritabanı ve gizli anahtar içermez.
+Yayına almak için dosyaların bir web sunucusuna kopyalanması yeterlidir.
+
+Önerimiz, sitenin kurumun kendi sunucusunda barındırılmasıdır. Bu durumda
+kalite.29mayis.edu.tr alt alan adı için DNS bölgesine, sunucunun IP adresini
+gösteren bir A kaydı eklenmesi yeterli olacaktır. Site mevcut sunucuda bir alt
+dizin olarak da yayımlanabilir; bu durumda DNS değişikliği gerekmez.
+
+Kurum sunucusu hazır olana kadar alan adı, sitenin şu anda yayımlandığı adrese de
+yönlendirilebilir. Bunun için kalite adı için emreceran.github.io hedefli bir CNAME
+kaydı yeterlidir; kalan işlemler tarafımızca yapılacaktır.
+
+Kurulum adımları, DNS kayıt tabloları, dikkat edilmesi gereken sunucu ayarı
+(.json dosyalarının sunulabilmesi) ve yayın sonrası kontrol listesi ekteki
+"Yayına Alma ve Alan Adı Yönlendirme Kılavuzu" belgesinde ayrıntılı olarak yer
+almaktadır.
+
+
+Uygun görülmesi hâlinde çalışma kısaca sunulabilir; teyit edilecek hususlar ve
+kalan içeriklerin nasıl toplanacağı birlikte değerlendirilebilir.
+
+Saygılarımla,
+Emre Ceran
+eceran@29mayis.edu.tr
+
+
+Ekler:
+- Canlıya Geçiş Öncesi Gereken İçerik ve Veriler (2. sürüm).pdf
+- Yayına Alma ve Alan Adı Yönlendirme Kılavuzu.pdf
+- Dashboard Veri Denetim Raporu.pdf

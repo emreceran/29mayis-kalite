@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yayına Alma ve Alan Adı Yönlendirme Kılavuzu</title>
+<style>
+ body{font-family:Georgia,'Times New Roman',serif;color:#20262e;background:#fff;margin:0;line-height:1.6;font-size:14px}
+ .wrap{max-width:900px;margin:0 auto;padding:0 46px}
+ .hdr{display:flex;align-items:center;gap:18px;border-bottom:3px solid #1c355e;padding:24px 0 16px}
+ .hdr img{height:64px;width:auto}
+ .hdr .uni{font-family:Arial,Helvetica,sans-serif;font-weight:700;color:#1c355e;font-size:17px;letter-spacing:.3px}
+ .hdr .sub{font-family:Arial,Helvetica,sans-serif;color:#5b6673;font-size:13px;margin-top:2px}
+ .doc-title{font-family:Arial,Helvetica,sans-serif;font-size:22px;color:#1c355e;margin:26px 0 4px;font-weight:700}
+ .doc-meta{font-family:Arial,Helvetica,sans-serif;color:#5b6673;font-size:12.5px;margin-bottom:18px}
+ h2{font-family:Arial,Helvetica,sans-serif;color:#1c355e;font-size:16px;margin:26px 0 8px;padding-bottom:5px;border-bottom:1px solid #d7dee6}
+ h2 .no{color:#8a97a6;font-weight:400;margin-right:6px}
+ p{margin:8px 0}
+ .ozet{background:#f4f6f9;border-left:4px solid #1c355e;padding:14px 18px;margin:10px 0}
+ table{width:100%;border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;margin:10px 0}
+ th,td{text-align:left;padding:8px 11px;border:1px solid #d7dee6;vertical-align:top}
+ th{background:#1c355e;color:#fff;font-weight:600;font-size:12px}
+ tbody tr:nth-child(even){background:#f7f9fb}
+ .oncelik-y{color:#8a1c1c;font-weight:700}
+ .oncelik-o{color:#8a5a12;font-weight:700}
+ .oncelik-i{color:#5b6673;font-weight:700}
+ ul{margin:8px 0;padding-left:20px} li{margin:5px 0}
+ .not{font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:#42505f;background:#f4f6f9;border:1px solid #e0e6ec;padding:10px 14px;margin:10px 0}
+ .foot{font-family:Arial,Helvetica,sans-serif;border-top:2px solid #1c355e;margin-top:34px;padding:14px 0 30px;font-size:12px;color:#5b6673}
+ .foot b{color:#1c355e}
+ .ok{color:#1a6b3c;font-weight:700}
+ .no{color:#8a1c1c;font-weight:700}
+ .rozet{display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.2px}
+ .r-ok{background:#e6f4ec;color:#1a6b3c;border:1px solid #bcdfcb}
+ .r-no{background:#fbeaea;color:#8a1c1c;border:1px solid #eccaca}
+ .r-ks{background:#fdf3e0;color:#8a5a12;border:1px solid #eeddb8}
+ .kutu-ok{background:#f2f9f5;border-left:4px solid #1a6b3c;padding:14px 18px;margin:10px 0}
+ code,.mono{font-family:'DejaVu Sans Mono',Consolas,monospace;font-size:12px;background:#f4f6f9;padding:1px 5px;border-radius:3px;border:1px solid #e0e6ec}
+ pre{font-family:'DejaVu Sans Mono',Consolas,monospace;font-size:12px;background:#f4f6f9;border:1px solid #e0e6ec;border-left:4px solid #1c355e;padding:12px 14px;overflow-x:auto;line-height:1.5}
+ .adim{font-family:Arial,Helvetica,sans-serif;font-weight:700;color:#1c355e;font-size:13.5px;margin:16px 0 4px}
+ .onerilen{background:#f2f9f5;border-left:4px solid #1a6b3c;padding:14px 18px;margin:10px 0}
+ h3{font-family:Arial,Helvetica,sans-serif;color:#1c355e;font-size:14.5px;margin:20px 0 6px}
+ @media print{.wrap{padding:0 24px} h2{page-break-after:avoid} table{page-break-inside:avoid}}
+</style></head><body><div class="wrap">
+
+<div class="hdr">
+  <img src="logo.png" alt="İstanbul 29 Mayıs Üniversitesi">
+  <div>
+    <div class="uni">İSTANBUL 29 MAYIS ÜNİVERSİTESİ</div>
+    <div class="sub">Kalite Güvence Sistemi</div>
+  </div>
+</div>
+
+<div class="doc-title">Yayına Alma ve Alan Adı Yönlendirme Kılavuzu</div>
+<div class="doc-meta">Bilgi İşlem Daire Başkanlığı için teknik kılavuz — Kalite Güvence Sistemi web sitesi. 9 Eylül 2026.</div>
+
+<div class="ozet">
+<b>Özet</b>
+<p>Site <b>tamamen statiktir</b>: sunucu tarafı kod, veritabanı, oturum yönetimi ve gizli anahtar
+içermez. Yayına almak için <b>dosyaları bir web sunucusuna kopyalamak yeterlidir</b>; kurulum,
+derleme veya çalışma zamanı bağımlılığı yoktur. Toplam 112 dosya, yaklaşık 17 MB.</p>
+<p>Aşağıda iki senaryo sunulmuştur. <b>Önerilen senaryo, sitenin kurumun kendi sunucusunda
+barındırılmasıdır</b> (A). Bu, dış hesap bağımlılığını tamamen ortadan kaldırır. İkinci senaryo (B),
+kurum sunucusu hazır olana kadar kullanılabilecek geçici bir çözümdür.</p>
+</div>
+
+<h2><span class="no">1.</span>Yayınlanacak Dosyalar</h2>
+<p>Yayına yalnızca aşağıdaki dosya ve klasörler çıkar. Bunlar dışındaki dosyalar (yönetim paneli,
+raporlar, kaynak veri belgeleri) <b>siteye konulmamalıdır</b>.</p>
+<pre>index.html                 Ana site (tek sayfa; içeriği data/site.json'dan okur)
+data/site.json             Tüm site içeriği (menüler, sayfalar, duyurular, haberler)
+data/dashboard.json        Gösterge panosu verileri
+dashboard/                 Gösterge panosu (index.html, yokak-data.js, yayin-data.js)
+assets/                    Görseller, logolar, şemalar, etkinlik fotoğrafları
+.nojekyll                  (yalnızca GitHub Pages için gereklidir)</pre>
+<div class="not"><b>Yönetim paneli hakkında:</b> <span class="mono">admin.html</span> siteyle birlikte
+yayımlanmak zorunda değildir. Panel sunucuya hiçbir şey yazmaz; yalnızca içerik dosyasını düzenleyip
+indirmeye yarar. Kurum içinde yerel olarak kullanılması ya da erişiminin kısıtlanması önerilir.</div>
+
+<h2><span class="no">2.</span>Senaryo A — Kurum Sunucusunda Barındırma <span style="font-weight:400;font-size:13px;color:#1a6b3c">(önerilen)</span></h2>
+
+<div class="adim">Adım 1 — Dosyaların yerleştirilmesi</div>
+<p>Yukarıdaki dosyalar web sunucusundaki bir dizine kopyalanır. Örnek:</p>
+<pre>/var/www/kalite/          (Linux / Apache / Nginx)
+C:\inetpub\wwwroot\kalite\   (Windows / IIS)</pre>
+
+<div class="adim">Adım 2 — Web sunucusu ayarı</div>
+<p>Özel bir yapılandırma gerekmez; dizin statik olarak sunulur. Dikkat edilecek iki nokta:</p>
+<ul>
+<li><b>Varsayılan belge</b> <span class="mono">index.html</span> olmalıdır.</li>
+<li><b>.json uzantılı dosyalar sunulabilmelidir.</b> Bazı IIS kurulumlarında <span class="mono">.json</span>
+MIME türü tanımlı değildir; tanımlı değilse <span class="mono">application/json</span> olarak eklenmelidir.
+Aksi hâlde site açılır ancak <b>içerik ve grafikler boş görünür</b>.</li>
+</ul>
+
+<div class="adim">Adım 3 — Alan adı ve DNS</div>
+<p>Site için önerilen alt alan adı <span class="mono">kalite.29mayis.edu.tr</span>'dir
+(paydaş geri bildirim bağlantısı hâlihazırda bu adrese işaret etmektedir). DNS bölgesine
+eklenecek kayıt:</p>
+<table>
+<thead><tr><th style="width:12%">Tip</th><th style="width:20%">Ad</th><th>Değer</th><th style="width:12%">TTL</th></tr></thead>
+<tbody>
+<tr><td>A</td><td><span class="mono">kalite</span></td><td>Web sunucusunun genel IPv4 adresi</td><td>3600</td></tr>
+<tr><td>AAAA</td><td><span class="mono">kalite</span></td><td>(varsa) Web sunucusunun IPv6 adresi</td><td>3600</td></tr>
+</tbody></table>
+<p>Site kurumun mevcut web sunucusunda bir alt dizin olarak da yayımlanabilir
+(ör. <span class="mono">29mayis.edu.tr/kalite/</span>); bu durumda DNS değişikliği gerekmez.
+Site içindeki tüm bağlantılar <b>görelidir</b>, alt dizinde sorunsuz çalışır.</p>
+
+<div class="adim">Adım 4 — HTTPS</div>
+<p>Kurumun mevcut sertifika altyapısı (wildcard <span class="mono">*.29mayis.edu.tr</span> sertifikası
+varsa doğrudan) kullanılabilir. HTTP'den HTTPS'e yönlendirme önerilir.</p>
+
+<h2><span class="no">3.</span>Senaryo B — Geçici Olarak GitHub Pages</h2>
+<p>Kurum sunucusu hazır olana kadar site, GitHub Pages üzerinden yayımlanabilir. Site
+<b>şu anda bu şekilde erişilebilir durumdadır</b>:</p>
+<pre>https://emreceran.github.io/29mayis-kalite/</pre>
+<p>Bu adrese kurum alan adı bağlanmak istenirse:</p>
+
+<div class="adim">Adım 1 — DNS kaydı</div>
+<table>
+<thead><tr><th style="width:12%">Tip</th><th style="width:20%">Ad</th><th>Değer</th><th style="width:12%">TTL</th></tr></thead>
+<tbody>
+<tr><td>CNAME</td><td><span class="mono">kalite</span></td><td><span class="mono">emreceran.github.io.</span></td><td>3600</td></tr>
+</tbody></table>
+<p>GitHub, alan adı sahipliğinin doğrulanması için ayrıca bir <b>TXT kaydı</b> talep edebilir
+(<span class="mono">_github-pages-challenge-emreceran.kalite</span>). Bu değer GitHub arayüzünde
+üretilir ve talep edilmesi hâlinde tarafımızca iletilir.</p>
+
+<div class="adim">Adım 2 — Depo tarafı</div>
+<p>Alan adı, depodaki <span class="mono">gh-pages</span> dalına eklenecek bir
+<span class="mono">CNAME</span> dosyasıyla eşleştirilir. Bu işlem tarafımızca yapılır;
+kurumdan yalnızca DNS kaydı beklenir.</p>
+
+<div class="adim">Adım 3 — HTTPS</div>
+<p>DNS yayılımı tamamlandıktan sonra (genellikle 15 dakika – 24 saat) GitHub, Let's Encrypt
+sertifikasını otomatik üretir. Ek işlem gerekmez.</p>
+
+<div class="not"><b>Önemli:</b> Bu senaryoda depo, hâlihazırda geliştiriciye ait bir GitHub hesabındadır.
+Kalıcı çözüm için deponun <b>kurumun GitHub organizasyonuna devredilmesi</b> ya da Senaryo A'ya
+geçilmesi gerekir. Depo devredildiğinde CNAME hedefi
+<span class="mono">&lt;organizasyon&gt;.github.io</span> olarak değişir.</div>
+
+<h2><span class="no">4.</span>İçerik Güncelleme</h2>
+<p>Kod bilgisi gerekmez. Yönetim paneli (<span class="mono">admin.html</span>) tarayıcıda açılır,
+mevcut içerik yüklenir, formlarla düzenlenir ve güncellenmiş <span class="mono">site.json</span>
+indirilir. İnen dosya sunucudaki <span class="mono">data/site.json</span> ile değiştirilir.
+Ayrıntı: <b>Panel Kullanım Kılavuzu</b>.</p>
+
+<div class="not"><b>Gösterge panosu verisi için teknik not:</b> Pano açılışta
+<span class="mono">data/dashboard.json</span> dosyasını okur ve <b>bu dosya, pano sayfasının içindeki
+gömülü verinin yerine geçer</b>. Pano verisinde değişiklik yapılacaksa iki kaynağın eşitlenmesi
+gerekir; depoda bunu yapan <span class="mono">tools/build-dashboard-json.js</span> betiği
+bulunmaktadır. Eşitleme atlanırsa sitede eski veriler görünmeye devam eder.</div>
+
+<h2><span class="no">5.</span>Yayın Sonrası Kontrol Listesi</h2>
+<table>
+<thead><tr><th style="width:6%">#</th><th style="width:40%">Kontrol</th><th>Beklenen sonuç</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Ana sayfa açılıyor mu</td><td>Menüler, duyurular, haberler ve etkinlikler görünür</td></tr>
+<tr><td>2</td><td>Menüden birkaç iç sayfa</td><td>Sayfa içerikleri yükleniyor (boş değil)</td></tr>
+<tr><td>3</td><td>Gösterge panosu (<span class="mono">/dashboard/</span>)</td><td>Grafikler çiziliyor; “Genel Bakış”ta 5.846 öğrenci / 197 akademik personel görünüyor</td></tr>
+<tr><td>4</td><td>Panoda “Fakülte / Birim Bazlı”</td><td>Fakülte ve bölüm seçimi çalışıyor, tablo doluyor</td></tr>
+<tr><td>5</td><td>Panoda “Araştırma ve Teşvikler”</td><td>Üç alt sayfa da grafik gösteriyor</td></tr>
+<tr><td>6</td><td>Görseller ve logo</td><td>Kırık görsel yok</td></tr>
+<tr><td>7</td><td>Mobil görünüm</td><td>Menü ve grafikler telefonda okunabiliyor</td></tr>
+<tr><td>8</td><td>HTTPS</td><td>Tarayıcıda kilit simgesi, uyarı yok</td></tr>
+</tbody></table>
+<p>3, 4 veya 5 numaralı maddede grafikler boş görünüyorsa sebebi büyük olasılıkla
+<span class="mono">.json</span> dosyalarının sunulamamasıdır (bkz. Senaryo A, Adım 2).</p>
+
+<div class="foot">
+<b>İstanbul 29 Mayıs Üniversitesi, Kalite Güvence Sistemi Web Sitesi</b> — Yayına Alma ve Alan Adı
+Yönlendirme Kılavuzu. 9 Eylül 2026. Hazırlayan: Emre Ceran.
+</div>
+
+</div></body></html>
