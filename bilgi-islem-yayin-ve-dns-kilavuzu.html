@@ -62,17 +62,16 @@ kurum sunucusu hazır olana kadar kullanılabilecek geçici bir çözümdür.</p
 </div>
 
 <h2><span class="no">1.</span>Yayınlanacak Dosyalar</h2>
-<p>Yayına yalnızca aşağıdaki dosya ve klasörler çıkar. Bunlar dışındaki dosyalar (yönetim paneli,
-raporlar, kaynak veri belgeleri) <b>siteye konulmamalıdır</b>.</p>
+<p>Teslim edilen pakette yalnızca aşağıdaki dosya ve klasörler bulunur; tamamı yayına çıkar.</p>
 <pre>index.html                 Ana site (tek sayfa; içeriği data/site.json'dan okur)
 data/site.json             Tüm site içeriği (menüler, sayfalar, duyurular, haberler)
 data/dashboard.json        Gösterge panosu verileri
 dashboard/                 Gösterge panosu (index.html, yokak-data.js, yayin-data.js)
 assets/                    Görseller, logolar, şemalar, etkinlik fotoğrafları
 .nojekyll                  (yalnızca GitHub Pages için gereklidir)</pre>
-<div class="not"><b>Yönetim paneli hakkında:</b> <span class="mono">admin.html</span> siteyle birlikte
-yayımlanmak zorunda değildir. Panel sunucuya hiçbir şey yazmaz; yalnızca içerik dosyasını düzenleyip
-indirmeye yarar. Kurum içinde yerel olarak kullanılması ya da erişiminin kısıtlanması önerilir.</div>
+<div class="not"><b>İçerik yönetimi hakkında:</b> Bu aşamada site <b>tamamen statik</b> olarak teslim
+edilmektedir; herhangi bir yönetim paneli veya içerik yönetim sistemi kurulumu içermez. Kurumun tercih
+edeceği içerik yönetim sistemi belirlendikten sonra devreye alınması planlanmaktadır.</div>
 
 <h2><span class="no">2.</span>Senaryo A — Kurum Sunucusunda Barındırma <span style="font-weight:400;font-size:13px;color:#1a6b3c">(önerilen)</span></h2>
 
@@ -139,10 +138,13 @@ geçilmesi gerekir. Depo devredildiğinde CNAME hedefi
 <span class="mono">&lt;organizasyon&gt;.github.io</span> olarak değişir.</div>
 
 <h2><span class="no">4.</span>İçerik Güncelleme</h2>
-<p>Kod bilgisi gerekmez. Yönetim paneli (<span class="mono">admin.html</span>) tarayıcıda açılır,
-mevcut içerik yüklenir, formlarla düzenlenir ve güncellenmiş <span class="mono">site.json</span>
-indirilir. İnen dosya sunucudaki <span class="mono">data/site.json</span> ile değiştirilir.
-Ayrıntı: <b>Panel Kullanım Kılavuzu</b>.</p>
+<p>Sitenin tüm içeriği (menüler, sayfalar, duyurular, haberler, etkinlikler)
+<span class="mono">data/site.json</span>, gösterge panosu verileri ise
+<span class="mono">data/dashboard.json</span> dosyasında tutulur. Güncelleme,
+sunucudaki bu dosyaların yenisiyle değiştirilmesinden ibarettir; başka hiçbir işlem gerekmez.</p>
+<p>Bu aşamada içerik güncellemeleri <b>tarafımızca hazırlanıp kuruma iletilecektir</b>. Kurumun
+tercih edeceği içerik yönetim sistemi belirlendiğinde, güncellemelerin kurum personeli tarafından
+doğrudan yapılabilmesi için gerekli yapı devreye alınacaktır.</p>
 
 <div class="not"><b>Gösterge panosu verisi için teknik not:</b> Pano açılışta
 <span class="mono">data/dashboard.json</span> dosyasını okur ve <b>bu dosya, pano sayfasının içindeki

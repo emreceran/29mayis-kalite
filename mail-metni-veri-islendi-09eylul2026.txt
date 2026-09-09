@@ -8,14 +8,19 @@ Bilgiler belgesinin tamamı web sitesine ve gösterge panosuna işlenmiştir. Ya
 özetlenmiştir. Ayrıntılar ekteki raporlarda yer almaktadır.
 
 
-1. GÜNCEL YAYIN ADRESİ
+1. İNCELEME ADRESİ VE TESLİM
+
+Sitenin güncel sürümü, incelemenize sunulmak üzere geçici olarak aşağıdaki adreste
+yayımlanmıştır:
 
 https://emreceran.github.io/29mayis-kalite/
 
-Sitenin güncel sürümü bu adreste yayımlanmıştır. Daha önce iletilen netlify.app
-uzantılı adres teknik nedenlerle güncellenememiştir; lütfen değerlendirmelerinizde
-yukarıdaki adresi kullanınız. Yayının kurum altyapısına taşınmasına ilişkin teknik
-kılavuz ektedir.
+Daha önce iletilen netlify.app uzantılı adres güncel değildir; lütfen
+değerlendirmelerinizde yukarıdaki adresi kullanınız.
+
+Sitenin kurum sunucusunda yayımlanabilmesi için gerekli tüm dosyalar ekte
+gönderilmektedir. Bilgi İşlem Daire Başkanlığı tarafından sunucuya alınmasının
+ardından geçici adrese ihtiyaç kalmayacaktır.
 
 
 2. İŞLENEN VERİLER
@@ -120,22 +125,31 @@ Teyit sonrası gerekiyorsa düzeltilecektir.
 
 5. BİLGİ İŞLEM DAİRE BAŞKANLIĞINA İLETİLMESİ RİCA OLUNAN HUSUS
 
-Site tamamen statiktir; sunucu tarafı kod, veritabanı ve gizli anahtar içermez.
-Yayına almak için dosyaların bir web sunucusuna kopyalanması yeterlidir.
+Sitenin tüm dosyaları ekteki arşivde yer almaktadır. Site tamamen statiktir;
+sunucu tarafı kod, veritabanı, oturum yönetimi ve gizli anahtar içermez. Kurulum,
+derleme veya çalışma zamanı bağımlılığı bulunmamaktadır.
 
-Önerimiz, sitenin kurumun kendi sunucusunda barındırılmasıdır. Bu durumda
-kalite.29mayis.edu.tr alt alan adı için DNS bölgesine, sunucunun IP adresini
-gösteren bir A kaydı eklenmesi yeterli olacaktır. Site mevcut sunucuda bir alt
-dizin olarak da yayımlanabilir; bu durumda DNS değişikliği gerekmez.
+Yayına alınması için arşiv içindeki "site" klasörünün içeriğinin web sunucusunda
+bir dizine kopyalanması yeterlidir. Site, kendi alt alan adı altında ya da mevcut
+bir sitenin alt dizini olarak yayımlanabilir; site içindeki tüm bağlantılar göreli
+olduğundan alt dizinde de sorunsuz çalışır ve bu durumda DNS değişikliği gerekmez.
 
-Kurum sunucusu hazır olana kadar alan adı, sitenin şu anda yayımlandığı adrese de
-yönlendirilebilir. Bunun için kalite adı için emreceran.github.io hedefli bir CNAME
-kaydı yeterlidir; kalan işlemler tarafımızca yapılacaktır.
+Dikkat edilmesi gereken iki nokta bulunmaktadır:
 
-Kurulum adımları, DNS kayıt tabloları, dikkat edilmesi gereken sunucu ayarı
-(.json dosyalarının sunulabilmesi) ve yayın sonrası kontrol listesi ekteki
-"Yayına Alma ve Alan Adı Yönlendirme Kılavuzu" belgesinde ayrıntılı olarak yer
-almaktadır.
+1. Varsayılan belge index.html olmalıdır.
+
+2. .json uzantılı dosyalar sunulabilmelidir. Bazı IIS kurulumlarında bu MIME türü
+   tanımlı değildir; tanımlı değilse application/json olarak eklenmelidir. Bu ayar
+   eksik olduğunda site açılmakta, ancak içerik ve grafikler boş görünmektedir.
+
+Bu iki husus ve kurulum sonrası kontrol listesi, arşiv içindeki OKUYUN.txt
+dosyasında da özetlenmiştir. İhtiyaç duyulması hâlinde kurulum sırasında destek
+verilebilir.
+
+Not: Bu aşamada site statik olarak teslim edilmekte olup herhangi bir içerik
+yönetim sistemi içermemektedir. İçerik güncellemeleri tarafımızca hazırlanıp
+iletilecek; kurumun tercih edeceği içerik yönetim sistemi belirlendiğinde
+gerekli yapı devreye alınacaktır.
 
 
 Uygun görülmesi hâlinde çalışma kısaca sunulabilir; teyit edilecek hususlar ve
@@ -147,6 +161,6 @@ eceran@29mayis.edu.tr
 
 
 Ekler:
+- kalite-sitesi-09eylul2026.zip (sitenin tüm dosyaları + kurulum notu)
 - Canlıya Geçiş Öncesi Gereken İçerik ve Veriler (2. sürüm).pdf
-- Yayına Alma ve Alan Adı Yönlendirme Kılavuzu.pdf
 - Dashboard Veri Denetim Raporu.pdf
