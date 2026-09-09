@@ -10,9 +10,16 @@ Toplantı öncesinde siteyi incelemenizi rica ederim:
 
     https://emreceran.github.io/29mayis-kalite/
 
-Bu adres yalnızca inceleme amaçlıdır; site, Bilgi İşlem Daire Başkanlığı tarafından
+Bu adres şimdilik inceleme amaçlıdır; site, Bilgi İşlem Daire Başkanlığı tarafından
 üniversitemizin kendi sunucusuna alındığında kurumumuzun adresinden yayımlanacaktır.
 İçerik ve görünüm bakımından bir fark olmayacaktır.
+
+Talep edilmesi hâlinde site, sunucuya taşınma işlemi beklenmeksizin bu bağlantı
+üzerinden de kurumumuzun alan adıyla yayına alınabilir. Bu durumda ziyaretçiler
+üniversitemizin kendi adresini görecek, herhangi bir kesinti yaşanmayacaktır.
+İşlem kısa sürede tamamlanabilmekte olup Bilgi İşlem Daire Başkanlığı ile
+koordinasyon içinde yürütülecektir. Kurulumuzun uygun görmesi hâlinde site,
+YÖK değerlendirme sürecine kurum adresimizle hazır hâle getirilebilir.
 
 Özellikle iki bölümün gözden geçirilmesi faydalı olacaktır:
 
