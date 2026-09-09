@@ -1,0 +1,56 @@
+Konu: Kalite Güvence Sistemi Web Sitesi — Toplantı Öncesi Bilgilendirme ve İnceleme Bağlantısı
+
+Sayın Hocam,
+
+Kalite Güvence Sistemi tanıtım web sitesi hazır duruma gelmiştir. Toplantımızda
+görüşülmek üzere sitenin mevcut durumu, dikkat edilmesi gereken hususlar ve
+kurulumuzun kararına sunulan konular ekteki bilgi notunda özetlenmiştir.
+
+Toplantı öncesinde siteyi incelemenizi rica ederim:
+
+    https://emreceran.github.io/29mayis-kalite/
+
+Bu adres yalnızca inceleme amaçlıdır; site, Bilgi İşlem Daire Başkanlığı tarafından
+üniversitemizin kendi sunucusuna alındığında kurumumuzun adresinden yayımlanacaktır.
+İçerik ve görünüm bakımından bir fark olmayacaktır.
+
+Özellikle iki bölümün gözden geçirilmesi faydalı olacaktır:
+
+1. Ana sayfa — duyurular ve kalite etkinlikleri gerçek içerikle güncellenmiştir.
+
+2. Gösterge Panosu — üniversitemizin 2026 verileriyle yenilenmiştir. Daha önce
+   panoda yer alan örnek rakamların tamamı kaldırılmış, yerlerini resmî verilerimiz
+   almıştır. Ayrıca bilimsel yayın, proje ve teşviklerimizi gösteren yeni bir bölüm
+   eklenmiştir.
+
+
+TOPLANTIDA GÖRÜŞÜLMESİ ÖNERİLEN KONULAR
+
+1. Verilerin teyidi. Tarafımıza iletilen dosyalar arasında birkaç noktada farklılık
+   bulunmaktadır (örneğin toplam öğrenci sayısının iki dosyada 5.846 ve 5.821 olarak
+   geçmesi). Bu veriler değiştirilmemiş, en makul yorumla işlenmiş ve teyide
+   sunulmuştur. Ayrıntısı bilgi notunun 4. bölümündedir.
+
+2. İçeriği beklenen sayfalar. On iki sayfa halen "yakında" ifadesiyle beklemektedir.
+   Bu sayfalar için teknik bir çalışmaya gerek yoktur; ilgili birimlerden hazır metin
+   ve belge temin edilmesi yeterlidir. Bilgi notunun 5. bölümündeki tabloda sorumlu
+   birim ve teslim tarihi sütunları toplantıda doldurulmak üzere boş bırakılmıştır.
+
+3. Ana sayfa haberleri. Duyurular ve etkinlikler gerçek içerikle değiştirilmiş, ancak
+   haberler bölümü güncellenememiştir. Ana sayfada ilk görülen bölümlerden biri
+   olduğundan öncelikli olarak değerlendirilmesi önerilir.
+
+4. Paydaş geri bildirim formu. Site üzerindeki bağlantı halen Bütünleşik Kalite
+   Yönetim Sistemi'ndeki forma yönlenmektedir. Farklı bir form kullanılacaksa
+   belirlenmesi gerekmektedir.
+
+
+Uygun görülmesi hâlinde toplantıda site kısaca gösterilebilir ve eksik içeriklerin
+nasıl toplanacağı birlikte değerlendirilebilir.
+
+Saygılarımla,
+Emre Ceran
+eceran@29mayis.edu.tr
+
+Ek:
+- Kalite Kurulu Bilgi Notu.pdf

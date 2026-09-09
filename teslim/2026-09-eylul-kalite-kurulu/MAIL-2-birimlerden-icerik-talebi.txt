@@ -1,0 +1,48 @@
+Konu: Kalite Güvence Sistemi Web Sitesi — Birimimizden Beklenen İçerik Hakkında
+
+Sayın Hocam,
+
+Kalite Güvence Sistemi tanıtım web sitesi yayına hazır duruma gelmiştir. Kalite
+Kurulumuzun ... tarihli toplantısında alınan karar gereğince, aşağıda belirtilen
+sayfanın içeriğinin birimimizce hazırlanması kararlaştırılmıştır.
+
+    Sayfa      : ...........................................
+    Menü yeri  : ...........................................
+    Teslim     : ...........................................
+
+
+NE GÖNDERİLMESİ GEREKİYOR
+
+Teknik bir çalışma gerekmemektedir. Aşağıdakilerin düz metin olarak (Word belgesi
+veya e-posta gövdesinde) iletilmesi yeterlidir:
+
+1. Sayfa metni. Yaklaşık bir sayfa uzunluğunda, kurumsal dille yazılmış açıklayıcı
+   metin. Varsa alt başlıklar ve maddeler kullanılabilir.
+
+2. Belgeler. Sayfada bağlantı verilmesi istenen yönerge, rapor veya form varsa PDF
+   olarak eklenmesi rica olunur.
+
+3. Görseller (isteğe bağlı). Şema, tablo veya fotoğraf eklenmek isteniyorsa
+   gönderilebilir.
+
+Gönderilen metin sayfanın tasarımına tarafımızca yerleştirilecektir; biçimlendirme
+konusunda bir hazırlık yapılmasına gerek yoktur.
+
+
+SİTEYİ İNCELEME
+
+Sayfanın hangi bölümde yer alacağını görmek için siteyi inceleyebilirsiniz:
+
+    https://emreceran.github.io/29mayis-kalite/
+
+Halen içeriği beklenen sayfalarda "bu bölümde yer alacaktır" biçiminde geçici bir
+açıklama görünmektedir. Benzer bir sayfanın nasıl göründüğünü incelemek için
+Politikalar menüsündeki sayfalar örnek alınabilir.
+
+
+İçeriğin ....... tarihine kadar iletilmesi, sitenin resmî yayına alınması bakımından
+önem arz etmektedir. Sorularınız için tarafıma ulaşabilirsiniz.
+
+Saygılarımla,
+Emre Ceran
+eceran@29mayis.edu.tr

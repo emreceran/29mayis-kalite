@@ -1,0 +1,96 @@
+KALİTE KURULU TOPLANTISI — SUNUM AKIŞI VE NOTLAR
+(Yalnızca Emre Ceran için hazırlanmıştır, dağıtılmayacaktır)
+
+Adres: https://emreceran.github.io/29mayis-kalite/
+Süre : 10-12 dakika gösterim + görüşme
+
+
+HAZIRLIK
+
+- Sayfayı toplantıdan önce açıp bir kez gezin; ilk açılışta grafikler birkaç saniyede
+  çiziliyor, canlı gösterimde beklemek kötü görünür.
+- İnternet bağlantısını teyit edin. Site tamamen internetten çalışıyor, çevrimdışı
+  yedeği yok. Bağlantı riski varsa ekran görüntülerini önceden alın.
+- Tarayıcıyı yakınlaştırın (Ctrl +). Projeksiyonda varsayılan yazı boyutu küçük kalıyor.
+- Ana sayfa ve Gösterge Panosu'nu iki ayrı sekmede açık tutun; geçiş hızlı olsun.
+
+
+GÖSTERİM SIRASI
+
+1) ANA SAYFA (2 dk)
+   - Üst menüyü gösterin: altı ana başlık, kurumsal yapıya birebir oturuyor.
+   - Duyurular bölümü: yedi resmî duyuru, tarihleriyle.
+   - Kalite etkinlikleri: üç etkinlik, fotoğraflarıyla.
+   > Söylenecek: "Duyurular ve etkinlikler kurumdan gelen gerçek içeriktir."
+   > DİKKAT: Haberler bölümüne gelince kendiniz söyleyin, sorulmasını beklemeyin:
+     "Haberler halen örnek içeriktir, güncellenmesi gereken bölüm burasıdır."
+     Kendiniz söylerseniz eksik değil, takip edilen bir iş olarak algılanır.
+
+2) İÇERİK SAYFALARI (2 dk)
+   - Politikalar menüsünden bir sayfa açın — tamamı dolu, iyi örnek.
+   - Ardından Stratejik Plan sayfasını açın: izleme ve değerlendirme tablosu görünüyor.
+   - Son olarak "yakında" yazan bir sayfayı açın (ör. İyileştirme > Toplumsal Katkı).
+   > Söylenecek: "On iki sayfa bu durumda. Teknik bir eksik değil; metin bekliyoruz.
+     Kimin hazırlayacağını bugün belirlersek site tamamlanır."
+   > Bilgi notundaki tabloyu burada dağıtın.
+
+3) GÖSTERGE PANOSU (4 dk) — sunumun en güçlü bölümü, zamanı buraya ayırın
+   - Genel Bakış: 5.846 öğrenci, 197 akademik personel rakamlarını gösterin.
+   - "Fakülte / Birim Bazlı" sayfasına geçin. Fakülte seçimini değiştirip bölüm
+     kırılımının anında güncellendiğini gösterin — en etkileyici kısım budur.
+   > Söylenecek: "Panodaki tüm rakamlar 31.08.2026 tarihli resmî verilerimizdir.
+     Daha önce burada örnek rakamlar vardı, tamamı kaldırıldı."
+   - "Araştırma ve Teşvikler" bölümünü açın (yeni eklendi).
+     Teşvik tutarları grafiğini gösterin: 2019-2025 arası toplam 1.531.043 TL.
+   > Söylenecek: "Bu bölüm bu ay iletilen istatistik verilerinden hazırlandı."
+   - YÖKAK Performans Göstergeleri'ne kısaca değinin.
+   > DİKKAT: Bazı YÖKAK grafiklerinde son yıl verisi boş görünüyor. Sorulursa:
+     "Bu veriler YÖKAK portalından olduğu gibi alınmıştır, tarafımızca
+     değiştirilmemiştir. Eksik değerlerin teyidi kurumdan bekleniyor."
+
+4) TEYİT KONULARI (2 dk)
+   - Bilgi notunun 4. bölümünü açın, üç örneği sözlü geçin:
+     * Toplam öğrenci: iki dosyada 5.846 ve 5.821 — hangisi esas alınacak?
+     * Akademik personel: resmî toplam 197, fakülte kırılımı 183 —
+       Yabancı Diller Yüksekokulu kırılımı iletilirse tamamlanır.
+     * Mezun sayısı 772 — yıl mezunu mu, toplam mı? Belli olmadığı için eklenmedi.
+   > Söylenecek: "Verilere müdahale etmedik, olduğu gibi işleyip teyidinize sunduk."
+
+5) KAPANIŞ (1 dk)
+   - Bilgi notunun 6. bölümündeki adımları özetleyin.
+   > Söylenecek: "Teknik tarafta bekleyen bir iş yok. Site hazır. Eksik olan tek şey
+     metin içerikleri ve birkaç teyit."
+
+
+MUHTEMEL SORULAR VE CEVAPLARI
+
+S: Adres neden emreceran.github.io ile başlıyor?
+C: Bu geçici bir inceleme adresidir. Site tamamen statik olduğu için dosyaların
+   Bilgi İşlem'e teslim edilmesi yeterlidir; üniversitemizin kendi sunucusuna
+   alındığında kurum adresinden yayımlanacaktır. Dosyalar hazır ve teslim edilmiştir.
+
+S: İçeriği kim güncelleyecek?
+C: Şu aşamada güncellemeler tarafımızca yapılmaktadır. Kurumun tercih edeceği içerik
+   yönetim sistemi belirlendiğinde, personelin doğrudan güncelleyebileceği yapı
+   devreye alınacaktır.
+
+S: Mevcut Bütünleşik Kalite Yönetim Sistemi ile ilişkisi ne?
+C: İki ayrı sistemdir. Bu site tanıtım ve raporlama amaçlıdır; paydaş geri bildirim
+   bağlantısı halen Bütünleşik Kalite Yönetim Sistemi'ndeki forma yönlenmektedir.
+
+S: YÖK denetimine yetişir mi?
+C: Site şu an incelenebilir durumdadır. Metin içerikleri geldikçe işlenecektir;
+   her sayfa için ayrı bir teknik çalışma gerekmemektedir.
+
+S: Veriler güncel mi?
+C: Öğrenci ve personel verileri 31.08.2026 tarihlidir. Araştırma ve teşvik verileri
+   kurumdan iletilen istatistik belgesinden alınmıştır. YÖKAK göstergeleri
+   2018-2024 aralığını kapsamaktadır, kaynağı YÖKAK portalıdır.
+
+
+SÖYLENMEMESİ GEREKENLER
+
+- "Netlify", "GitHub", "depo", "JSON" gibi teknik terimlere girmeyin; sorulmadıkça
+  gereksiz teknik detay güveni azaltır.
+- Eksikleri savunmaya çalışmayın; hangisinin kimden beklendiğini söylemek yeterli.
+  Toplantının amacı sorumluluk dağıtmak, mazeret sunmak değil.
