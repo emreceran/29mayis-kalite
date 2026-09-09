@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalite Güvence Sistemi | İstanbul 29 Mayıs Üniversitesi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700;800&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto Slab', serif; scroll-behavior: smooth; }
+    /* Kurumsal başlık, TrajanPro varsa onu, yoksa Trajan benzeri Cinzel'i kullanır */
+    .uni-title { font-family: 'TrajanPro-Regular','Trajan Pro','Cinzel', serif; letter-spacing: .04em; }
+
+    /* Page transitions */
+    #content-area { animation: fadeIn .3s ease-out; }
+    @keyframes fadeIn { from { opacity:0; transform:translateX(8px); } to { opacity:1; transform:translateX(0); } }
+
+    /* Nav dropdowns */
+    .nav-item .dropdown { display:none; }
+    .nav-item:hover .dropdown { display:block; animation:dropIn .15s ease-out; }
+    .nav-item:hover .mega-menu { display:flex; animation:none; }
+    @keyframes dropIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+    /* Mega menu, hover edilen başlığın ALTINDA açılan geniş kart */
+    .nav-item-mega { position:relative; }
+    .mega-menu { left:0;right:auto;width:max-content;max-width:min(1120px,94vw);padding:16px 28px;display:flex;flex-wrap:wrap;gap:4px 40px; }
+    .nav-item-mega.mega-right .mega-menu { left:auto;right:0; }
+    .nav-item-mega.mega-center .mega-menu { left:50%;right:auto;transform:translateX(-50%); }
+    .mega-col { width:238px;flex:0 0 auto; }
+    .mega-col-title { margin-bottom:2px!important; }
+    .mega-col-title { font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#c8a84b;padding:0 4px 8px;margin-bottom:4px;border-bottom:1px solid #eef0f3; }
+    .mega-col ul { list-style:none;margin:0;padding:0; }
+
+    /* Sidebar active */
+    .sidebar-link.active { background:#eff6ff; color:#1c355e; font-weight:600; }
+
+    /* ── CONTENT COMPONENTS ── */
+    :root {
+      --navy: #1c355e;
+      --mid:  #4bb5e8;
+      --accent: #c8a84b;
+      --accent-lt: rgba(200,168,75,.12);
+      --light: #f4f6fb;
+      --border: #dce3ef;
+      --text: #1e293b;
+      --muted: #5a6a80;
+      --r: 5px;
+      --shadow: 0 1px 8px rgba(13,34,64,.10);
+    }
+
+    .prose p { margin-bottom:14px; color:var(--text); }
+    .prose p:last-child { margin-bottom:0; }
+
+    .policy-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; margin-top:18px; }
+    .policy-card { background:#fff; border:1px solid var(--border); border-radius:var(--r); padding:20px 20px 20px 24px; position:relative; box-shadow:var(--shadow); }
+    .policy-card::before { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background:var(--mid); border-radius:var(--r) 0 0 var(--r); }
+    .policy-card.gold::before { background:var(--accent); }
+    .policy-card h3 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+    .policy-card p { font-size:13px; color:var(--muted); line-height:1.65; }
+
+    .member-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:18px; background:#fff; border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow); }
+    .member-table thead th { background:var(--navy); color:#fff; padding:10px 14px; text-align:left; font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; }
+    .member-table tbody tr { border-bottom:1px solid var(--border); }
+    .member-table tbody tr:last-child { border-bottom:none; }
+    .member-table tbody tr:hover { background:var(--light); }
+    .member-table td { padding:10px 14px; vertical-align:top; }
+    .member-table td:first-child { font-weight:600; color:var(--navy); }
+    .chair-badge { display:inline-block; font-size:10px; font-weight:700; background:var(--accent-lt); color:#8a6800; border:1px solid rgba(200,168,75,.4); padding:1px 7px; border-radius:10px; margin-left:6px; vertical-align:middle; }
+
+    .sub-section { background:#fff; border:1px solid var(--border); border-radius:var(--r); margin-bottom:16px; overflow:hidden; box-shadow:var(--shadow); }
+    .sub-section-head { background:var(--navy); color:#fff; padding:12px 18px; display:flex; align-items:center; gap:10px; }
+    .sub-section-head h3 { font-size:13.5px; font-weight:700; }
+    .sub-section-head .num { width:24px; height:24px; background:rgba(255,255,255,.15); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; flex-shrink:0; }
+
+    .steps { display:flex; flex-direction:column; gap:0; margin-top:18px; }
+    .step { display:flex; gap:14px; padding:14px 18px; background:#fff; border:1px solid var(--border); border-radius:var(--r); margin-bottom:8px; box-shadow:var(--shadow); }
+    .step-num { width:34px; height:34px; background:var(--navy); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#fff; flex-shrink:0; margin-top:1px; }
+    .step-body h4 { font-size:13.5px; font-weight:700; color:var(--navy); margin-bottom:3px; }
+    .step-body p { font-size:13px; color:var(--muted); }
+
+    .contact-card { background:#fff; border:1px solid var(--border); border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow); max-width:560px; }
+    .contact-card-head { background:var(--navy); padding:18px 22px; color:#fff; }
+    .contact-card-head h3 { font-size:15px; font-weight:700; }
+    .contact-card-head p { font-size:12.5px; color:rgba(255,255,255,.7); margin-top:2px; }
+    .contact-card-body { padding:22px; }
+    .contact-row { display:flex; align-items:flex-start; gap:12px; margin-bottom:13px; }
+    .contact-row:last-child { margin-bottom:0; }
+    .contact-icon { font-size:17px; flex-shrink:0; margin-top:1px; }
+    .contact-detail label { display:block; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:2px; }
+    .contact-detail span { font-size:13.5px; color:var(--text); }
+
+    .info-box { background:rgba(75,181,232,.07); border:1px solid rgba(75,181,232,.22); border-left:4px solid var(--mid); border-radius:var(--r); padding:14px 18px; margin:18px 0; font-size:13px; color:var(--text); }
+    .info-box strong { color:var(--navy); }
+
+    .sh { font-size:16px; font-weight:700; color:var(--navy); margin:26px 0 10px; }
+    .sh:first-child { margin-top:0; }
+
+    #content-area a { color:var(--mid); }
+    #content-area a:hover { text-decoration:underline; }
+
+    /* ── CAROUSEL ── */
+    .carousel-track { display:flex; transition:transform .55s cubic-bezier(.4,0,.2,1); }
+    .carousel-slide { min-width:100%; position:relative; height:420px; overflow:hidden; }
+    .carousel-slide-inner { position:absolute;inset:0;display:flex;align-items:center; }
+    .carousel-overlay { position:absolute;inset:0;background:linear-gradient(90deg,rgba(28,53,94,.85) 0%,rgba(28,53,94,.4) 55%,transparent 100%); }
+    .carousel-btn { position:absolute;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s; }
+    .carousel-btn:hover { background:rgba(255,255,255,.32); }
+    .carousel-dot { width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.45);border:none;cursor:pointer;transition:background .2s,transform .2s; }
+    .carousel-dot.active { background:#fff;transform:scale(1.25); }
+
+    /* ── HOME SECTIONS ── */
+    .stat-card { background:#fff;border-radius:12px;padding:24px 20px;text-align:center;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid #e5e7eb;transition:box-shadow .2s; }
+    .stat-card:hover { box-shadow:0 4px 18px rgba(28,53,94,.12); }
+    .news-card { background:#fff;border-radius:10px;border:1px solid #e5e7eb;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;transition:box-shadow .2s,border-color .2s;cursor:pointer; }
+    .news-card:hover { box-shadow:0 4px 14px rgba(28,53,94,.1);border-color:#bdd7ee; }
+    .news-date { background:#f0f6fc;color:#1c355e;border-radius:8px;padding:6px 10px;text-align:center;min-width:50px;flex-shrink:0; }
+    .quick-link { display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border-radius:10px;border:1px solid #e5e7eb;transition:all .2s;cursor:pointer; }
+    .quick-link:hover { border-color:#4bb5e8;background:#f0f9ff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(75,181,232,.15); }
+    .accred-badge { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:18px 14px;background:#fff;border-radius:10px;border:1px solid #e5e7eb;transition:box-shadow .2s; }
+    .accred-badge:hover { box-shadow:0 4px 14px rgba(28,53,94,.1); }
+    .accred-logo { height:64px;display:flex;align-items:center;justify-content:center; }
+    .accred-logo img { max-height:64px;max-width:120px;width:auto;object-fit:contain; }
+    /* ── KALİTE ETKİNLİKLERİ ── */
+    .event-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px; }
+    .event-card { background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column; }
+    .event-card:hover { transform:translateY(-3px);box-shadow:0 10px 24px rgba(28,53,94,.12); }
+    .event-card-top { height:88px;position:relative;display:flex;align-items:center;justify-content:center; }
+    .event-card-top i { color:#fff;font-size:30px;opacity:.92; }
+    .event-cat { position:absolute;top:10px;left:10px;background:rgba(255,255,255,.9);color:#1c355e;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px; }
+    .event-card-body { padding:14px 16px 16px; }
+    .event-date { font-size:11px;color:#c8a84b;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:5px; }
+    .event-card-body h4 { font-size:14px;font-weight:700;color:#1c355e;line-height:1.35;margin:0 0 6px; }
+    .event-card-body p { font-size:12px;color:#6b7280;line-height:1.5;margin:0; }
+    /* ── HABERLER GRID ── */
+    .news-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px; }
+    /* ── PAYDAŞ FORMU ── */
+    .paydas-form { margin-top:20px;max-width:720px; }
+    .paydas-form .pf-row { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+    @media (max-width:640px){ .paydas-form .pf-row { grid-template-columns:1fr; } }
+    .paydas-form label { display:block;font-size:13px;font-weight:600;color:#1c355e;margin-bottom:14px; }
+    .paydas-form input,.paydas-form select,.paydas-form textarea { display:block;width:100%;margin-top:6px;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;font-weight:400;color:#374151;background:#fff;font-family:inherit; }
+    .paydas-form input:focus,.paydas-form select:focus,.paydas-form textarea:focus { outline:none;border-color:#4bb5e8;box-shadow:0 0 0 3px rgba(75,181,232,.15); }
+    .paydas-form .pf-submit { background:#c8a84b;color:#fff;font-weight:700;font-size:14px;padding:11px 26px;border:none;border-radius:8px;cursor:pointer;transition:background .2s; }
+    .paydas-form .pf-submit:hover { background:#b8943a; }
+
+    /* ── DUYURULAR ── */
+    .duyuru-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px; }
+    .duyuru-card { position:relative;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px 18px 24px;box-shadow:0 1px 6px rgba(13,34,64,.07);transition:box-shadow .2s,transform .2s;cursor:pointer;overflow:hidden; }
+    .duyuru-card:hover { box-shadow:0 6px 20px rgba(28,53,94,.12);transform:translateY(-2px); }
+    .duyuru-card::before { content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--bar,#1c355e); }
+    .duyuru-card.onemli { border-color:rgba(200,168,75,.5);background:linear-gradient(180deg,rgba(200,168,75,.06),#fff 60%); }
+    .duyuru-badge { display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:3px 11px;border-radius:20px; }
+    .duyuru-pin { position:absolute;top:14px;right:14px;color:#c8a84b;font-size:13px; }
+    .duyuru-card h4 { font-size:14.5px;font-weight:700;color:#1c355e;margin:10px 0 5px;line-height:1.4;padding-right:14px; }
+    .duyuru-card p { font-size:12.5px;color:#6b7280;line-height:1.55; }
+    .duyuru-date { font-size:11px;color:#94a3b8;font-weight:600;margin-top:12px;display:flex;align-items:center;gap:6px; }
+
+    /* ── DASHBOARD ── */
+    .dash-select { appearance:none;background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 34px 9px 14px;font-size:13px;font-weight:600;color:var(--navy);cursor:pointer;font-family:inherit;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c355e' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:15px;transition:border-color .2s,box-shadow .2s; }
+    .dash-select:focus { outline:none;border-color:var(--mid);box-shadow:0 0 0 3px rgba(75,181,232,.15); }
+    .dash-select:disabled { opacity:.5;cursor:not-allowed; }
+    .kpi { position:relative;background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);overflow:hidden; }
+    .kpi::after { content:'';position:absolute;right:-14px;bottom:-14px;width:64px;height:64px;border-radius:50%;background:var(--kc,#1c355e);opacity:.06; }
+    .kpi-ico { width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px; }
+    .kpi-val { font-size:26px;font-weight:800;color:var(--navy);line-height:1; }
+    .kpi-lbl { font-size:11.5px;color:var(--muted);font-weight:600;margin-top:4px; }
+    .kpi-sub { font-size:10.5px;color:#94a3b8;margin-top:2px; }
+    .chart-card { background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow); }
+    .chart-card h4 { font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:2px;display:flex;align-items:center;gap:8px; }
+    .chart-card .sub { font-size:11px;color:#94a3b8;margin-bottom:12px; }
+    .chart-wrap { position:relative;width:100%; }
+    /* Birleşik grafik + aç/kapa (toggle) bileşeni */
+    .tc-card { background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);margin-bottom:18px; }
+    .tc-head { display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:12px; }
+    .tc-head h4 { margin:0;font-size:15px;font-weight:700;color:var(--navy);display:flex;align-items:center; }
+    .tc-sub { font-size:11.5px;color:#94a3b8; }
+    .tc-toggles { display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px; }
+    .tpill { display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);color:#94a3b8;font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;cursor:pointer;transition:all .15s;line-height:1.1; }
+    .tpill .tdot { width:9px;height:9px;border-radius:50%;background:currentColor;opacity:.45;flex-shrink:0; }
+    .tpill:hover { border-color:var(--pc); }
+    .tpill.on { color:#fff;background:var(--pc);border-color:var(--pc); }
+    .tpill.on .tdot { background:#fff;opacity:1; }
+    .tpill:not(.on) { text-decoration:line-through;text-decoration-color:#cbd5e1; }
+    .tc-grid { display:grid;grid-template-columns:1fr 1fr;gap:18px; }
+    @media (max-width:900px){ .tc-grid{ grid-template-columns:1fr; } }
+    .dash-table { width:100%;border-collapse:collapse;font-size:13px; }
+    .dash-table thead th { background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px; }
+    .dash-table thead th:not(:first-child) { text-align:right; }
+    .dash-table tbody td { padding:9px 12px;border-bottom:1px solid var(--border); }
+    .dash-table tbody td:not(:first-child) { text-align:right;font-variant-numeric:tabular-nums; }
+    .dash-table tbody td:first-child { font-weight:600;color:var(--navy); }
+    .dash-table tbody tr:hover { background:var(--light); }
+    .dash-bar { display:inline-block;height:7px;border-radius:4px;background:var(--mid);vertical-align:middle;margin-left:8px; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+<!-- ── ÜST YARDIMCI BAR (Bütünleşik Kalite, menüden bağımsız) ── -->
+<div class="bg-white border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-1.5">
+      <a href="https://www.29mayis.edu.tr/" target="_blank" rel="noopener"
+         class="inline-flex items-center text-[10.5px] font-semibold text-[#1c355e] hover:text-[#4bb5e8] uppercase tracking-wide transition-colors">
+        Üniversite Ana Sayfası
+      </a>
+      <a href="https://kalite.29mayis.edu.tr/panel" target="_blank" rel="noopener"
+         class="inline-flex items-center px-3.5 py-1 bg-[#1c355e] hover:bg-[#16294a] text-white text-[10.5px] font-bold uppercase tracking-wide rounded-full transition-colors">
+        Bütünleşik Kalite Yönetim Sistemi
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── HEADER ── -->
+<header class="bg-[#1c355e] border-b border-[#2a4a7f]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col items-center text-center py-5 cursor-pointer" onclick="loadPage('home')" title="Ana Sayfa">
+      <img src="assets/logo.png" alt="İstanbul 29 Mayıs Üniversitesi" class="h-16 w-auto mb-2.5">
+      <span class="uni-title text-white text-lg md:text-2xl leading-tight">İstanbul 29 Mayıs Üniversitesi</span>
+      <span class="uni-title text-[#4bb5e8] text-lg md:text-2xl leading-tight tracking-[0.1em] mt-1 uppercase">Kalite Güvence Sistemi</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── NAV ── -->
+<nav class="bg-white shadow-md sticky top-0 z-40 border-b border-gray-200 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <ul id="top-menu" class="flex flex-wrap items-center text-xs font-bold uppercase tracking-wide">
+
+      <li class="nav-item relative mr-1">
+        <a href="#" onclick="loadPage('home')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">
+          ANA SAYFA</a>
+      </li>
+
+      <li class="nav-item relative mr-1">
+        <a href="#" onclick="loadPage('misyon-vizyon')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">
+          HAKKIMIZDA         </a>
+        <ul class="dropdown absolute left-0 top-full bg-white shadow-xl border-t-4 border-[#1c355e] py-2 z-50 rounded-b-lg" style="width:350px">
+          <li><a href="#" onclick="loadPage('misyon-vizyon')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Misyon &amp; Vizyon</a></li>
+          <li><a href="#" onclick="loadPage('degerlerimiz')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Değerlerimiz</a></li>
+          <li><a href="#" onclick="loadPage('istatistikler')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Sayılarla Üniversitemiz</a></li>
+          <li><a href="#" onclick="loadPage('ilgili-mevzuat')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">İlgili Mevzuat</a></li>
+          <li><a href="#" onclick="loadPage('akreditasyon-koordinatorlugu')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kalite Güv. ve Akreditasyon Koordinatörlüğü</a></li>
+          <li class="px-5 pt-2.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-gray-400 border-t border-gray-100 mt-1">Kalite Komisyonları</li>
+          <li><a href="#" onclick="loadPage('kalite-komisyonu')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kalite Komisyonu</a></li>
+          <li><a href="#" onclick="loadPage('kalite-alt-komisyonlari')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kalite Alt Komisyonları</a></li>
+          <li><a href="#" onclick="loadPage('ogrenci-kalite-komisyonu')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Öğrenci Kalite Komisyonu</a></li>
+          <li><a href="#" onclick="loadPage('uygulama-arastirma-kalite-komisyonu')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Uyg. ve Araştırma Merkezleri Kalite Alt Kom.</a></li>
+          <li><a href="#" onclick="loadPage('organizasyon-semalari')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Organizasyon Şemaları</a></li>
+          <li><a href="#" onclick="loadPage('puko-donguleri')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kalite Etkinlik Alanları ve PUKÖ Döngüleri</a></li>
+          <li><a href="#" onclick="loadPage('olcme-degerlendirme-komisyonu')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Ölçme, Değerlendirme ve İyileştirme Komisyonu</a></li>
+          <li><a href="#" onclick="loadPage('surec-el-kitabi-komisyonu')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Süreç El Kitabı Hazırlama Komisyonu</a></li>
+          <li><a href="#" onclick="loadPage('danisma-kurullari')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm border-t border-gray-100 mt-1">Danışma Kurulları</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item relative mr-1">
+        <a href="#" onclick="loadPage('kalite-politikasi')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">
+          POLİTİKALAR         </a>
+        <ul class="dropdown absolute left-0 top-full bg-white shadow-xl border-t-4 border-[#1c355e] py-2 z-50 rounded-b-lg" style="width:280px">
+          <li><a href="#" onclick="loadPage('kalite-politikasi')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kalite Politikası</a></li>
+          <li><a href="#" onclick="loadPage('arastirma-gelistirme')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Araştırma-Geliştirme</a></li>
+          <li><a href="#" onclick="loadPage('egitim-ogretim')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Eğitim-Öğretim</a></li>
+          <li><a href="#" onclick="loadPage('kurumsal-gelisim')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kurumsal Gelişim</a></li>
+          <li><a href="#" onclick="loadPage('topluma-hizmet')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Toplumsal Katkı</a></li>
+          <li><a href="#" onclick="loadPage('uluslararasilasma')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Uluslararasılaşma</a></li>
+          <li><a href="#" onclick="loadPage('uzaktan-egitim-politikasi')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Uzaktan Eğitim Politikası</a></li>
+          <li><a href="#" onclick="loadPage('bilgi-guvenligi')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Bilgi Güvenliği</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item relative mr-1">
+        <a href="#" onclick="loadPage('stratejik-plan')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">
+          KALİTE DOKÜMANLARI         </a>
+        <ul class="dropdown absolute left-0 top-full bg-white shadow-xl border-t-4 border-[#1c355e] py-2 z-50 rounded-b-lg" style="width:280px">
+          <li><a href="#" onclick="loadPage('stratejik-plan')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Stratejik Plan</a></li>
+          <li><a href="#" onclick="loadPage('is-akis-surecleri')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">İş Akış Süreçleri</a></li>
+          <li><a href="#" onclick="loadPage('gorev-tanimlari')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Görev Tanımları</a></li>
+          <li><a href="#" onclick="loadPage('prosedurler')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Prosedürler</a></li>
+          <li><a href="#" onclick="loadPage('sertifikalarimiz')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Sertifikalarımız</a></li>
+          <li><a href="#" onclick="loadPage('kalite-etkinlikleri')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kalite Etkinlikleri</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item relative mr-1">
+        <a href="#" onclick="loadPage('izleme-anketler')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">
+          İZLEME VE DEĞERLENDİRME         </a>
+        <ul class="dropdown absolute left-0 top-full bg-white shadow-xl border-t-4 border-[#1c355e] py-2 z-50 rounded-b-lg" style="width:340px">
+          <li class="px-5 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-gray-400">Kurum İçi İzleme</li>
+          <li><a href="#" onclick="loadPage('ic-degerlendirme-raporlari')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">İç Değerlendirme Raporları</a></li>
+          <li><a href="#" onclick="loadPage('faaliyet-raporlari')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Faaliyet Raporları</a></li>
+          <li><a href="#" onclick="loadPage('oz-degerlendirme')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Öz Değerlendirme Raporları</a></li>
+          <li><a href="#" onclick="loadPage('akran-degerlendirme')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Akran Değerlendirme Raporları</a></li>
+          <li class="px-5 pt-2.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-gray-400 border-t border-gray-100 mt-1">YÖK / YÖKAK İzlemeleri</li>
+          <li><a href="#" onclick="loadPage('dis-degerlendirme-geri-bildirim')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Dış Değerlendirme Geri Bildirim Raporu</a></li>
+          <li><a href="#" onclick="loadPage('dis-degerlendirme-kurumsal-izleme')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Dış Değerlendirme Kurumsal İzleme Raporu</a></li>
+          <li><a href="#" onclick="loadPage('vakif-yuksekogretim-raporu')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Vakıf Yükseköğretim Kurumları Raporu</a></li>
+          <li><a href="#" onclick="loadPage('yokak-izleme-raporu')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Yıllara Göre Değişim</a></li>
+          <li class="px-5 pt-2.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-gray-400 border-t border-gray-100 mt-1">Diğer İzlemeler</li>
+          <li><a href="#" onclick="loadPage('tuma-arastirmalari')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">TÜBA-TÜMA Raporları</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item relative mr-1">
+        <a href="#" onclick="loadPage('iyilestirme-liderlik')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">
+          İYİLEŞTİRME         </a>
+        <ul class="dropdown absolute left-0 top-full bg-white shadow-xl border-t-4 border-[#1c355e] py-2 z-50 rounded-b-lg" style="width:300px">
+          <li><a href="#" onclick="loadPage('iyilestirme-liderlik')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Liderlik, Yönetişim ve Kalite</a></li>
+          <li><a href="#" onclick="loadPage('iyilestirme-egitim-ogretim')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Eğitim &amp; Öğretim</a></li>
+          <li><a href="#" onclick="loadPage('iyilestirme-arastirma')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Araştırma Geliştirme</a></li>
+          <li><a href="#" onclick="loadPage('iyilestirme-toplumsal')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Toplumsal Katkı</a></li>
+          <li><a href="#" onclick="loadPage('iyilestirme-performans')" class="block px-5 py-2.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kurumsal Performans Göstergeleri</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item relative mr-1">
+        <a href="#" onclick="loadPage('program-akreditasyonlari')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">
+          GELECEĞE BAKIŞ         </a>
+        <ul class="dropdown absolute left-0 top-full bg-white shadow-xl border-t-4 border-[#1c355e] py-2 z-50 rounded-b-lg" style="width:330px">
+          <li class="px-5 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-gray-400">Akreditasyon</li>
+          <li><a href="#" onclick="loadPage('program-akreditasyonlari')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Program Akreditasyonları</a></li>
+          <li><a href="#" onclick="loadPage('kurum-akreditasyonlari')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kurum Akreditasyonları</a></li>
+          <li class="px-5 pt-2.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-gray-400 border-t border-gray-100 mt-1">Vizyon ve Programlar</li>
+          <li><a href="#" onclick="loadPage('vizyon-2030')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">2030 Vizyonu</a></li>
+          <li><a href="#" onclick="loadPage('kurumsal-donusum-kapasitesi')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kurumsal Dönüşüm Kapasitesi</a></li>
+          <li><a href="#" onclick="loadPage('kap')" class="block px-5 py-2 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-sm">Kurumsal Akreditasyon Programı (KAP)</a></li>
+        </ul>
+      </li>
+
+      <li class="ml-auto flex items-center gap-2 py-2">
+        <div class="relative" id="search-wrap">
+          <button onclick="toggleNavSearch()" aria-label="Ara"
+            class="px-3 h-9 flex items-center justify-center rounded-lg text-[#1c355e] hover:bg-gray-100 transition-colors text-xs font-bold tracking-wide">
+            Ara
+          </button>
+          <div id="nav-search-box" class="hidden absolute right-0 top-full mt-2 w-80 z-50">
+            <div class="relative">
+              <input type="text" id="search-input" placeholder="Site içi ara…"
+                class="w-full pl-4 pr-10 py-2.5 bg-white text-gray-700 placeholder-gray-400 rounded-xl border border-gray-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-[#4bb5e8] text-sm normal-case font-medium transition">
+                          </div>
+            <div id="search-dropdown" class="hidden mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden"></div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── PAGE TITLE BAR ── -->
+<div id="page-title-bar" class="bg-white border-b border-gray-200 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+    <h1 id="page-title" class="text-2xl font-extrabold text-[#1c355e] tracking-tight">Misyon ve Vizyon</h1>
+    <nav class="text-sm text-gray-500 mt-1.5 flex items-center gap-2 flex-wrap">
+      <a href="#" onclick="loadPage('home')" class="hover:text-[#1c355e] transition-colors font-medium">Ana Sayfa</a>
+      <span class="text-gray-300">/</span>
+      <span id="bc-section" class="text-gray-500">Geleceğe Bakış</span>
+      <span id="bc-sep" class="text-gray-300">/</span>
+      <span id="bc-page" class="text-[#4bb5e8] font-semibold">Misyon &amp; Vizyon</span>
+    </nav>
+  </div>
+</div>
+
+<!-- ── MAIN (iç sayfalar) ── -->
+<main id="inner-layout" class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex flex-col lg:flex-row gap-8">
+  <aside class="w-full lg:w-60 flex-shrink-0" id="sidebar-container"></aside>
+  <article class="flex-1 min-w-0">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden min-h-[520px] p-8" id="content-area"></div>
+  </article>
+</main>
+
+<!-- ── HOME LAYOUT (ana sayfa) ── -->
+<div id="home-layout" class="flex-grow w-full" style="display:none"></div>
+
+<!-- ── FOOTER ── -->
+<footer class="bg-[#1c355e] text-white py-10 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div>
+        <div class="flex items-center mb-4">
+          <img src="assets/logo.png" alt="İstanbul 29 Mayıs Üniversitesi" class="h-10 w-auto mr-3 flex-shrink-0">
+          <div>
+            <div class="font-bold text-sm">İstanbul 29 Mayıs Üniversitesi</div>
+            <div class="text-[#4bb5e8] text-xs">Kalite Güvence Sistemi</div>
+          </div>
+        </div>
+        <p class="text-gray-400 text-sm" id="ft-addr1">Elmalıkent Mah. Elmalıkent Cad. No:4</p>
+        <p class="text-gray-400 text-sm" id="ft-addr2">Ümraniye / İstanbul</p>
+        <p class="text-gray-400 text-sm mt-1" id="ft-phone">Tel: +90 216 474 08 60</p>
+        <p class="text-gray-400 text-sm" id="ft-email">E-posta: kalite@29mayis.edu.tr</p>
+      </div>
+      <div>
+        <h4 class="text-[#c8a84b] text-xs font-bold uppercase tracking-wider mb-4">Kalite Güvencesi</h4>
+        <div class="space-y-2">
+          <a href="#" onclick="loadPage('kalite-politikasi')" class="block text-gray-400 hover:text-white text-sm transition-colors">Kalite Politikası</a>
+          <a href="#" onclick="loadPage('kalite-komisyonu')" class="block text-gray-400 hover:text-white text-sm transition-colors">Kalite Komisyonu</a>
+          <a href="#" onclick="loadPage('akreditasyon-koordinatorlugu')" class="block text-gray-400 hover:text-white text-sm transition-colors">Akreditasyon Koordinatörlüğü</a>
+          <a href="#" onclick="loadPage('iletisim')" class="block text-gray-400 hover:text-white text-sm transition-colors">İletişim</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-[#c8a84b] text-xs font-bold uppercase tracking-wider mb-4">Hızlı Erişim</h4>
+        <div class="space-y-2">
+          <a href="https://obs.29mayis.edu.tr" target="_blank" class="block text-gray-400 hover:text-white text-sm transition-colors">Öğrenci Bilgi Sistemi</a>
+          <a href="https://abs.29mayis.edu.tr" target="_blank" class="block text-gray-400 hover:text-white text-sm transition-colors">Akademik Bilgi Sistemi</a>
+          <a href="https://ebs.29mayis.edu.tr" target="_blank" class="block text-gray-400 hover:text-white text-sm transition-colors">Uzaktan Eğitim Sistemi</a>
+          <a href="https://www.29mayis.edu.tr" target="_blank" class="block text-gray-400 hover:text-white text-sm transition-colors">Kurumsal Portal</a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-gray-500">
+      <span id="ft-copyright">© 2025 İstanbul 29 Mayıs Üniversitesi. Tüm hakları saklıdır.</span>
+      <span>KVKK | Çerez Politikası | Erişilebilirlik</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── NAV GROUPS ── */
+let NAV_GROUPS = {
+  'hakkimizda': { label:'Hakkımızda', links:[
+    { id:'misyon-vizyon', icon:'fa-bullseye', text:'Misyon & Vizyon' },
+    { id:'degerlerimiz',  icon:'fa-star',     text:'Değerlerimiz' },
+    { id:'istatistikler', icon:'fa-chart-pie', text:'Sayılarla Üniversitemiz' },
+    { id:'ilgili-mevzuat', icon:'fa-gavel',   text:'İlgili Mevzuat' },
+    { id:'akreditasyon-koordinatorlugu', icon:'fa-certificate', text:'Akreditasyon Koor.' },
+    { id:'kalite-komisyonu',                   icon:'fa-users',         text:'Kalite Komisyonu' },
+    { id:'kalite-alt-komisyonlari',            icon:'fa-users-cog',     text:'Kalite Alt Komisyonları' },
+    { id:'ogrenci-kalite-komisyonu',           icon:'fa-user-graduate', text:'Öğrenci Kalite Kom.' },
+    { id:'uygulama-arastirma-kalite-komisyonu',icon:'fa-flask',         text:'Uyg. ve Araş. Mrk. Alt Kom.' },
+    { id:'organizasyon-semalari',              icon:'fa-sitemap',       text:'Organizasyon Şemaları' },
+    { id:'puko-donguleri',                     icon:'fa-sync-alt',      text:'PUKÖ Döngüleri' },
+    { id:'olcme-degerlendirme-komisyonu',      icon:'fa-tachometer-alt',text:'Ölçme, Değ. ve İyileştirme Kom.' },
+    { id:'surec-el-kitabi-komisyonu',          icon:'fa-book',          text:'Süreç El Kitabı Kom.' },
+    { id:'danisma-kurullari',                  icon:'fa-comments',      text:'Danışma Kurulları' }
+  ]},
+  'politikalar': { label:'Kalite Politikaları', links:[
+    { id:'kalite-politikasi',         icon:'fa-award',          text:'Kalite Politikası' },
+    { id:'arastirma-gelistirme',      icon:'fa-flask',          text:'Araştırma-Geliştirme' },
+    { id:'egitim-ogretim',            icon:'fa-graduation-cap', text:'Eğitim-Öğretim' },
+    { id:'kurumsal-gelisim',          icon:'fa-building',       text:'Kurumsal Gelişim' },
+    { id:'topluma-hizmet',            icon:'fa-hands-helping',  text:'Toplumsal Katkı' },
+    { id:'uluslararasilasma',         icon:'fa-globe',          text:'Uluslararasılaşma' },
+    { id:'uzaktan-egitim-politikasi', icon:'fa-laptop',         text:'Uzaktan Eğitim Pol.' },
+    { id:'bilgi-guvenligi',           icon:'fa-shield-alt',     text:'Bilgi Güvenliği' }
+  ]},
+  'kalite-dokumanlari': { label:'Kalite Dokümanları', links:[
+    { id:'stratejik-plan',    icon:'fa-chart-bar',       text:'Stratejik Plan' },
+    { id:'is-akis-surecleri', icon:'fa-project-diagram', text:'İş Akış Süreçleri' },
+    { id:'gorev-tanimlari',   icon:'fa-tasks',           text:'Görev Tanımları' },
+    { id:'prosedurler',       icon:'fa-list-alt',        text:'Prosedürler' },
+    { id:'sertifikalarimiz',  icon:'fa-medal',           text:'Sertifikalarımız' },
+    { id:'kalite-etkinlikleri', icon:'fa-calendar-check', text:'Kalite Etkinlikleri' }
+  ]},
+  'izleme-degerlendirme': { label:'İzleme ve Değerlendirme', links:[
+    { id:'izleme-anketler',      icon:'fa-poll',            text:'Kurum İçi İzleme' },
+    { id:'yok-izleme-raporlari', icon:'fa-university',      text:'YÖK / YÖKAK İzlemeleri' },
+    { id:'uluslararasi-izleme',  icon:'fa-globe',           text:'Uluslararası İzleme' },
+    { id:'yokak-izleme-raporu',  icon:'fa-chart-bar',       text:'İzleme, Yıllara Göre Değişim' },
+    { id:'tuma-arastirmalari',   icon:'fa-clipboard-check', text:'Ulusal İzleme ve Değ. Raporları' },
+    { id:'oz-degerlendirme',     icon:'fa-user-check',      text:'Öz Değerlendirme' },
+    { id:'akran-degerlendirme',  icon:'fa-users',           text:'Akran Değerlendirme' },
+    { id:'ic-degerlendirme-raporlari',        icon:'fa-file-alt',       text:'İç Değerlendirme Raporları' },
+    { id:'faaliyet-raporlari',                icon:'fa-clipboard-list', text:'Faaliyet Raporları' },
+    { id:'dis-degerlendirme-geri-bildirim',   icon:'fa-file-import',    text:'Dış Değ. Geri Bildirim' },
+    { id:'dis-degerlendirme-kurumsal-izleme', icon:'fa-search-plus',    text:'Dış Değ. Kurumsal İzleme' },
+    { id:'vakif-yuksekogretim-raporu',        icon:'fa-landmark',       text:'Vakıf YÖK Raporu' },
+    { id:'paydas-katilim',       icon:'fa-comments',        text:'Paydaş Katılım Formu' }
+  ]},
+  'iyilestirme': { label:'İyileştirme', links:[
+    { id:'iyilestirme-liderlik',      icon:'fa-crown',          text:'Liderlik, Yönetişim ve Kalite' },
+    { id:'iyilestirme-egitim-ogretim',icon:'fa-graduation-cap', text:'Eğitim & Öğretim' },
+    { id:'iyilestirme-arastirma',     icon:'fa-flask',          text:'Araştırma Geliştirme' },
+    { id:'iyilestirme-toplumsal',     icon:'fa-hands-helping',  text:'Toplumsal Katkı' },
+    { id:'iyilestirme-performans',    icon:'fa-chart-line',     text:'Kurumsal Performans Göstergeleri' }
+  ]},
+  'gelecege-bakis': { label:'Geleceğe Bakış', links:[
+    { id:'vizyon-2030',                   icon:'fa-binoculars', text:'2030 Vizyonu' },
+    { id:'kurumsal-donusum-kapasitesi',   icon:'fa-sync',       text:'Kurumsal Dönüşüm Kapasitesi' },
+    { id:'ilkelerimiz',                   icon:'fa-scale-balanced', text:'İlkelerimiz' },
+    { id:'program-akreditasyonlari',      icon:'fa-award',      text:'Program Akreditasyonları' },
+    { id:'kurum-akreditasyonlari',        icon:'fa-university', text:'Kurum Akreditasyonları' },
+    { id:'kap',                           icon:'fa-stamp',      text:'Kurumsal Akreditasyon Programı (KAP)' }
+  ]},
+  'uzaktan': { label:'Uzaktan Eğitim', links:[
+    { id:'uzaktan-amac-hedefler',    icon:'fa-crosshairs',         text:'Amaç ve Hedefler' },
+    { id:'uzaktan-komisyon',         icon:'fa-users',              text:'UE Komisyonu' },
+    { id:'uzaktan-alt-komisyon',     icon:'fa-users-cog',          text:'UE Alt Komisyonu' },
+    { id:'uzaktan-ogretim-sureci',   icon:'fa-chalkboard-teacher', text:'Öğretim Süreci' },
+    { id:'uzaktan-yonetimsel-surec', icon:'fa-cogs',               text:'Yönetimsel Süreç' }
+  ]},
+  'iletisim': { label:'İletişim', links:[
+    { id:'iletisim', icon:'fa-map-marker-alt', text:'İletişim Bilgileri' }
+  ]}
+};
+
+let PAGE_TO_GROUP = {
+  'misyon-vizyon':'hakkimizda','degerlerimiz':'hakkimizda',
+  'istatistikler':'hakkimizda','ilgili-mevzuat':'hakkimizda',
+  'akreditasyon-koordinatorlugu':'hakkimizda',
+  'kalite-komisyonu':'hakkimizda','kalite-alt-komisyonlari':'hakkimizda',
+  'ogrenci-kalite-komisyonu':'hakkimizda','uygulama-arastirma-kalite-komisyonu':'hakkimizda',
+  'organizasyon-semalari':'hakkimizda','puko-donguleri':'hakkimizda',
+  'olcme-degerlendirme-komisyonu':'hakkimizda','surec-el-kitabi-komisyonu':'hakkimizda',
+  'danisma-kurullari':'hakkimizda',
+  'kalite-politikasi':'politikalar','arastirma-gelistirme':'politikalar',
+  'egitim-ogretim':'politikalar','kurumsal-gelisim':'politikalar',
+  'topluma-hizmet':'politikalar','uluslararasilasma':'politikalar',
+  'uzaktan-egitim-politikasi':'politikalar','bilgi-guvenligi':'politikalar',
+  'stratejik-plan':'kalite-dokumanlari','is-akis-surecleri':'kalite-dokumanlari',
+  'gorev-tanimlari':'kalite-dokumanlari','prosedurler':'kalite-dokumanlari',
+  'sertifikalarimiz':'kalite-dokumanlari',
+  'izleme-anketler':'izleme-degerlendirme','yok-izleme-raporlari':'izleme-degerlendirme',
+  'yokak-izleme-raporu':'izleme-degerlendirme','tuma-arastirmalari':'izleme-degerlendirme',
+  'oz-degerlendirme':'izleme-degerlendirme','akran-degerlendirme':'izleme-degerlendirme',
+  'ic-degerlendirme-raporlari':'izleme-degerlendirme','faaliyet-raporlari':'izleme-degerlendirme',
+  'dis-degerlendirme-geri-bildirim':'izleme-degerlendirme','dis-degerlendirme-kurumsal-izleme':'izleme-degerlendirme',
+  'vakif-yuksekogretim-raporu':'izleme-degerlendirme',
+  'iyilestirme-liderlik':'iyilestirme','iyilestirme-egitim-ogretim':'iyilestirme',
+  'iyilestirme-arastirma':'iyilestirme','iyilestirme-toplumsal':'iyilestirme',
+  'iyilestirme-performans':'iyilestirme',
+  'program-akreditasyonlari':'gelecege-bakis','kurum-akreditasyonlari':'gelecege-bakis',
+  'vizyon-2030':'gelecege-bakis','kurumsal-donusum-kapasitesi':'gelecege-bakis','kap':'gelecege-bakis',
+  'uzaktan-amac-hedefler':'uzaktan','uzaktan-komisyon':'uzaktan',
+  'uzaktan-alt-komisyon':'uzaktan','uzaktan-ogretim-sureci':'uzaktan',
+  'uzaktan-yonetimsel-surec':'uzaktan','iletisim':'iletisim',
+  'kalite-etkinlikleri':'kalite-dokumanlari',
+  'uluslararasi-izleme':'izleme-degerlendirme','paydas-katilim':'izleme-degerlendirme',
+  'ilkelerimiz':'gelecege-bakis'
+};
+
+/* ── KALİTE ETKİNLİKLERİ (global) ── */
+let EVENTS = [
+  { tarih:"28-29 Temmuz 2026", kategori:"Akreditasyon", baslik:"Fakülteler Akreditasyon Değerlendirme Toplantıları", ozet:"Üniversitemiz fakültelerinin program akreditasyon süreçlerine yönelik değerlendirme toplantıları iki gün boyunca gerçekleştirildi.", icon:"fa-clipboard-check", color:"#1c355e", slug:"temmuz-2026-fakulte-akreditasyon", foto:17, detay:"Kalite Güvencesi ve Akreditasyon Koordinatörlüğü koordinasyonunda, fakülte kalite temsilcileri ve akademik birim yöneticilerinin katılımıyla düzenlenen toplantılarda; program akreditasyonuna hazırlık, öz değerlendirme çalışmaları ve gelişmeye açık alanlar iki gün boyunca ele alındı." },
+  { tarih:"1 Temmuz 2026", kategori:"Eğitim", baslik:"Program ve Ders Bilgi Paketlerinin Hazırlanması Eğitimi", ozet:"Program ve ders bilgi paketlerinin hazırlanmasına yönelik eğitim, Dr. Öğr. Üyesi Yunus Emre Ömür tarafından AE114 No'lu Salon'da gerçekleştirildi.", icon:"fa-chalkboard-user", color:"#1c355e", slug:"program-ders-bilgi-paketi-egitimi", foto:1, detay:"1 Temmuz 2026 tarihinde saat 14.00'te AE114 No'lu Salon'da düzenlenen eğitimde; program ve ders bilgi paketlerinin hazırlanma esasları, öğrenme çıktıları ve ders içeriklerinin bilgi paketine işlenmesi Dr. Öğr. Üyesi Yunus Emre Ömür tarafından ele alındı." },
+  { tarih:"8 Haziran 2026", kategori:"Akreditasyon", baslik:"Edebiyat Fakültesi Akreditasyon Süreci", ozet:"Edebiyat Fakültesi programlarının akreditasyon değerlendirmesi ve akreditasyon belgesi takdimi gerçekleştirildi.", icon:"fa-award", color:"#4bb5e8", slug:"edebiyat-akreditasyon-haziran-2026", foto:14, detay:"Edebiyat Fakültesi programlarının dış değerlendirme sürecinde; program çıktıları, eğitim-öğretim kalitesi ve sürekli iyileştirme çalışmaları değerlendirildi. Süreç, akreditasyon belgesinin takdimiyle taçlandırıldı." },
+  { tarih:"21 Mayıs 2026", kategori:"Eğitim", baslik:"Hizmet İçi Eğitim: Yükseköğretimde Uluslararasılaşma Süreçleri", ozet:"Yükseköğretimde uluslararasılaşma süreçlerine yönelik hizmet içi eğitim semineri, Dr. Öğr. Üyesi Mehtap Güven Çoban tarafından gerçekleştirildi.", icon:"fa-globe", color:"#4bb5e8", slug:"uluslararasilasma-surecleri-egitimi", foto:1, detay:"21 Mayıs 2026 tarihinde saat 16.00'da B213B'de düzenlenen hizmet içi eğitim seminerinde; yükseköğretimde uluslararasılaşma politikaları, süreçleri ve iyi uygulamalar Dr. Öğr. Üyesi Mehtap Güven Çoban tarafından paylaşıldı." },
+  { tarih:"18 Mayıs 2026", kategori:"Eğitim", baslik:"Hizmet İçi Eğitim: Bilgi Paketi Eğitimi", ozet:"Bilgi paketi hazırlama sürecine yönelik hizmet içi eğitim semineri çevrim içi (ZOOM) olarak gerçekleştirildi.", icon:"fa-laptop", color:"#059669", slug:"bilgi-paketi-egitimi-mayis-2026", foto:1, detay:"18 Mayıs 2026 tarihinde saat 14.00'te çevrim içi (ZOOM) düzenlenen hizmet içi eğitim seminerinde; AKTS bilgi paketinin hazırlanması, güncellenmesi ve kalite süreçleriyle ilişkisi ele alındı." },
+  { tarih:"14 Nisan 2026", kategori:"Toplantı", baslik:"Kalite Değerlendirme Toplantısı", ozet:"Kalite Güvence Sistemi kapsamında akademik birimlerle kalite süreçleri değerlendirme toplantısı yapıldı.", icon:"fa-people-group", color:"#059669", slug:"nisan-2026-kalite-toplantisi", foto:6, detay:"Kalite Güvence Sistemi kapsamında akademik birim temsilcilerinin katılımıyla düzenlenen toplantıda; kalite süreçlerinin işleyişi, performans göstergeleri ve iyileştirme çalışmaları görüşüldü." },
+];
+
+/* ── Birleşik grafik + aç/kapa (toggle) bileşeni ── */
+/* Bir grafikte birden çok istatistik; yanındaki pill'lerle her seri açılıp kapanır. */
+const TC = {};   // id -> Chart örneği kaydı
+function tcCard(g){
+  const pills = g.series.map((s,i)=>
+    `<button class="tpill ${s.on?'on':''}" style="--pc:${s.color}" onclick="tcToggle('${g.id}',${i},this)"><span class="tdot"></span>${s.label}</button>`
+  ).join('');
+  return `<div class="tc-card">
+    <div class="tc-head"><h4>${g.title}</h4><span class="tc-sub">${g.sub||''}</span></div>
+    <div class="tc-toggles">${pills}</div>
+    <div class="chart-wrap" style="height:300px"><canvas id="tc-${g.id}"></canvas></div>
+  </div>`;
+}
+function tcBuild(g){
+  const el = document.getElementById('tc-'+g.id);
+  if(!el || typeof Chart==='undefined') return;
+  const gridColor='rgba(0,0,0,.05)';
+  const usesRight = g.series.some(s=>s.axis==='y1');
+  const bar = (g.type==='bar');
+  const stacked = !!g.stacked;
+  const datasets = g.series.map(s=>({
+    label:s.label, data:s.data, hidden:!s.on,
+    borderColor:s.color, backgroundColor: bar ? s.color : s.color+'22',
+    yAxisID:s.axis||'y', tension:.35, borderWidth:2.2, pointRadius:2.4, pointHoverRadius:4,
+    pointBackgroundColor:s.color, fill:false, maxBarThickness:30, borderRadius:5
+  }));
+  if(TC[g.id]){ try{TC[g.id].destroy();}catch(e){} }
+  TC[g.id] = new Chart(el, {
+    type: g.type||'line',
+    data:{ labels:g.labels, datasets },
+    options:{ responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{ legend:{display:false},
+        tooltip:{ callbacks:{ label:(c)=>` ${c.dataset.label}: ${Number(c.parsed.y).toLocaleString('tr-TR')}` } } },
+      scales:{
+        x:{ grid:{display:false}, stacked },
+        y:{ position:'left', beginAtZero:true, stacked, grid:{color:gridColor},
+            ticks:{ callback:(v)=>Number(v).toLocaleString('tr-TR') } },
+        y1:{ display: usesRight?'auto':false, position:'right', beginAtZero:true, grid:{drawOnChartArea:false} }
+      }
+    }
+  });
+}
+function tcToggle(gid, idx, btn){
+  const ch = TC[gid]; if(!ch) return;
+  const ds = ch.data.datasets[idx];
+  ds.hidden = !ds.hidden;
+  ch.update();
+  if(btn) btn.classList.toggle('on', !ds.hidden);
+}
+function tcBuildAll(groups){ (groups||[]).forEach(tcBuild); }
+
+/* Dashboard için gerçek zaman-serisi veriler (Kaynak: Sayılarla İstanbul 29 Mayıs Üniversitesi) */
+const Y9  = ['2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+const Y11 = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+let DASH_GROUPS = [
+  { id:'ogrenci', title:'Öğrenci Sayıları', sub:'2017-2025', icon:'fa-user-graduate', accent:'#1c355e', type:'line', labels:Y9, series:[
+    { label:'Toplam Öğrenci', color:'#1c355e', on:true,  data:[1797,1844,1908,2190,2670,3363,4405,5100,5545] },
+    { label:'Lisans',         color:'#4bb5e8', on:true,  data:[1481,1504,1575,1745,2168,2847,3852,4580,4986] },
+    { label:'Yüksek Lisans',  color:'#7c3aed', on:false, data:[259,277,251,344,392,402,432,400,359] },
+    { label:'Doktora',        color:'#059669', on:false, data:[57,63,82,101,110,114,121,120,124] },
+    { label:'Ön Lisans',      color:'#c8a84b', on:false, data:[0,0,0,0,0,0,0,0,76] },
+    { label:'Yabancı Uyruklu',color:'#e11d48', on:true,  data:[211,197,210,223,262,308,354,329,333] },
+  ]},
+  { id:'birim', title:'Akademik Birimler', sub:'2017-2025', icon:'fa-building-columns', accent:'#0891b2', type:'bar', stacked:true, labels:Y9, series:[
+    { label:'Fakülte',   color:'#1c355e', on:true, data:[6,6,6,7,7,7,8,8,8] },
+    { label:'Enstitü',   color:'#4bb5e8', on:true, data:[3,3,3,3,3,3,3,3,3] },
+    { label:'Yüksekokul',color:'#059669', on:true, data:[1,1,1,1,1,1,1,1,1] },
+    { label:'Meslek Yüksekokulu', color:'#c8a84b', on:true, data:[0,0,0,0,0,0,0,0,1] },
+    { label:'Uyg. ve Araştırma Merkezi', color:'#7c3aed', on:true, data:[5,6,6,6,6,6,6,7,8] },
+  ]},
+  { id:'program', title:'Program Sayıları', sub:'2017-2025', icon:'fa-diagram-project', accent:'#7c3aed', type:'bar', stacked:true, labels:Y9, series:[
+    { label:'Lisans',        color:'#1c355e', on:true, data:[11,11,12,16,19,22,22,22,23] },
+    { label:'Yüksek Lisans', color:'#4bb5e8', on:true, data:[14,15,15,24,29,29,29,31,33] },
+    { label:'Doktora',       color:'#059669', on:true, data:[5,5,5,5,6,6,6,6,7] },
+    { label:'Ön Lisans',     color:'#c8a84b', on:true, data:[0,0,0,0,0,0,0,0,2] },
+  ]},
+  { id:'personel', title:'Akademik ve İdari Personel', sub:'2015-2025', icon:'fa-users', accent:'#059669', type:'line', labels:Y11, series:[
+    { label:'Akademik Personel', color:'#1c355e', on:true,  data:[95,109,110,104,99,121,145,156,165,165,179] },
+    { label:'İdari Personel',    color:'#4bb5e8', on:true,  data:[76,76,75,68,66,66,66,68,66,72,81] },
+    { label:'Yabancı Akademik',  color:'#c8a84b', on:false, data:[22,32,34,28,18,17,15,16,13,9,8] },
+    { label:'Yabancı İdari',     color:'#e11d48', on:false, data:[1,1,1,1,2,3,3,3,3,1,2] },
+  ]},
+  { id:'kutuphane', title:'Kütüphane', sub:'2017-2025', icon:'fa-book', accent:'#c8a84b', type:'line', labels:Y9, series:[
+    { label:'Toplam Kitap',        color:'#1c355e', on:true,  axis:'y',  data:[70535,76393,87823,97295,113865,119808,129887,141468,148745] },
+    { label:'Fiziki Alan (m²)',    color:'#4bb5e8', on:false, axis:'y',  data:[800,833,6243,6567,6567,6567,6567,6567,10560] },
+    { label:'Öğrenci Başına Kitap',color:'#059669', on:false, axis:'y1', data:[39.25,41.43,46.03,44.43,42.65,35.63,29.49,28.32,26.56] },
+    { label:'Veri Tabanı Üyeliği', color:'#e11d48', on:false, axis:'y1', data:[2,1,1,2,4,4,4,3,3] },
+  ]},
+  { id:'mezun', title:'Yıllara Göre Mezun Sayıları', sub:'2017-2025, toplam 2.701', icon:'fa-user-check', accent:'#e11d48', type:'bar', labels:Y9, series:[
+    { label:'Mezun', color:'#1c355e', on:true, data:[108,188,294,242,250,250,258,544,567] },
+  ]},
+];
+
+/* ── PAGES ── */
+const PAGES = {
+
+'home':{ title:'Ana Sayfa', breadcrumb:[], icon:'fa-home',
+render:()=>{
+  const slides = (window.CMS&&CMS.home&&CMS.home.carousel&&CMS.home.carousel.length) ? CMS.home.carousel : [
+    { bg:'linear-gradient(135deg,#0f2444 0%,#1c355e 50%,#1a4a7a 100%)',
+      tag:'YÖKAK 2025',
+      title:'Kurumsal Kalite Güvencesinde Güçlü Adımlar',
+      body:'İstanbul 29 Mayıs Üniversitesi, YÖKAK kurumsal izleme sürecindeki performansını her yıl güçlendirerek sürdürülebilir kalite anlayışını pekiştirmeye devam etmektedir.',
+      link:"loadPage('ic-degerlendirme-raporlari')", linkText:'Raporları İncele' },
+    { bg:'linear-gradient(135deg,#1a3a5c 0%,#0e4d6b 60%,#0d6e8a 100%)',
+      tag:'ISO 27001',
+      title:'Bilgi Güvenliği Yönetim Sistemi Belgemiz Yenilendi',
+      body:'TURKAK tarafından onaylanan ISO 27001 Bilgi Güvenliği Yönetim Sistemi belgemiz 2025 yılında başarıyla yenilenmiştir.',
+      link:"loadPage('sertifikalarimiz')", linkText:'Belgelerimizi Gör' },
+    { bg:'linear-gradient(135deg,#1c355e 0%,#2d5986 50%,#1c355e 100%)',
+      tag:'Stratejik Plan 2024-2028',
+      title:'Geleceğimizi Birlikte Şekillendiriyoruz',
+      body:'Üniversitemizin 2024-2028 yıllarını kapsayan Stratejik Planı, eğitim-öğretim, araştırma ve toplumsal katkı alanlarında hedeflerimizi belirlemektedir.',
+      link:"loadPage('stratejik-plan')", linkText:'Stratejik Plana Git' },
+    { bg:'linear-gradient(135deg,#0c2e52 0%,#1c355e 40%,#2a5080 100%)',
+      tag:'Akreditasyon',
+      title:'İlahiyat Fakültesi Ulusal Akreditasyonunu Aldı',
+      body:'Üniversitemiz İlahiyat Fakültesi lisans programları, İslam Akademik Akreditasyon (İAA) tarafından ulusal akreditasyon belgesine layık görülmüştür.',
+      link:"loadPage('sertifikalarimiz')", linkText:'Akreditasyonlarımız' },
+    { bg:'linear-gradient(135deg,#12304e 0%,#1c355e 55%,#173358 100%)',
+      tag:'Kalite Komisyonu',
+      title:'2024-2025 Akademik Yılı Kalite Değerlendirme Toplantısı',
+      body:'Üniversite Kalite Komisyonu, akademik birim kalite temsilcilerinin katılımıyla 2024-2025 akademik yılına ait değerlendirme toplantısını tamamlamıştır.',
+      link:"loadPage('kalite-komisyonu')", linkText:'Komisyona Bakın' },
+    { bg:'linear-gradient(135deg,#1c355e 0%,#163050 40%,#0e2a48 100%)',
+      tag:'Anketler',
+      title:'2024-2025 Memnuniyet Anketi Sonuçları Açıklandı',
+      body:'Öğrenci, akademik ve idari personele yönelik memnuniyet anketlerinin 2024-2025 dönemi sonuçları kalite izleme sürecinde değerlendirilmiştir.',
+      link:"loadPage('izleme-anketler')", linkText:'Sonuçları Gör' },
+  ];
+
+  const news = (window.CMS&&CMS.home&&CMS.home.news&&CMS.home.news.length) ? CMS.home.news : [
+    { gun:'12', ay:'HAZ', baslik:'YÖKAK Kurumsal Geri Bildirim Raporu 2024 Yayımlandı', ozet:'Üniversitemize ait YÖKAK Kurumsal Geri Bildirim Raporu resmi portalda yayımlanmıştır.', page:'ic-degerlendirme-raporlari' },
+    { gun:'03', ay:'HAZ', baslik:'ISO 27001 Denetim Süreci Başarıyla Tamamlandı', ozet:'Yıllık gözetim denetimi TURKAK akreditasyonlu belgelendirme kuruluşu tarafından gerçekleştirildi.', page:'sertifikalarimiz' },
+    { gun:'20', ay:'MAY', baslik:'2024-2028 Stratejik Plan Değerlendirme Raporu Hazırlandı', ozet:'Stratejik hedeflere yönelik birinci yıl ilerleme raporu Kalite Komisyonu\'na sunuldu.', page:'stratejik-plan' },
+    { gun:'15', ay:'MAY', baslik:'Öğrenci Kalite Komisyonu Yeni Dönem Toplantısı Yapıldı', ozet:'2024-2025 dönemi Öğrenci Kalite Komisyonu üyeleri katılımıyla ilk toplantı gerçekleştirildi.', page:'ogrenci-kalite-komisyonu' },
+    { gun:'08', ay:'MAY', baslik:'İzleme Anketleri 2024-2025 Sonuçları Açıklandı', ozet:'Öğrenci genel memnuniyeti, akademik personel ve dış paydaş anket sonuçları değerlendirmeye alındı.', page:'izleme-anketler' },
+    { gun:'22', ay:'NİS', baslik:'Kurum İç Değerlendirme Raporu (KİDR) Tamamlandı', ozet:'2023-2024 dönemine ait KİDR hazırlanarak YÖKAK sistemine yüklenmiştir.', page:'ic-degerlendirme-raporlari' },
+  ];
+
+  const quickLinks = (window.CMS&&CMS.home&&CMS.home.quickLinks&&CMS.home.quickLinks.length) ? CMS.home.quickLinks : [
+    { icon:'fa-award', label:'Kalite Politikası', page:'kalite-politikasi', color:'#1c355e' },
+    { icon:'fa-file-alt', label:'İç Değerlendirme Raporları', page:'ic-degerlendirme-raporlari', color:'#2563eb' },
+    { icon:'fa-poll', label:'Anketler', page:'izleme-anketler', color:'#0891b2' },
+    { icon:'fa-chart-bar', label:'Stratejik Plan', page:'stratejik-plan', color:'#7c3aed' },
+    { icon:'fa-certificate', label:'Akreditasyon', page:'akreditasyon-koordinatorlugu', color:'#c8a84b' },
+    { icon:'fa-chart-line', label:'İstatistikler', page:'istatistikler', color:'#059669' },
+  ];
+
+  const stats = (window.CMS&&CMS.home&&CMS.home.stats&&CMS.home.stats.length) ? CMS.home.stats : [
+    { val:'5.846',  label:'Kayıtlı Öğrenci', icon:'fa-user-graduate', color:'#1c355e' },
+    { val:'197',    label:'Akademik Personel', icon:'fa-chalkboard-teacher', color:'#2563eb' },
+    { val:'333',    label:'Uluslararası Öğrenci', icon:'fa-globe', color:'#7c3aed' },
+    { val:'6',      label:'Akredite Program', icon:'fa-certificate', color:'#c8a84b' },
+  ];
+
+  const accreds = (window.CMS&&CMS.home&&CMS.home.accreds&&CMS.home.accreds.length) ? CMS.home.accreds : [
+    { abb:'YÖKAK', full:'Yükseköğretim Kalite Kurulu', img:'assets/accred/yokak.png', icon:'fa-university', color:'#1c355e' },
+    { abb:'İAA', full:'İlahiyat Akreditasyon Ajansı', img:'assets/accred/iaa.png', icon:'fa-star-and-crescent', color:'#c8a84b' },
+    { abb:'ISO 27001', full:'Bilgi Güvenliği YS', img:'assets/accred/iso27001.svg', icon:'fa-shield-alt', color:'#2563eb' },
+    { abb:'ISO 9001', full:'Kalite Yönetim Sistemi', img:'assets/accred/iso9001.svg', icon:'fa-check-circle', color:'#059669' },
+    { abb:'Sıfır Atık', full:'Çevre, Şehircilik ve İklim Değ. Bakanlığı', img:'assets/accred/sifiratik.png', icon:'fa-leaf', color:'#16a34a' },
+    { abb:'Engelsiz', full:'YÖK Engelsiz Üniversite Ödülü', img:'assets/accred/engelsiz.png', icon:'fa-wheelchair', color:'#7c3aed' },
+  ];
+
+  const events = (window.CMS&&CMS.home&&CMS.home.events&&CMS.home.events.length) ? CMS.home.events : EVENTS;
+
+  const duyurular = (window.CMS&&CMS.announcements&&CMS.announcements.length) ? CMS.announcements : [
+    { tarih:"6 Ağustos 2026", kat:"Süreç", ikon:"fa-clipboard-check", renk:"#1c355e", onemli:true, baslik:"Program Akran Değerlendirme Süreçleri Başlatıldı", ozet:"Akredite olmayan öğretim programlarının güçlü ve gelişmeye açık yönlerinin belirlenmesi ve sürekli iyileştirme (PUKÖ) döngülerinin işletilmesi amacıyla Program Akran Değerlendirme Süreci başlatılmıştır.", page:"akran-degerlendirme" },
+    { tarih:"5 Ağustos 2026", kat:"Süreç", ikon:"fa-building", renk:"#0891b2", baslik:"2026 Yılı İdari Birimler İç Değerlendirme Süreci Başladı", ozet:"Kurumsal dönüşüm ve dijitalleşme vizyonu doğrultusunda İdari Birimler İç Değerlendirme Raporu (BİDR) Hazırlama Kılavuzu oluşturulmuştur.", page:"ic-degerlendirme-raporlari" },
+    { tarih:"31 Temmuz 2026", kat:"Rehber", ikon:"fa-book", renk:"#7c3aed", baslik:"Kurumsal Akreditasyon Hazırlık Rehberi Paylaşıldı", ozet:"Birimlerce gerçekleştirilmesi gereken faaliyetler, hazır olması gereken kanıtlar ve olası değerlendirici sorularına ilişkin Kurumsal Akreditasyon Hazırlık Rehberi paylaşılmıştır.", page:"kurum-akreditasyonlari" },
+    { tarih:"7 Temmuz 2026", kat:"Anket", ikon:"fa-poll", renk:"#c8a84b", baslik:"Mezun Görüş ve İşbirliği Anketi Erişime Açıldı", ozet:"Mezunlarımızın görüş ve önerilerini almak, memnuniyet düzeylerini ölçmek amacıyla Mezun Memnuniyet Anketi erişime açılmıştır.", page:"izleme-anketler" },
+    { tarih:"7 Temmuz 2026", kat:"Anket", ikon:"fa-poll", renk:"#c8a84b", baslik:"Akademik Personel Memnuniyet Anketi Erişime Açıldı", ozet:"Akademik personelimizin görüşlerini ve memnuniyet düzeylerini değerlendirmek amacıyla Akademik Personel Memnuniyet Anketi erişime açılmıştır.", page:"izleme-anketler" },
+    { tarih:"7 Temmuz 2026", kat:"Anket", ikon:"fa-poll", renk:"#c8a84b", baslik:"İdari Personel Memnuniyet Anketi Erişime Açıldı", ozet:"İdari personelimizin görüşlerini ve memnuniyet düzeylerini değerlendirmek amacıyla İdari Personel Memnuniyet Anketi erişime açılmıştır.", page:"izleme-anketler" },
+    { tarih:"17 Nisan 2026", kat:"Rehber", ikon:"fa-book", renk:"#059669", baslik:"Kurumsal Akreditasyon Hazırlık Rehberi Hazırlandı", ozet:"YÖKAK Kurumsal Akreditasyon Programı kapsamında kalite güvence sistemimizin güçlendirilmesi amacıyla İstanbul 29 Mayıs Üniversitesi Kurumsal Akreditasyon Hazırlık Rehberi hazırlanarak paylaşılmıştır.", page:"kurum-akreditasyonlari" },
+  ];
+
+  const duyurularHtml = duyurular.map(d=>`
+    <div class="duyuru-card${d.onemli?' onemli':''}" style="--bar:${d.renk}" onclick="loadPage('${d.page}')">
+      ${d.onemli?'':''}
+      <span class="duyuru-badge" style="background:${d.renk}15;color:${d.renk}">${d.kat}</span>
+      <h4>${d.baslik}</h4>
+      <p>${d.ozet}</p>
+      <div class="duyuru-date">${d.tarih}</div>
+    </div>`).join('');
+
+  const slidesHtml = slides.map((s,i)=>`
+    <div class="carousel-slide" style="background:${s.bg}">
+      <div class="carousel-overlay"></div>
+      <div class="carousel-slide-inner">
+        <div class="max-w-7xl mx-auto px-8 lg:px-16 w-full relative z-10">
+          <span style="display:inline-block;background:#c8a84b;color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:20px;margin-bottom:14px;text-transform:uppercase">${s.tag}</span>
+          <h2 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;line-height:1.25;max-width:560px;margin-bottom:14px;text-shadow:0 2px 12px rgba(0,0,0,.25)">${s.title}</h2>
+          <p style="color:rgba(255,255,255,.82);font-size:15px;max-width:500px;line-height:1.6;margin-bottom:22px">${s.body}</p>
+          <a href="#" onclick="${s.link};return false;" style="display:inline-flex;align-items:center;gap:8px;background:#c8a84b;color:#fff;font-size:13px;font-weight:700;padding:10px 22px;border-radius:8px;text-decoration:none;transition:background .2s" onmouseover="this.style.background='#b8943a'" onmouseout="this.style.background='#c8a84b'">
+            ${s.linkText}           </a>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const dotsHtml = slides.map((_,i)=>`<button class="carousel-dot${i===0?' active':''}" onclick="carouselGoTo(${i})"></button>`).join('');
+
+  const newsHtml = news.map(n=>`
+    <div class="news-card" onclick="loadPage('${n.page}')">
+      <div class="news-date">
+        <div style="font-size:20px;font-weight:800;color:#1c355e;line-height:1">${n.gun}</div>
+        <div style="font-size:10px;font-weight:600;color:#6b7280;letter-spacing:.5px">${n.ay}</div>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:14px;font-weight:600;color:#1c355e;margin-bottom:4px;line-height:1.4">${n.baslik}</div>
+        <div style="font-size:12px;color:#6b7280;line-height:1.5">${n.ozet}</div>
+      </div>
+          </div>`).join('');
+
+  const quickLinksHtml = quickLinks.map(q=>`
+    <div class="quick-link" onclick="loadPage('${q.page}')">
+      <span style="font-size:13px;font-weight:600;color:#1c355e">${q.label}</span>
+          </div>`).join('');
+
+  const eventsHtml = events.slice(0,4).map(e=>{
+    const hasFoto = e.slug && e.foto;
+    const top = hasFoto
+      ? `<div class="event-card-top" style="padding:0;overflow:hidden;background:${e.color}">
+           <img src="assets/etkinlikler/${e.slug}/thumb/01.jpg" loading="lazy" alt="${e.baslik}" style="width:100%;height:100%;object-fit:cover">
+           <span class="event-cat">${e.kategori}</span>
+           <span style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:600;border-radius:20px;padding:3px 9px">${e.foto}</span>
+         </div>`
+      : `<div class="event-card-top" style="background:linear-gradient(135deg,${e.color},${e.color}cc)">
+           <span class="event-cat">${e.kategori}</span>
+         </div>`;
+    return `
+    <div class="event-card" onclick="${hasFoto?`loadPage('kalite-etkinlikleri');openEtkinlik('${e.slug}')`:`loadPage('kalite-etkinlikleri')`}">
+      ${top}
+      <div class="event-card-body">
+        <div class="event-date">${e.tarih}</div>
+        <h4>${e.baslik}</h4>
+        <p>${e.ozet}</p>
+      </div>
+    </div>`;}).join('');
+
+  const statsHtml = stats.map(s=>`
+    <div class="stat-card">
+      <div style="font-size:34px;font-weight:800;color:${s.color};line-height:1">${s.val}</div>
+      <div style="width:26px;height:3px;border-radius:3px;background:${s.color};margin:10px auto 0"></div>
+      <div style="font-size:12px;color:#6b7280;margin-top:10px;font-weight:500">${s.label}</div>
+    </div>`).join('');
+
+  const accredsHtml = accreds.map(a=>`
+    <div class="accred-badge">
+      ${a.img
+        ? `<div class="accred-logo"><img src="${a.img}" alt="${a.abb||a.full||''}" loading="lazy"></div>`
+        : `<div style="width:54px;height:54px;border-radius:12px;background:${a.color}14;display:flex;align-items:center;justify-content:center">
+                        </div>
+           <div style="font-size:13px;font-weight:700;color:#1c355e;text-align:center">${a.abb}</div>`}
+      <div style="font-size:10px;color:#9ca3af;text-align:center;line-height:1.3">${a.full}</div>
+    </div>`).join('');
+
+  return `
+    <!-- CAROUSEL -->
+    <div style="position:relative;overflow:hidden" id="home-carousel">
+      <div class="carousel-track" id="carousel-track">${slidesHtml}</div>
+      <button class="carousel-btn" style="left:16px" onclick="carouselPrev()"><span style="display:inline-block;width:10px;height:10px;border-top:2px solid #fff;border-left:2px solid #fff;transform:rotate(-45deg);margin-left:3px"></span></button>
+      <button class="carousel-btn" style="right:16px" onclick="carouselNext()"><span style="display:inline-block;width:10px;height:10px;border-top:2px solid #fff;border-right:2px solid #fff;transform:rotate(45deg);margin-right:3px"></span></button>
+      <div style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10" id="carousel-dots">${dotsHtml}</div>
+    </div>
+
+    <!-- PAYDAŞ KATILIM ŞERİDİ -->
+    <a href="https://kalite.29mayis.edu.tr/geri-bildirim/" target="_blank" rel="noopener"
+       style="display:block;text-decoration:none;background:linear-gradient(90deg,#1c355e,#2a4a7f);transition:filter .2s"
+       onmouseover="this.style.filter='brightness(1.12)'" onmouseout="this.style.filter='none'">
+      <div style="max-width:1152px;margin:0 auto;padding:15px 24px;display:flex;align-items:center;justify-content:center;gap:8px 18px;flex-wrap:wrap;text-align:center">
+        <span style="color:#fff;font-size:15px;font-weight:700;letter-spacing:.3px">Paydaş Katılım Formu</span>
+        <span style="color:#cfe0f5;font-size:13.5px">Görüş, öneri ve geri bildirimleriniz için, erişmek için tıklayın</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;background:#c8a84b;color:#fff;font-size:13px;font-weight:700;padding:8px 18px;border-radius:999px;white-space:nowrap">Katılım Sağla </span>
+      </div>
+    </a>
+
+    <!-- STATS / SAYILARLA ÖZET -->
+    <div style="background:#f8fafc;border-bottom:1px solid #e5e7eb;padding:30px 0">
+      <div style="max-width:1152px;margin:0 auto;padding:0 24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:18px">
+          <div>
+            <h3 style="font-size:18px;font-weight:800;color:#1c355e;display:flex;align-items:center;gap:9px;margin:0">
+              Sayılarla Üniversitemiz
+            </h3>
+            <p style="font-size:12.5px;color:#6b7280;margin-top:3px">2024-2025 akademik yılı öne çıkan göstergeleri</p>
+          </div>
+          <a href="dashboard/index.html"
+             style="display:inline-flex;align-items:center;gap:8px;background:#1c355e;color:#fff;font-size:12.5px;font-weight:700;padding:10px 18px;border-radius:8px;text-decoration:none;transition:background .2s"
+             onmouseover="this.style.background='#142643'" onmouseout="this.style.background='#1c355e'">
+            Gösterge Panosu           </a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px">${statsHtml}</div>
+      </div>
+    </div>
+
+    <!-- HIZLI ERİŞİM -->
+    <div style="max-width:1152px;margin:0 auto;padding:40px 24px 8px">
+      <h3 style="font-size:16px;font-weight:700;color:#1c355e;margin-bottom:16px;display:flex;align-items:center;gap:8px">
+        Hızlı Erişim
+      </h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px">${quickLinksHtml}</div>
+    </div>
+
+    <!-- DUYURULAR -->
+    <div style="background:#fff;border-top:1px solid #e5e7eb;padding:44px 0">
+      <div style="max-width:1152px;margin:0 auto;padding:0 24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px">
+          <h3 style="font-size:20px;font-weight:800;color:#1c355e;display:flex;align-items:center;gap:10px;margin:0">
+            Duyurular
+          </h3>
+          <a href="https://www.29mayis.edu.tr/tr/duyurular" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#4bb5e8;font-weight:600;text-decoration:none">
+            Tüm Duyurular           </a>
+        </div>
+        <div class="duyuru-grid">${duyurularHtml}</div>
+      </div>
+    </div>
+
+    <!-- KALİTE ETKİNLİKLERİ -->
+    <div style="background:#f8fafc;border-top:1px solid #e5e7eb;padding:44px 0">
+      <div style="max-width:1152px;margin:0 auto;padding:0 24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px">
+          <h3 style="font-size:20px;font-weight:800;color:#1c355e;display:flex;align-items:center;gap:10px;margin:0">
+            Kalite Etkinlikleri
+          </h3>
+          <a href="#" onclick="loadPage('kalite-etkinlikleri');return false;"
+             style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#4bb5e8;font-weight:600;text-decoration:none">
+            Tüm Etkinlikler           </a>
+        </div>
+        <div class="event-grid">${eventsHtml}</div>
+      </div>
+    </div>
+
+    <!-- HABERLER -->
+    <div style="background:#fff;border-top:1px solid #e5e7eb;padding:44px 0">
+      <div style="max-width:1152px;margin:0 auto;padding:0 24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px">
+          <h3 style="font-size:20px;font-weight:800;color:#1c355e;display:flex;align-items:center;gap:10px;margin:0">
+            Haberler
+          </h3>
+          <a href="https://www.29mayis.edu.tr/tr/haberler" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#4bb5e8;font-weight:600;text-decoration:none">
+            Tüm Haberler           </a>
+        </div>
+        <div class="news-grid">${newsHtml}</div>
+      </div>
+    </div>
+
+    <!-- AKREDİTASYON & SERTİFİKALAR -->
+    <div style="background:#f8fafc;border-top:1px solid #e5e7eb;padding:36px 0">
+      <div style="max-width:1152px;margin:0 auto;padding:0 24px">
+        <h3 style="font-size:16px;font-weight:700;color:#1c355e;text-align:center;margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:8px">
+          Akreditasyon &amp; Sertifikalarımız
+        </h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px">${accredsHtml}</div>
+        <div style="text-align:center;margin-top:20px">
+          <a href="#" onclick="loadPage('sertifikalarimiz');return false;"
+             style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#4bb5e8;font-weight:600;text-decoration:none">
+            Tüm Belgelerimiz           </a>
+        </div>
+      </div>
+    </div>`;
+}},
+
+'misyon-vizyon':{ title:'Misyon ve Vizyon', breadcrumb:['Geleceğe Bakış','Misyon & Vizyon'], icon:'fa-bullseye',
+render:()=>`
+  <div class="space-y-6">
+    <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-[#1c355e] shadow-sm">
+      <h3 class="text-lg font-bold text-[#1c355e] mb-3 flex items-center">Misyonumuz</h3>
+      <p class="text-gray-700 leading-relaxed text-justify">Kadim/milli kültürümüzden hareketle geliştirdiğimiz kurumsal değerlerimiz ışığında, uluslararası yeterlikte bir öğretim ve araştırma ortamı inşa ederek inançlara saygılı, etik değerlere bağlı, ülkemizin, bölgemizin ve insanlığın temel sorunlarına duyarlı, çözüm odaklı, gelişime açık, mesleki ve toplumsal sorumluluk sahibi bireyler yetiştirmektir.</p>
+    </div>
+    <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-[#c8a84b] shadow-sm">
+      <h3 class="text-lg font-bold text-[#1c355e] mb-3 flex items-center">Vizyonumuz</h3>
+      <p class="text-gray-700 leading-relaxed text-justify">Ülkemiz, bölgemiz ve insanlığın toplumsal gelişimine yön veren, akademik, sosyal ve kültürel faaliyetlerimizle daha iyi bir geleceğin şekillenmesine katkı sunan öncü, aranır ve örnek bir üniversite olmaktır.</p>
+    </div>
+  </div>`},
+
+'degerlerimiz':{ title:'Kurumsal Değerlerimiz', breadcrumb:['Geleceğe Bakış','Değerlerimiz'], icon:'fa-star',
+render:()=>`
+  <div class="prose mb-5"><p>İstanbul 29 Mayıs Üniversitesi, tüm faaliyetlerini aşağıdaki kurumsal değerler doğrultusunda yürütür.</p></div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    ${['İnançlara saygı','Etik değerlere bağlılık','Katılımcılık','Toplumsal sorumluluk','Eleştirel düşünce','Yeniliklere açıklık','Bilimsel üretkenlik ve özgünlük','Disiplinlerarası yaklaşım','Doğa ve çevre bilinci'].map(v=>`
+      <div class="border border-gray-100 bg-white p-4 rounded-lg shadow-sm" style="border-left:3px solid #1c355e">
+        <h4 class="font-bold text-[#1c355e]">${v}</h4>
+      </div>`).join('')}
+  </div>`},
+
+'kalite-politikasi':{ title:'Kalite Politikası', breadcrumb:['Kalite Politikaları','Kalite Politikası'], icon:'fa-award',
+render:()=>`
+  <div class="prose"><p>Kalite politikamız, üniversitemizin misyon ve vizyonu doğrultusunda eğitim öğretim, araştırma ve yönetim faaliyetlerinin ortak akıl çerçevesinde tüm paydaşlarımızca benimsenen sürekli iyileştirme ve verimlilik esaslı uygulamalar ile geleceğe yön veren bir kurumsal kimliği inşa etmektir.</p></div>
+  <p class="sh">Kalite Politikamızın Unsurları</p>
+  <div class="policy-grid">
+    ${[
+      'Kurumsal etkinlik alanlarımızda ölçülebilir ve değerlendirilebilir politikalar tanımlamak',
+      'Bilimsel bilgi üretebilen özgün bir kurumsal yönelimi ön planda tutmak',
+      'İç ve dış paydaşlarımızın memnuniyetini esas alan uygulamalara öncelik vermek',
+      'Toplumsal sorumluluğumuza uygun sosyal projeleri dış paydaşlarımızla eş güdümle gerçekleştirmek',
+      'Etkinliklerde öğrenci, akademik ve idari personelin tümünün katılımını sağlamak',
+      'Eğitim öğretim ve akademik faaliyetlerde eleştirel düşünceyi öncelemek',
+      'Kalite yönetim sistemi ile tüm kurumsal işleyişimizi sürekli iyileştirmek',
+    ].map(c=>`<div class="policy-card"><p>${c}</p></div>`).join('')}
+  </div>`},
+
+'arastirma-gelistirme':{ title:'Araştırma-Geliştirme Politikası', breadcrumb:['Kalite Politikaları','Araştırma-Geliştirme Politikası'], icon:'fa-flask',
+render:()=>`
+  <div class="info-box"><strong>Temel Vizyon:</strong> İstanbul 29 Mayıs Üniversitesi, araştırma yönelimli bir kurum olarak kendisini "ülkemiz, bölgemiz ve insanlığın toplumsal gelişimine yön veren" bir üniversite olarak konumlandırmaktadır.</div>
+  <div class="prose"><p>Üniversitenin bilimsel uğraşları <em>keşfedici ve inşa edici nitelikte</em> çalışmalar olarak tanımlanmakta; bu çalışmaların sonuçlarının toplumsal gelişime katkı sunması beklenmektedir.</p></div>
+  <p class="sh">Politikanın Temel Hedefleri</p>
+  <div class="policy-grid">
+    ${[
+      {title:'1. Kurumsal Statü',body:'Örnek, önde gelen, tercih edilen ve aranır bir üniversite olmak.'},
+      {title:'2. Sosyal Katkı',body:'Ülke, bölge ve insanlığın gelişimine, geleceğin inşasına katkı sunmak.'},
+      {title:'3. Kurumsal Kültür',body:'Araştırma odaklı bir kurumsal kültürü tüm paydaşlarla birlikte geliştirmek.',gold:true},
+      {title:'4. Politika Uyumu',body:'Araştırma çalışmalarını eğitim-öğretim ve diğer üniversite politikaları ile uyumlu hale getirmek.',gold:true},
+      {title:'5. Sürdürülebilirlik',body:'Araştırma-geliştirme çalışmalarının uzun vadeli devamını sağlamak.'},
+    ].map(c=>`<div class="policy-card ${c.gold?'gold':''}"><h3>${c.title}</h3><p>${c.body}</p></div>`).join('')}
+  </div>`},
+
+'egitim-ogretim':{ title:'Eğitim-Öğretim Politikası', breadcrumb:['Kalite Politikaları','Eğitim-Öğretim Politikası'], icon:'fa-graduation-cap',
+render:()=>`
+  <div class="info-box"><strong>Misyon:</strong> Gelişime açık, araştırma yönelimli insanlar yetiştirmek; mesleki ve toplumsal sorumluluk bilinci yüksek, ulusal ve uluslararası yeterlikte tercih edilen mezunlar yetiştirmek.</div>
+  <p class="sh">Temel Çalışma Prensipleri</p>
+  <div class="policy-grid">
+    ${[
+      {title:'Kalite Odaklı Yaklaşım',body:'Tüm eğitim süreçlerinde kalite odaklı yaklaşım ve sürekli iyileştirme ilkesinin benimsenmesi.'},
+      {title:'Tutarlı Gelişim',body:'Öğrencilerin kurumsal değerlerle tanışmasından mezun olana kadar istikrarlı ve kesintisiz gelişiminin sağlanması.'},
+      {title:'Bilim ve Etik',body:'Bilimsel bilgi, akademik beceri ve etik değerlerin eğitim-öğretim sürecinin temeline alınması.',gold:true},
+      {title:'Tercih Edilen Mezunlar',body:'Ulusal ve uluslararası düzeyde tercih edilen, toplumsal sorumluluk bilinci taşıyan mezunlar yetiştirilmesi.',gold:true},
+    ].map(c=>`<div class="policy-card ${c.gold?'gold':''}"><h3>${c.title}</h3><p>${c.body}</p></div>`).join('')}
+  </div>`},
+
+'kurumsal-gelisim':{ title:'Kurumsal Gelişim Politikası', breadcrumb:['Kalite Politikaları','Kurumsal Gelişim Politikası'], icon:'fa-building',
+render:()=>`
+  <div class="prose"><p>Üniversite, kurumsal kimliğini geliştirmek için stratejik plan çalışmaları yürütmekte ve yönetim sistemlerini sürekli iyileştirmektedir.</p></div>
+  <p class="sh">Politikanın Beş Temel Amacı</p>
+  <div class="policy-grid">
+    ${[
+      {title:'1. Paydaş Memnuniyeti',body:'İç ve dış paydaşların üniversite faaliyetlerine yönelik memnuniyet düzeylerini uygun ölçme yöntemleriyle tespit edip artırıcı tedbirler almak.'},
+      {title:'2. İnsan Kaynakları Gelişimi',body:'Öğrenci, akademisyen ve idari personelin motivasyonlarını geliştirme; nitelikli insan kaynağının elde tutulması.'},
+      {title:'3. Risk Yönetimi',body:'İş sağlığı, güvenliği ve olası risk durumları için senaryolar oluşturma; kurumsal dayanıklılığın artırılması.',gold:true},
+      {title:'4. Eğitim Gelişimi',body:'Eğitim araç-gereçlerinin gelişimine paralel olarak süreçlerin iyileştirilmesi; teknoloji entegrasyonunun sağlanması.',gold:true},
+      {title:'5. Sürdürülebilirlik',body:'Tüm faaliyetlerin kurumsal gelişim stratejisine uygun ve uzun vadeli olmasının güvence altına alınması.'},
+    ].map(c=>`<div class="policy-card ${c.gold?'gold':''}"><h3>${c.title}</h3><p>${c.body}</p></div>`).join('')}
+  </div>`},
+
+'topluma-hizmet':{ title:'Toplumsal Katkı Politikası', breadcrumb:['Kalite Politikaları','Toplumsal Katkı Politikası'], icon:'fa-hands-helping',
+render:()=>`
+  <div class="info-box">Üniversitenin topluma hizmet anlayışı yerel sınırların ötesine geçerek ulusal ve uluslararası boyutta şekillenmektedir.</div>
+  <p class="sh">Politikanın Temel Sütunları</p>
+  <div class="policy-grid">
+    ${[
+      {title:'Güçlendirilmiş Ortaklıklar',body:'Ulusal ve uluslararası kuruluşlarla ilişkileri güçlendirmek; toplumsal sorumluluk bilincinin insanlığa fayda sağlayacak şekilde hayata geçirilmesi.'},
+      {title:'Araştırma Odaklı Katkı',body:'Dezavantajlı gruplara yönelik ve genel toplum refahını ilerleten araştırma projelerini destekleme ve hayata geçirme.',gold:true},
+      {title:'Değerlerin Yaygınlaştırılması',body:'Topluma hizmet anlayışının başta öğrenciler olmak üzere tüm paydaşlara, üniversitenin misyon ve vizyonuyla uyumlu biçimde aktarılması.'},
+    ].map(c=>`<div class="policy-card ${c.gold?'gold':''}"><h3>${c.title}</h3><p>${c.body}</p></div>`).join('')}
+  </div>`},
+
+'uluslararasilasma':{ title:'Uluslararasılaşma Politikası', breadcrumb:['Kalite Politikaları','Uluslararasılaşma Politikası'], icon:'fa-globe',
+render:()=>`
+  <p class="sh">Politikanın Beş Temel Hedefi</p>
+  <div class="policy-grid">
+    ${[
+      {title:'1. Uluslararası İş Birlikleri',body:'Uluslararasılaşma hedefleri doğrultusunda ve üniversitenin misyon ve vizyonuna uygun olacak şekilde uluslararası iş birliklerini geliştirmek.'},
+      {title:'2. Akademik Destek',body:'Başarılı öğrenci ve akademisyenlere kurumsal imkânlar çerçevesinde destek sunmak.'},
+      {title:'3. Dil Eğitimi',body:'Kaliteli ve sürdürülebilir yabancı dil eğitim sistemi oluşturmak; çok dilli akademik ortam oluşturmak.',gold:true},
+      {title:'4. Uluslararası Araştırmalar',body:'Uluslararası düzeyde araştırma ve yayın faaliyetlerini desteklemek; küresel akademik ağlara entegrasyonu sağlamak.',gold:true},
+      {title:'5. Uluslararası Standartlar',body:'Tüm amaç ve hedeflerde uluslararası yeterlilik şartlarını dikkate almak; Bologna Süreci gerekliliklerini karşılamak.'},
+    ].map(c=>`<div class="policy-card ${c.gold?'gold':''}"><h3>${c.title}</h3><p>${c.body}</p></div>`).join('')}
+  </div>`},
+
+'uzaktan-egitim-politikasi':{ title:'Uzaktan Eğitim Politikası', breadcrumb:['Kalite Politikaları','Uzaktan Eğitim Politikası'], icon:'fa-laptop',
+render:()=>`
+  <div class="info-box"><strong>Kurumsal Misyon:</strong> "Kadim milli kültürümüzden esinlenerek" uluslararası standartlarda eğitim vererek sorun çözme yeteneğine sahip bireyler yetiştirmek.</div>
+  <p class="sh">Politikanın Beş Ana Prensibi</p>
+  <div class="policy-grid">
+    ${[
+      {title:'1. Verimlilik ve İyileştirme',body:'Uzaktan eğitim yönteminin güçlü yönlerini maksimize ederken eksiklikleri gidermek.'},
+      {title:'2. Teknik Altyapı',body:'Öğrencilere ve akademisyenlere gerekli teknik ve fiziksel kaynakları sağlamak.'},
+      {title:'3. Kalite Odağı',body:'Uzaktan eğitim faaliyetlerinin niteliğini artırmak amacıyla düzenli çalışmalar yürütmek.',gold:true},
+      {title:'4. Uluslararasılaşma',body:'Uzaktan eğitimin sunduğu fırsatlardan yararlanarak küresel amaçlara ulaşmak.',gold:true},
+      {title:'5. Toplumsal Değer',body:'Eğitim dışındaki üniversite faaliyetlerinde kurumsal ve sosyal faydayı gözetlemek.'},
+    ].map(c=>`<div class="policy-card ${c.gold?'gold':''}"><h3>${c.title}</h3><p>${c.body}</p></div>`).join('')}
+  </div>`},
+
+'bilgi-guvenligi':{ title:'Bilgi Güvenliği Politikası', breadcrumb:['Kalite Politikaları','Bilgi Güvenliği Politikası'], icon:'fa-shield-alt',
+render:()=>`
+  <div class="info-box">Bilgi Güvenliği Politikası belgesi görsel (PDF) formatında yayımlanmaktadır. Belgeye aşağıdaki sistemler üzerinden ulaşabilirsiniz.</div>
+  <p class="sh">İlgili Sistemler</p>
+  <div class="policy-grid">
+    ${[
+      {title:'Webmail',body:'Kurumsal e-posta sistemi güvenli bağlantı üzerinden kullanılmaktadır.'},
+      {title:'Öğrenci Bilgi Sistemi',body:'OBS, Kişisel verileriniz KVKK kapsamında korunmaktadır.'},
+      {title:'Akademik Bilgi Sistemi',body:'ABS, Akademik veriler şifreli bağlantıyla iletilmektedir.',gold:true},
+      {title:'Eğitim Öğretim Bilgi Sistemi',body:'EBS, Uzaktan eğitim platformu güvenli protokollerle çalışmaktadır.',gold:true},
+    ].map(c=>`<div class="policy-card ${c.gold?'gold':''}"><h3>${c.title}</h3><p>${c.body}</p></div>`).join('')}
+  </div>
+  <div class="info-box" style="margin-top:18px">Politika belgesi için: <strong>kalite@29mayis.edu.tr</strong> | <strong>+90 216 474 08 60 Dahili: 2840</strong></div>`},
+
+'kalite-komisyonu':{ title:'Kalite Komisyonu', breadcrumb:['Kalite Komisyonları','Kalite Komisyonu'], icon:'fa-users',
+render:()=>`
+  <div class="prose"><p>Üniversite Kalite Komisyonu; rektör başkanlığında, rektör yardımcıları, fakülte dekanları, enstitü ve yüksekokul müdürleri, idari yöneticiler ile öğrenci temsilcisinden oluşmaktadır.</p></div>
+  <table class="member-table">
+    <thead><tr><th>Ad Soyad</th><th>Unvan / Görev</th></tr></thead>
+    <tbody>${[
+      ['Prof. Dr. Mustafa SİNANOĞLU','Rektör, Komisyon Başkanı','başkan'],
+      ['Prof. Dr. İlyas ÇELEBİ','Rektör Yardımcısı'],
+      ['Prof. Dr. Murat DOĞRUEL','Rektör Yardımcısı'],
+      ['Prof. Dr. Feridun Mustafa EMECEN','Edebiyat Fakültesi Dekanı'],
+      ['Prof. Dr. Halil İbrahim SAĞLAM','Eğitim Fakültesi Dekanı'],
+      ['Prof. Dr. Sera REYHANİ YÜKSEL','Hukuk Fakültesi Dekan V.'],
+      ['Prof. Dr. Mustafa SİNANOĞLU','İktisadi ve İdari Bilimler Fakültesi Dekan V.'],
+      ['Prof. Dr. Ahmet YÜCEL','İlahiyat Fakültesi Dekanı'],
+      ['Prof. Dr. Abdulsamet HAŞILOĞLU','Mühendislik ve Doğa Bilimleri Fakültesi Dekanı'],
+      ['Dr. Öğr. Üyesi İbrahim HELALŞAH','Yabancı Diller Yüksekokulu Müdürü'],
+      ['Dr. Öğr. Üyesi Metin DUMANLI','Bilişim Teknolojileri MYO Müdürü'],
+      ['Dr. Öğr. Üyesi Gülsüm PEHLİVAN AĞIRAKÇA','Araştırma Merkezleri Kalite Komisyonu Başkanı'],
+      ['Prof. Dr. Mehmet Taha BOYALIK','Sosyal Bilimler Enstitüsü Müdürü'],
+      ['Doç. Dr. Talip YİĞİT','Kalite Güvencesi ve Akreditasyon Koordinatörü'],
+      ['A. Rüştü MUMCU','Genel Sekreter'],
+      ['Azize ÇIRTLIK','Rektör Danışmanı'],
+      ['Erdal İŞCAN','İdari ve Mali İşler Daire Başkanı'],
+      ['Hacer Pınar ER','Üniversite Öğrenci Kalite Komisyonu Başkanı'],
+    ].map(([n,r,c])=>`<tr><td>${n}${c==='başkan'?'<span class="chair-badge">Başkan</span>':''}</td><td>${r}</td></tr>`).join('')}</tbody>
+  </table>
+  <p class="sh">Komisyon Karar Tutanakları</p>
+  <div class="info-box">Komisyon toplantı ve karar tutanakları için <strong>kalite@29mayis.edu.tr</strong> adresine başvurabilirsiniz.</div>`},
+
+'kalite-alt-komisyonlari':{ title:'Kalite Alt Komisyonları', breadcrumb:['Kalite Komisyonları','Kalite Alt Komisyonları'], icon:'fa-users-cog',
+render:()=>{
+  const subs=[
+    {title:'Liderlik, Yönetim ve Kalite Alt Komisyonu',rows:[
+      ['Prof. Dr. İlyas ÇELEBİ','Rektör Yardımcısı','Başkan'],
+      ['Prof. Dr. Sera REYHANİ YÜKSEL','Hukuk Fakültesi Dekan V.','Üye'],
+      ['Prof. Dr. Feridun Mustafa EMECEN','Edebiyat Fakültesi Dekanı','Üye'],
+      ['Prof. Dr. Abdulsamet HAŞILOĞLU','Müh. ve Doğa Bilimleri Fakültesi Dekanı','Üye'],
+      ['A. Rüştü MUMCU','Genel Sekreter','Raportör'],
+    ]},
+    {title:'Eğitim-Öğretim Kalite Alt Komisyonu',rows:[
+      ['Prof. Dr. İlyas ÇELEBİ','Rektör Yardımcısı','Başkan'],
+      ['Prof. Dr. Halil İbrahim SAĞLAM','Eğitim Fakültesi Dekanı','Üye'],
+      ['Prof. Dr. Ahmet YÜCEL','İlahiyat Fakültesi Dekanı','Üye'],
+      ['Prof. Dr. Ahmet KOÇ','Öğretim Üyesi','Üye'],
+      ['Neşe DURUKAN','Öğrenci İşleri Daire Başkanı','Raportör'],
+    ]},
+    {title:'Araştırma ve Geliştirme Kalite Alt Komisyonu',rows:[
+      ['Prof. Dr. Murat DOĞRUEL','Rektör Yardımcısı','Başkan'],
+      ['Dr. Öğr. Üyesi Gülsüm PEHLİVAN AĞIRAKÇA','Araştırma Merkezleri Kalite Kom. Başkanı','Üye'],
+      ['Dr. Öğr. Üyesi Ramazan ALGIN','Öğretim Üyesi','Üye'],
+      ['Prof. Dr. M. Taha BOYALIK','Sosyal Bilimler Enstitüsü Müdürü','Üye'],
+      ['Azize ÇIRTLIK','Rektör Danışmanı','Raportör'],
+    ]},
+    {title:'Toplumsal Katkı Kalite Alt Komisyonu',rows:[
+      ['Prof. Dr. Murat DOĞRUEL','Rektör Yardımcısı','Başkan'],
+      ['Dr. Öğr. Üyesi Nida ERDEM','Öğretim Üyesi','Üye'],
+      ['Dr. Öğr. Üyesi Nur AKBULUT KILIÇOĞLU','Öğretim Üyesi','Üye'],
+      ['Prof. Dr. A. Ayhan ÇİTİL','Öğretim Üyesi','Üye'],
+      ['Gürhan TOKTAŞ','Kurumsal İletişim ve Tanıtım Daire Başkanı V.','Raportör'],
+    ]},
+  ];
+  return subs.map((s,i)=>`
+    <div class="sub-section">
+      <div class="sub-section-head"><div class="num">${i+1}</div><h3>${s.title}</h3></div>
+      <table class="member-table" style="border-radius:0;box-shadow:none;">
+        <thead><tr><th>Ad Soyad</th><th>Birim / Görev</th><th>Komis. Görevi</th></tr></thead>
+        <tbody>${s.rows.map(([n,b,g])=>`<tr><td>${n}</td><td>${b}</td><td>${g}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>`).join('') +
+    `<p class="sh">Komisyon Karar Tutanakları</p>
+     <div class="info-box">Alt komisyonlara ait karar tutanakları yakında bu bölümde yer alacaktır.</div>`;
+}},
+
+'ogrenci-kalite-komisyonu':{ title:'Öğrenci Kalite Komisyonu', breadcrumb:['Kalite Komisyonları','Öğrenci Kalite Komisyonu'], icon:'fa-user-graduate',
+render:()=>`
+  <div class="prose"><p>Üniversite Öğrenci Kalite Komisyonu; kalite güvencesi süreçlerine öğrenci katılımını sağlamak, öğrenci görüş ve önerilerini kalite çalışmalarına yansıtmak ve kalite kültürünün öğrenciler arasında yaygınlaştırılmasına katkı sunmak amacıyla kurulmuştur.</p></div>
+  <p class="sh">Görev Tanımı</p>
+  <div class="prose"><ul><li>Üniversitenin sürekli iyileştirme ve geliştirme faaliyetlerine, öğrenci odaklı eğitim sisteminin geliştirilmesine, öğrenci memnuniyetinin artırılmasına ve kalite politikasının gerçekleştirilmesine destek vermek,</li><li>Öğrencilerden gelen taleplere ilişkin ön değerlendirme yapmak ve iyileştirme önerileri belirlemek,</li><li>Kalite ana süreçleriyle ilgili yıllık faaliyet ve eylem planları ile takvimini hazırlayarak Kalite Komisyonuna sunmak; faaliyet raporunu Aralık ayı son haftasına kadar sunmak,</li><li>Kalite kültürünün öğrenciler tarafından içselleştirilmesine ve kalite güvencesi süreçlerine öğrenci katılımının artırılmasına yönelik çalışmalar yapmak,</li><li>Kalite ile ilgili ulusal ve uluslararası düzeyde öğrenci katılımlı çalışmalar gerçekleştirmek.</li></ul></div>
+  <p class="sh">Komisyon Üyeleri</p>
+  <table class="member-table">
+    <thead><tr><th>Ad Soyad</th><th>Fakülte / Birim</th><th>Görev</th></tr></thead>
+    <tbody><tr><td>Hacer Pınar ER<span class="chair-badge">Başkan</span></td><td>Sosyal Bilimler Enstitüsü</td><td>Sosyal Bilimler Enstitüsü Öğrenci Kalite Komisyonu Başkanı</td></tr><tr><td>Beyzanur BİLGİN</td><td>Edebiyat Fakültesi</td><td>Edebiyat Fakültesi Öğrenci Kalite Komisyonu Başkanı</td></tr><tr><td>Mina ÖZÜLKÜ</td><td>Edebiyat Fakültesi</td><td>Yabancı Diller Yüksekokulu Öğrenci Kalite Komisyonu Başkanı</td></tr><tr><td>Murat DÖNMEZ</td><td>İktisadi ve İdari Bilimler Fakültesi</td><td>Uluslararası İlişkiler ve Araştırma Kulübü Temsilcisi</td></tr><tr><td>Mervegül ÖLÇEK</td><td>İktisadi ve İdari Bilimler Fakültesi</td><td>İİBF Öğrenci Kalite Komisyonu Başkanı</td></tr><tr><td>Emine Sude KESKİN</td><td>İktisadi ve İdari Bilimler Fakültesi</td><td>Engelli Öğrenci Temsilcisi</td></tr><tr><td>Mikail MARAŞ</td><td>İktisadi ve İdari Bilimler Fakültesi</td><td>Medeniyet Araştırmaları Kulübü Temsilcisi</td></tr><tr><td>Daouda CISSE</td><td>İktisadi ve İdari Bilimler Fakültesi</td><td>Uluslararası Öğrenci Temsilcisi</td></tr><tr><td>Aidana ALMAS</td><td>İktisadi ve İdari Bilimler Fakültesi</td><td>Uluslararası Öğrenci Temsilcisi</td></tr><tr><td>Zeynep FIRAT</td><td>Eğitim Fakültesi</td><td>Eğitim Fakültesi Öğrenci Kalite Komisyonu Başkanı</td></tr><tr><td>Burak İLGİ</td><td>İlahiyat Fakültesi</td><td>İlahiyat Fakültesi Öğrenci Kalite Komisyonu Başkanı</td></tr><tr><td>Esma ÇİÇEK</td><td>Hukuk Fakültesi</td><td>İstanbul 29 Mayıs Hukuk Kulübü Temsilcisi</td></tr><tr><td>Erdal İNGENÇ</td><td>Hukuk Fakültesi</td><td>Hukuk Fakültesi Öğrenci Kalite Komisyonu Başkanı</td></tr><tr><td>Ali Orhun ERKAN</td><td>Mühendislik ve Doğa Bilimleri Fakültesi</td><td>Mühendislik Fakültesi Öğrenci Kalite Komisyonu Başkanı</td></tr><tr><td>Emircan BİLECEN</td><td>Bilişim Teknolojileri MYO</td><td>Bilişim Teknolojileri MYO Öğrenci Kalite Komisyonu Başkanı</td></tr></tbody>
+  </table>`},
+
+'izleme-degerlendirme':{ title:'Kalite İzleme ve Değerlendirme Komisyonları', breadcrumb:['Kalite Komisyonları','İzleme ve Değerlendirme Komisyonları'], icon:'fa-chart-line',
+render:()=>`
+  <div class="prose"><p>Üniversitenin her akademik birimi bünyesinde ayrı bir kalite izleme ve değerlendirme komisyonu faaliyet göstermektedir.</p></div>
+  ${[
+    ['Edebiyat Fakültesi','Prof. Dr. Feridun M. EMECEN','8 akademik üye ve 1 fakülte sekreteri'],
+    ['Eğitim Fakültesi','Prof. Dr. Halil İbrahim SAĞLAM','12 akademik üye ve 1 öğrenci temsilcisi'],
+    ['Hukuk Fakültesi','Prof. Dr. Sera REYHANİ YÜKSEL','2 başkan yardımcısı ve 6 üye'],
+    ['İktisadi ve İdari Bilimler Fakültesi','Prof. Dr. Yaşar AKGÜN','Fakülte bünyesinde oluşturulan komisyon'],
+    ['İlahiyat Fakültesi','Prof. Dr. Ahmet YÜCEL','Fakülte bünyesinde oluşturulan komisyon'],
+    ['Sosyal Bilimler Enstitüsü','Prof. Dr. Mehmet Taha BOYALIK','Enstitü bünyesinde oluşturulan komisyon'],
+    ['Yabancı Diller Yüksekokulu','Dr. Öğr. Üyesi İbrahim HELALŞAH','Yüksekokul bünyesinde oluşturulan komisyon'],
+    ['Araştırma Merkezleri','Prof. Dr. Yaşar AKGÜN','Tüm araştırma merkezlerini kapsayan komisyon'],
+  ].map(([b,k,y])=>`
+    <div class="sub-section" style="margin-bottom:10px;">
+      <div class="sub-section-head"><h3>${b}</h3></div>
+      <table class="member-table" style="border-radius:0;box-shadow:none;"><tbody>
+        <tr><td style="width:150px;color:var(--muted);font-weight:400">Komisyon Başkanı</td><td>${k}</td></tr>
+        <tr><td style="color:var(--muted);font-weight:400">Yapı</td><td>${y}</td></tr>
+      </tbody></table>
+    </div>`).join('')}`},
+
+'akreditasyon-koordinatorlugu':{ title:'Kalite Güvencesi ve Akreditasyon Koordinatörlüğü', breadcrumb:['Kalite Komisyonları','Akreditasyon Koordinatörlüğü'], icon:'fa-certificate',
+render:()=>`
+  <div class="prose"><p>Kalite Güvencesi ve Akreditasyon Koordinatörlüğü; üniversitemizin kalite güvencesi ve akreditasyon süreçlerini yürüten, iç ve dış değerlendirme çalışmalarını koordine eden ve kalite kültürünün yaygınlaştırılmasını sağlayan birimdir.</p></div>
+  <p class="sh">Görev Tanımı</p>
+  <div class="prose"><ul><li>Kalite geliştirme, iç ve dış değerlendirmeler için ihtiyaç duyulan süreçleri belirlemek, uygulamak ve sürdürülmesini sağlamak,</li><li>Kalite güvencesi ve akreditasyon ile ilgili tüm akademik ve idari birimler arasında koordinasyonu sağlamak,</li><li>YÖKAK kurumsal iç değerlendirme çalışmalarını koordine etmek; Kurum İç Değerlendirme Raporunun (KİDR) eksiksiz ve zamanında hazırlanmasını sağlayarak Senato onayına sunulmak üzere Kalite Komisyonuna arz etmek,</li><li>Yükseköğretim Kalite Kurulu tarafından yürütülen kurumsal dış değerlendirme sürecindeki iş ve işlemleri koordine etmek,</li><li>Dış değerlendirme sonrasında gelişmeye açık alanlar için iyileştirme çalışmaları önermek, planlamak ve izlemek,</li><li>Stratejik Planda yer alan ölçülebilir hedefleri ve performans göstergelerini izleyerek raporlanmasını sağlamak,</li><li>Personele ve öğrencilere yönelik genel memnuniyet anketleri düzenlemek, analiz ederek sonuçlarını paydaşlarla paylaşmak,</li><li>Senato tarafından onaylanan yıllık KİDR'in YÖKAK sistemine girilmesini ve internet sayfasında yayımlanmasını sağlamak,</li><li>YÖKAK tarafından kabul edilen Kurumsal Dış Değerlendirme Raporunun (KDDR) internet sayfasında yayımlanmasını sağlamak,</li><li>Kalite kültürünün yaygınlaştırılması için öğrenci, idari ve akademik personele yönelik eğitim, toplantı ve çalıştaylar düzenlemek.</li></ul></div>
+  <p class="sh">Koordinatörlük Kadrosu</p>
+  <table class="member-table">
+    <thead><tr><th>Ad Soyad</th><th>Görev</th></tr></thead>
+    <tbody><tr><td>Doç. Dr. Talip YİĞİT<span class="chair-badge">Başkan</span></td><td>Koordinatör</td></tr><tr><td>Arş. Gör. Murat DİNÇER</td><td>Üye</td></tr><tr><td>Azize ÇIRTLIK</td><td>Üye</td></tr><tr><td>Zeynep BURSA</td><td>Üye</td></tr><tr><td>Mehlika ÇAKAN</td><td>Üye</td></tr></tbody>
+  </table>`},
+
+'organizasyon-semalari':{ title:'Kalite Yönetimi Organizasyon Şemaları', breadcrumb:['Kalite Komisyonları','Organizasyon Şemaları'], icon:'fa-sitemap',
+render:()=>`
+  <div class="prose"><p>İstanbul 29 Mayıs Üniversitesi Kalite Güvence Sistemi'nin organizasyonel yapısı; liderlik ve yönetim, eğitim-öğretim, araştırma, toplumsal katkı ve uluslararasılaşma süreçlerine ait organizasyon şemalarıyla belgelenmiştir. Bu şemalar; kalite yönetim hiyerarşisini, komisyonlar arası ilişkileri ve sorumluluk dağılımını gösterir.</p></div>
+  <p class="sh">Organizasyon Şemaları</p>
+  <p style="font-size:13px;color:var(--text);margin:-4px 0 6px">Şemayı büyütmek için üzerine tıklayın; kaynak belgeyi indirmek için <strong>PDF</strong> bağlantısını kullanın.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-3">
+    <div class="group rounded-xl border border-gray-200 bg-white overflow-hidden hover:shadow-lg hover:border-[#4bb5e8] transition">
+      <div onclick="openLightbox('assets/orgsema/liderlik-yonetim-kalite.png','Liderlik, Yönetim ve Kalite Yönetimi Organizasyon Şeması')" class="relative cursor-pointer overflow-hidden bg-gray-50 flex items-center justify-center" style="aspect-ratio:4/3;padding:10px;">
+        <img src="assets/orgsema/liderlik-yonetim-kalite.png" loading="lazy" alt="Liderlik, Yönetim ve Kalite Yönetimi Organizasyon Şeması" class="max-w-full max-h-full object-contain group-hover:scale-[1.02] transition duration-300">
+        
+      </div>
+      <div class="flex items-center justify-between gap-3 px-4 py-3 border-t border-gray-100">
+        <span class="text-[13px] font-semibold text-gray-800 leading-snug">Liderlik, Yönetim ve Kalite Yönetimi Organizasyon Şeması</span>
+        <a href="assets/orgsema/liderlik-yonetim-kalite.pdf" download target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-1 text-[12px] font-medium text-[#4bb5e8] hover:text-[#1c355e]">PDF</a>
+      </div>
+    </div>
+    <div class="group rounded-xl border border-gray-200 bg-white overflow-hidden hover:shadow-lg hover:border-[#4bb5e8] transition">
+      <div onclick="openLightbox('assets/orgsema/egitim-ogretim.png','Eğitim-Öğretim Yönetimi Organizasyon Şeması')" class="relative cursor-pointer overflow-hidden bg-gray-50 flex items-center justify-center" style="aspect-ratio:4/3;padding:10px;">
+        <img src="assets/orgsema/egitim-ogretim.png" loading="lazy" alt="Eğitim-Öğretim Yönetimi Organizasyon Şeması" class="max-w-full max-h-full object-contain group-hover:scale-[1.02] transition duration-300">
+        
+      </div>
+      <div class="flex items-center justify-between gap-3 px-4 py-3 border-t border-gray-100">
+        <span class="text-[13px] font-semibold text-gray-800 leading-snug">Eğitim-Öğretim Yönetimi Organizasyon Şeması</span>
+        <a href="assets/orgsema/egitim-ogretim.pdf" download target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-1 text-[12px] font-medium text-[#4bb5e8] hover:text-[#1c355e]">PDF</a>
+      </div>
+    </div>
+    <div class="group rounded-xl border border-gray-200 bg-white overflow-hidden hover:shadow-lg hover:border-[#4bb5e8] transition">
+      <div onclick="openLightbox('assets/orgsema/arastirma-yonetimi.png','Araştırma Yönetimi Organizasyon Şeması')" class="relative cursor-pointer overflow-hidden bg-gray-50 flex items-center justify-center" style="aspect-ratio:4/3;padding:10px;">
+        <img src="assets/orgsema/arastirma-yonetimi.png" loading="lazy" alt="Araştırma Yönetimi Organizasyon Şeması" class="max-w-full max-h-full object-contain group-hover:scale-[1.02] transition duration-300">
+        
+      </div>
+      <div class="flex items-center justify-between gap-3 px-4 py-3 border-t border-gray-100">
+        <span class="text-[13px] font-semibold text-gray-800 leading-snug">Araştırma Yönetimi Organizasyon Şeması</span>
+        <a href="assets/orgsema/arastirma-yonetimi.pdf" download target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-1 text-[12px] font-medium text-[#4bb5e8] hover:text-[#1c355e]">PDF</a>
+      </div>
+    </div>
+    <div class="group rounded-xl border border-gray-200 bg-white overflow-hidden hover:shadow-lg hover:border-[#4bb5e8] transition">
+      <div onclick="openLightbox('assets/orgsema/toplumsal-katki.png','Toplumsal Katkı Yönetimi Organizasyon Şeması')" class="relative cursor-pointer overflow-hidden bg-gray-50 flex items-center justify-center" style="aspect-ratio:4/3;padding:10px;">
+        <img src="assets/orgsema/toplumsal-katki.png" loading="lazy" alt="Toplumsal Katkı Yönetimi Organizasyon Şeması" class="max-w-full max-h-full object-contain group-hover:scale-[1.02] transition duration-300">
+        
+      </div>
+      <div class="flex items-center justify-between gap-3 px-4 py-3 border-t border-gray-100">
+        <span class="text-[13px] font-semibold text-gray-800 leading-snug">Toplumsal Katkı Yönetimi Organizasyon Şeması</span>
+        <a href="assets/orgsema/toplumsal-katki.pdf" download target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-1 text-[12px] font-medium text-[#4bb5e8] hover:text-[#1c355e]">PDF</a>
+      </div>
+    </div>
+    <div class="group rounded-xl border border-gray-200 bg-white overflow-hidden hover:shadow-lg hover:border-[#4bb5e8] transition">
+      <div onclick="openLightbox('assets/orgsema/uluslararasilasma.png','Uluslararasılaşma Yönetimi Organizasyon Şeması')" class="relative cursor-pointer overflow-hidden bg-gray-50 flex items-center justify-center" style="aspect-ratio:4/3;padding:10px;">
+        <img src="assets/orgsema/uluslararasilasma.png" loading="lazy" alt="Uluslararasılaşma Yönetimi Organizasyon Şeması" class="max-w-full max-h-full object-contain group-hover:scale-[1.02] transition duration-300">
+        
+      </div>
+      <div class="flex items-center justify-between gap-3 px-4 py-3 border-t border-gray-100">
+        <span class="text-[13px] font-semibold text-gray-800 leading-snug">Uluslararasılaşma Yönetimi Organizasyon Şeması</span>
+        <a href="assets/orgsema/uluslararasilasma.pdf" download target="_blank" rel="noopener" class="flex-shrink-0 inline-flex items-center gap-1 text-[12px] font-medium text-[#4bb5e8] hover:text-[#1c355e]">PDF</a>
+      </div>
+    </div>
+  </div>`},
+
+'uzaktan-amac-hedefler':{ title:'Uzaktan Eğitimde Kalite, Amaç ve Hedefler', breadcrumb:['Uzaktan Eğitim','Amaç ve Hedefler'], icon:'fa-crosshairs',
+render:()=>`
+  <div class="info-box"><strong>Misyon:</strong> Uzaktan eğitim uygulamalarını üniversitenin tüm etkinlik alanlarında en verimli şekilde yürütmek ve öğrencileri olumsuz etkilerden koruyacak süreçler geliştirmek.<br><br><strong>Vizyon:</strong> Öncü, aranır ve örnek üniversite olma idealini uzaktan eğitim süreçlerinde paydaş katılımıyla gerçekleştirmek.</div>
+  <p class="sh">Stratejik Hedefler, 6 Etkinlik Alanı</p>
+  ${[
+    {n:'1',title:'Kalite Güvence Sistemi',items:['Kalite komisyonlarının mekanizmalarını sürece uygun hale getirme','Kalite çalışmalarını nitelik artırıcı faaliyetlerle yaygınlaştırma','Öğrenci merkezli yaklaşımla kalite anlayışını sürdürme']},
+    {n:'2',title:'Eğitim-Öğretim',items:['Erişilebilir ve kullanışlı eğitim platformları sunmak','Öğrencilerin aktif katılımını teşvik etme','Farklı öğrenme ortamlarında etkileşim fırsatları yaratma']},
+    {n:'3',title:'Araştırma-Geliştirme',items:['Kütüphane ve teşvik sistemini işlevsel tutma','Sürecin nedenlerine yönelik araştırmaları destekleme','Öncü üniversiteler arasında konumlanma']},
+    {n:'4',title:'Toplumsal Hizmet',items:['Uluslararası yeterlilikte akademisyen yetiştirme','Öğrencileri toplumsal hizmet çalışmalarına dahil etme','Akademisyen ve lisansüstü öğrencilerin üretkenliğini artırma']},
+    {n:'5',title:'Yönetişim',items:['Tüm üniversite üyelerine destekleyici hizmetler sunma','Hizmetlerin geliştirilmesini ve etkin sunulmasını sağlama','İç paydaşların ulaşabileceği politika ve uygulamalar belirleme']},
+    {n:'6',title:'Uluslararasılaşma',items:['Üniversite değerleriyle uyumlu uluslararası iş birlikleri geliştirme','Uluslararası ve engelli öğrencilerin ihtiyaçlarını takip etme','Kurumsal kültürü uzaktan eğitim çerçevesinde yaygınlaştırma']},
+  ].map(s=>`
+    <div class="sub-section" style="margin-bottom:10px;">
+      <div class="sub-section-head"><div class="num">${s.n}</div><h3>${s.title}</h3></div>
+      <div style="padding:12px 18px;"><ul style="list-style:none;display:flex;flex-direction:column;gap:7px;">
+        ${s.items.map(i=>`<li style="font-size:13px;color:var(--text);padding-left:16px;position:relative"><span style="position:absolute;left:0;top:7px;width:5px;height:5px;background:var(--mid);border-radius:1px"></span>${i}</li>`).join('')}
+      </ul></div>
+    </div>`).join('')}`},
+
+'uzaktan-komisyon':{ title:'Uzaktan Eğitim Komisyonu', breadcrumb:['Uzaktan Eğitim','Uzaktan Eğitim Komisyonu'], icon:'fa-users',
+render:()=>`
+  <div class="prose"><p>Uzaktan Eğitim Komisyonu; üniversitede uzaktan eğitim uygulamalarının altyapı hazırlığı, yönetmelik oluşturma ve geliştirme, geri bildirim toplama görevlerini yürütür. 1 başkan ve 5 üyeden oluşmaktadır.</p></div>
+  <table class="member-table">
+    <thead><tr><th>Ad Soyad</th><th>Görevi</th></tr></thead>
+    <tbody>${[
+      ['Prof. Dr. İlyas ÇELEBİ','Başkan','başkan'],
+      ['Prof. Dr. Mehmet Taha BOYALIK','Üye'],
+      ['Doç. Dr. Alphan Yusuf AKGÜL','Üye'],
+      ['Dr. Öğr. Üyesi Arzu ÖZTÜRK','Üye'],
+      ['Dr. Öğr. Üyesi İbrahim HELALŞAH','Üye'],
+      ['Dr. Öğr. Üyesi Merve ARBAK','Üye'],
+    ].map(([n,g,c])=>`<tr><td>${n}${c==='başkan'?'<span class="chair-badge">Başkan</span>':''}</td><td>${g}</td></tr>`).join('')}</tbody>
+  </table>`},
+
+'uzaktan-alt-komisyon':{ title:'Uzaktan Eğitim Alt Komisyonu', breadcrumb:['Uzaktan Eğitim','Uzaktan Eğitim Alt Komisyonu'], icon:'fa-users-cog',
+render:()=>`
+  <table class="member-table">
+    <thead><tr><th>Ad Soyad</th><th>Fakülte</th><th>Görevi</th></tr></thead>
+    <tbody>${[
+      ['Dr. Öğr. Üyesi Arzu Öztürk','Eğitim Fakültesi','Başkan'],
+      ['Dr. Öğr. Üyesi Şeyma Güldal','Eğitim Fakültesi','Üye'],
+      ['Dr. Öğr. Üyesi Oğuz Keleş','Eğitim Fakültesi','Üye'],
+      ['Dr. Öğr. Üyesi Mehmet Akıncı','Eğitim Fakültesi','Üye'],
+      ['Dr. Öğr. Üyesi Esat Burak ŞAMAN','Edebiyat Fakültesi','Üye'],
+      ['Arş. Gör. Hüseyin YILDIZ','Edebiyat Fakültesi','Üye'],
+      ['Dr. Öğr. Üyesi Cengiz YOLCU','Edebiyat Fakültesi','Üye'],
+      ['Öğr. Gör. Ömer UZUNAĞAÇ','Edebiyat Fakültesi','Üye'],
+      ['Arş. Gör. Uğur Yankı ÜÇKARDEŞLER','Edebiyat Fakültesi','Üye'],
+      ['Arş. Gör. Şeyma ÖZTÜRK SAKA','Hukuk Fakültesi','Üye'],
+      ['Prof. Dr. Yaşar AKGÜN','İktisadi ve İdari Bilimler Fakültesi','Üye'],
+      ['Doç. Dr. Harun ŞENCAL','İktisadi ve İdari Bilimler Fakültesi','Üye'],
+      ['Doç. Dr. Talip YİĞİT','İktisadi ve İdari Bilimler Fakültesi','Üye'],
+      ['Arş. Gör. Sami Turan EREL','İlahiyat Fakültesi','Üye'],
+      ['Arş. Gör. Ahmet AYTEP','İlahiyat Fakültesi','Üye'],
+    ].map(([n,f,g])=>`<tr><td>${n}</td><td>${f}</td><td>${g}</td></tr>`).join('')}</tbody>
+  </table>`},
+
+'uzaktan-ogretim-sureci':{ title:'Uzaktan Eğitim Öğretim Süreci', breadcrumb:['Uzaktan Eğitim','Öğretim Süreci'], icon:'fa-chalkboard-teacher',
+render:()=>`
+  <div class="info-box"><strong>Tanım:</strong> Uzaktan eğitim, eğitim-öğretim faaliyetlerinin web tabanlı olarak sürdürüldüğü süreçtir. Uzaktan Eğitim Komisyonu, bu faaliyetlerin etkin yürütülmesi için gerekli planlamaları yapar.</div>
+  <p class="sh">Süreç Adımları</p>
+  <div class="steps">
+    ${[
+      ['Duyuru ve Yayın','Uzaktan eğitim kararının web kanalları üzerinden tüm paydaşlarla paylaşılması.'],
+      ['Planlama','Uzaktan eğitim sürecine ilişkin gerekli planlamaların oluşturulması.'],
+      ['Bilgilendirme','Öğrenci ve akademisyenlerin kullanılacak platformlar, ölçme-değerlendirme yöntemleri gibi konularda bilgilendirilmesi.'],
+      ['Hedef Belirleme','Programların amaç ve hedeflerinin uzaktan eğitim koşullarına uyarlanması.'],
+      ['Müfredat Revizyonu','Derslerin içeriklerinin uzaktan eğitim imkân ve koşullarına uygun hale getirilmesi.'],
+      ['Değerlendirme İlkeleri','Ölçme ve değerlendirme yöntemlerinin hukuki açıdan doğru biçimde belirlenmesi.'],
+      ['Ortam Tasarımı ve Şeffaflık','Değerlendirme kriterlerinin önceden belirlenmesi ve şeffaflık ilkesinin uygulanması.'],
+    ].map(([t,d],i)=>`<div class="step"><div class="step-num">${i+1}</div><div class="step-body"><h4>${t}</h4><p>${d}</p></div></div>`).join('')}
+  </div>`},
+
+'uzaktan-yonetimsel-surec':{ title:'Uzaktan Eğitim Yönetimsel Süreci', breadcrumb:['Uzaktan Eğitim','Yönetimsel Süreç'], icon:'fa-cogs',
+render:()=>`
+  <div class="info-box"><strong>Kapsam:</strong> Uzaktan eğitimde yapısal süreç; web tabanlı eğitim faaliyetlerinin yönetimsel işleyişini ve YÖKAK ölçütleriyle uyumunu ele alır. Kullanılan platform: <strong>Microsoft Teams</strong></div>
+  <p class="sh">Yönetimsel Süreç Adımları</p>
+  <div class="steps">
+    ${[
+      ['YÖKAK Rehberinin İncelenmesi','Uzaktan eğitimde kalite güvencesi ölçütlerini belirleyen YÖKAK rehberinin incelenmesi ve kuruma uyarlanması.'],
+      ['Komisyon Oluşturulması','Uzaktan eğitim süreçlerini yönetecek komisyon ve alt komisyonların oluşturulması.'],
+      ['İhtiyaç Belirlenmesi','Kurumun uzaktan eğitim altyapısı ve kaynak ihtiyaçlarının tespit edilmesi.'],
+      ['İş ve İşlemlerin Tanımlanması','Uzaktan eğitim sürecinde görev ve sorumluluklara ilişkin iş tanımlarının yapılması.'],
+      ['Web Platformu Tanımlaması','Microsoft Teams platformunun belirlenmesi, yapılandırılması ve kullanıma hazır hale getirilmesi.'],
+      ['Yaygınlaştırma ve Bilgilendirme','Tüm paydaşların platform ve süreçler hakkında bilgilendirilmesi; eğitimlerin düzenlenmesi.'],
+      ['Başlatma, İzleme ve Raporlama','Uzaktan eğitimin başlatılması; süreçlerin izlenmesi ve periyodik raporlama yapılması.'],
+    ].map(([t,d],i)=>`<div class="step"><div class="step-num">${i+1}</div><div class="step-body"><h4>${t}</h4><p>${d}</p></div></div>`).join('')}
+  </div>`},
+
+'iletisim':{ title:'İletişim', breadcrumb:['İletişim'], icon:'fa-map-marker-alt',
+render:()=>`
+  <div class="contact-card">
+    <div class="contact-card-head"><h3>Kalite Güvencesi ve Akreditasyon Koordinatörlüğü</h3><p>İstanbul 29 Mayıs Üniversitesi</p></div>
+    <div class="contact-card-body">
+      <div class="contact-row"><div class="contact-icon"></div><div class="contact-detail"><label>Koordinatör</label><span>Doç. Dr. Talip YİĞİT</span></div></div>
+      <div class="contact-row"><div class="contact-icon"></div><div class="contact-detail"><label>E-Posta</label><span>kalite@29mayis.edu.tr</span></div></div>
+      <div class="contact-row"><div class="contact-icon"></div><div class="contact-detail"><label>Telefon</label><span>0216 474 08 60, Dahili: 2840</span></div></div>
+      <div class="contact-row"><div class="contact-icon"></div><div class="contact-detail"><label>Faks</label><span>+90 216 474 08 75</span></div></div>
+      <div class="contact-row"><div class="contact-icon"></div><div class="contact-detail"><label>Adres</label><span>Elmalıkent Mah. Elmalıkent Cad. No:4, Ümraniye / İstanbul</span></div></div>
+      <div class="contact-row"><div class="contact-icon"></div><div class="contact-detail"><label>KEP Adresi</label><span>29mayis@hs03.kep.tr</span></div></div>
+    </div>
+  </div>
+  <p class="sh">Diğer Birimler</p>
+  <div class="policy-grid">
+    ${[
+      {title:'Ana Yerleşke',body:'Tel: +90 216 474 08 60\nE-posta: 29mayis@29mayis.edu.tr'},
+      {title:'ARÖMER',body:'Tel: +90 216 988 12 33',gold:true},
+      {title:'SÜREM',body:'Tel: +90 216 474 08 61',gold:true},
+      {title:'TÜRÖMER',body:'Tel: +90 216 474 08 60'},
+      {title:'Uluslararası Ofis',body:'international.29mayis.edu.tr'},
+    ].map(c=>`<div class="policy-card ${c.gold?'gold':''}"><h3>${c.title}</h3><p style="white-space:pre-line">${c.body}</p></div>`).join('')}
+  </div>`},
+
+'stratejik-plan':{ title:'Stratejik Plan', breadcrumb:['Kalite Dokümanları','Stratejik Plan'], icon:'fa-chart-bar',
+render:()=>`
+  <p class="text-gray-600 mb-4 text-sm">Üniversitemizin stratejik planlarına ve ilgili dokümanlarına aşağıdan ulaşabilirsiniz.</p>
+  <p class="sh">2024-2028 Stratejik Planı</p>
+  <div class="space-y-2 mb-6">
+    ${[['2024-2028 Stratejik Planı (Ana Doküman)','https://www.29mayis.edu.tr/tr/2024-2028-stratejik-plani'],['Eğitim-Öğretim Stratejisi','https://www.29mayis.edu.tr/tr/2024-2028-stratejik-plani-egitim-ogretim-stratejisi'],['Araştırma-Uygulama Stratejisi','https://www.29mayis.edu.tr/tr/2024-2028-stratejik-plani-arastirma-uygulama-stratejisi'],['Topluma Hizmet Stratejisi','https://www.29mayis.edu.tr/tr/2024-2028-stratejik-plani-topluma-hizmet-stratejisi'],['Kurumsal Gelişim Stratejisi','https://www.29mayis.edu.tr/tr/2024-2028-stratejik-plani-kurumsal-gelisim-stratejisi']].map(([t,u])=>'<a href="'+u+'" target="_blank" rel="noopener" class="flex items-center p-3 border border-gray-100 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors group"><span class="text-sm font-medium text-gray-700 group-hover:text-[#1c355e]">'+t+'</span></a>').join('')}
+  </div>
+  <p class="sh">Stratejik Plan İzleme ve Değerlendirmeleri (2024-2028)</p>
+  <div class="space-y-2 mb-6">
+    ${['2024 İzleme ve Değerlendirme Raporları','2025 İzleme ve Değerlendirme Raporları'].map(t=>'<div class="flex items-center justify-between p-3 border border-gray-100 rounded-lg bg-gray-50"><div class="flex items-center min-w-0"><span class="text-sm font-medium text-gray-700">'+t+'</span></div><span class="text-xs text-gray-400 ml-3 flex-shrink-0">Belge yakında</span></div>').join('')}
+  </div>
+  <p class="sh">2019-2023 Stratejik Planı</p>
+  <div class="space-y-2">
+    ${[['2019-2023 Stratejik Planı, PDF','https://filehost.29mayis.edu.tr/upload/2019/11/04/stratejik-plan-2019-2023.pdf'],['Eğitim-Öğretim Stratejisi','https://www.29mayis.edu.tr/tr/egitim-ogretim-stratejisi'],['Araştırma-Uygulama Stratejisi','https://www.29mayis.edu.tr/tr/arastirma-uygulama-stratejisi'],['Topluma Hizmet Stratejisi','https://www.29mayis.edu.tr/tr/topluma-hizmet-stratejisi'],['Kurumsal Gelişim Stratejisi','https://www.29mayis.edu.tr/tr/kurumsal-gelisim-stratejisi'],['Uluslararasılaşma Stratejisi','https://www.29mayis.edu.tr/tr/uluslararasilasma-stratejisi'],['2019-2023 Stratejik Plan İzleme Raporu','https://www.29mayis.edu.tr/tr/2019-2023-stratejik-plani-izleme']].map(([t,u])=>'<a href="'+u+'" target="_blank" rel="noopener" class="flex items-center p-3 border border-gray-100 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors group"><span class="text-sm font-medium text-gray-700 group-hover:text-[#1c355e]">'+t+'</span></a>').join('')}
+  </div>`},
+
+'is-akis-surecleri':{ title:'İş Akış Süreçleri', breadcrumb:['Operasyonel Süreçler','İş Akış Süreçleri'], icon:'fa-project-diagram',
+render:()=>`
+  <div class="info-box">Bu içerik Kalite Portalında yer almaktadır. Görüntülemek için üniversite hesabınızla giriş yapınız.</div>
+  <div class="mt-8 text-center">
+    <a href="https://portal.29mayis.edu.tr/kalite/surecler" target="_blank" rel="noopener"
+       class="inline-flex items-center px-5 py-2.5 bg-[#1c355e] text-white font-semibold rounded-lg hover:bg-[#142643] transition-colors text-sm">
+      Kalite Portalına Git
+    </a>
+  </div>`},
+
+'gorev-tanimlari':{ title:'Görev Tanımları', breadcrumb:['Operasyonel Süreçler','Görev Tanımları'], icon:'fa-tasks',
+render:()=>`
+  <div class="info-box">Bu içerik Kalite Portalında yer almaktadır. Görüntülemek için üniversite hesabınızla giriş yapınız.</div>
+  <div class="mt-8 text-center">
+    <a href="https://portal.29mayis.edu.tr/kalite/gorevler" target="_blank" rel="noopener"
+       class="inline-flex items-center px-5 py-2.5 bg-[#1c355e] text-white font-semibold rounded-lg hover:bg-[#142643] transition-colors text-sm">
+      Kalite Portalına Git
+    </a>
+  </div>`},
+
+'prosedurler':{ title:'Prosedürler', breadcrumb:['Operasyonel Süreçler','Prosedürler'], icon:'fa-list-alt',
+render:()=>`
+  <div class="info-box">Bu içerik Kalite Portalında yer almaktadır. Görüntülemek için üniversite hesabınızla giriş yapınız.</div>
+  <div class="mt-8 text-center">
+    <a href="https://portal.29mayis.edu.tr/kalite/prosedurler" target="_blank" rel="noopener"
+       class="inline-flex items-center px-5 py-2.5 bg-[#1c355e] text-white font-semibold rounded-lg hover:bg-[#142643] transition-colors text-sm">
+      Kalite Portalına Git
+    </a>
+  </div>`},
+
+'izleme-anketler':{ title:'Kurum İçi İzleme', breadcrumb:['İzleme ve Değerlendirme','Kurum İçi İzleme'], icon:'fa-poll',
+render:()=>`
+  <p class="text-gray-600 mb-6 text-sm">Üniversitemizde 2018-2019 öğretim yılından itibaren çeşitli paydaş memnuniyet anketleri düzenlenmektedir.</p>
+  <div class="policy-grid">
+    ${[{title:'Akademik/İdari Personel Genel Memnuniyet Anketi',body:'2018-2019 ile 2024-2025 öğretim yılları'},{title:'Öğrenci Ders Değerlendirme Anketi',body:'2018-2019 ile 2024-2025 öğretim yılları'},{title:'Öğrenci Genel Memnuniyet Anketi',body:'2018-2019 ile 2024-2025 öğretim yılları'},{title:'Mezun Görüş ve İşbirliği Anketi',body:'2018-2019 ile 2024-2025 öğretim yılları'},{title:'Dış Paydaş Anketi',body:'2018-2019 ile 2024-2025 öğretim yılları'},{title:'Sosyal Bilimler Enstitüsü Anketi',body:'2018-2019 ile 2024-2025 öğretim yılları'}].map(c=>'<div class="policy-card"><h3>'+c.title+'</h3><p>'+c.body+'</p></div>').join('')}
+  </div>
+  <div class="mt-6">
+    <a href="https://www.29mayis.edu.tr/tr/izleme-anketler" target="_blank" rel="noopener"
+       class="inline-flex items-center px-5 py-2.5 bg-[#1c355e] text-white font-semibold rounded-lg hover:bg-[#142643] transition-colors text-sm">
+      Anket Sonuçlarını Görüntüle
+    </a>
+  </div>`},
+
+'yok-izleme-raporlari':{ title:'YÖK / YÖKAK İzlemeleri', breadcrumb:['İzleme, Değerlendirme ve İyileştirme','YÖK / YÖKAK İzlemeleri'], icon:'fa-university',
+render:()=>reportList([
+  ['2025 Yılı YÖK İzleme ve Değerlendirme Raporu','https://filehost.29mayis.edu.tr/upload/2026/01/07/universite-izleme-ve-degerlendirme-genel-raporu-2025.pdf'],
+  ['2024 Yılı YÖK İzleme ve Değerlendirme Raporu','https://filehost.29mayis.edu.tr/upload/2026/01/07/universite-izleme-ve-degerlendirme-genel-raporu-2024.pdf'],
+  ['2023 Yılı YÖK İzleme Raporu (1. Değerlendirme)','https://filehost.29mayis.edu.tr/upload/2025/01/16/yok_izleme_2023-1.pdf'],
+  ['2023 Yılı YÖK İzleme Raporu (2. Değerlendirme)','https://filehost.29mayis.edu.tr/upload/2025/01/16/yok_izleme_2023-2.pdf'],
+  ['2022 Yılı YÖK İzleme ve Değerlendirme Raporu','https://filehost.29mayis.edu.tr/upload/2023/11/01/yok_izleme_2022.pdf'],
+  ['2021 Yılı YÖK İzleme ve Değerlendirme Raporu','https://filehost.29mayis.edu.tr/upload/2023/11/01/yok_izleme_2021.pdf'],
+  ['2020 Yılı YÖK İzleme ve Değerlendirme Raporu','https://filehost.29mayis.edu.tr/upload/2023/11/01/yok_izleme_2020.pdf'],
+  ['2019 Yılı YÖK İzleme ve Değerlendirme Raporu','https://filehost.29mayis.edu.tr/upload/2023/11/01/yok_izleme_2019.pdf'],
+  ['2018 Yılı YÖK İzleme ve Değerlendirme Raporu','https://filehost.29mayis.edu.tr/upload/2023/11/01/yok_izleme_2018.pdf']
+])},
+
+'yokak-izleme-raporu':{ title:'YOKAK İzleme Yıllara Göre Değişim Raporu', breadcrumb:['İzleme, Değerlendirme ve İyileştirme','İzleme, Yıllara Göre Değişim'], icon:'fa-chart-bar',
+render:()=>reportList([
+  ['YOKAK İzleme Yıllara Göre Değişim Raporu, 2015-2022','https://filehost.29mayis.edu.tr/upload/2023/11/01/yokak_izleme_yillara_gore_degisim_2015-2022.pdf']
+])},
+
+'ic-degerlendirme-raporlari':{ title:'Kurum İç Değerlendirme Raporları', breadcrumb:['İzleme ve Değerlendirme','İç Değerlendirme Raporları'], icon:'fa-file-alt',
+render:()=>reportList([
+  ['Kurum İç Değerlendirme Raporu, 2025','https://filehost.29mayis.edu.tr/upload/2026/05/13/kurum_ic_degerlendirme_raporu_2025.pdf'],
+  ['Kurum İç Değerlendirme Raporu, 2024','https://filehost.29mayis.edu.tr/upload/2025/06/26/ic-degerlendirme-2024.pdf'],
+  ['Kurum İç Değerlendirme Raporu, 2023','https://filehost.29mayis.edu.tr/upload/2024/05/28/ic-degerlendirme-2023.pdf'],
+  ['Kurum İç Değerlendirme Raporu, 2022','https://filehost.29mayis.edu.tr/upload/2023/10/31/ic-degerlendirme-2022.pdf'],
+  ['Kurum İç Değerlendirme Raporu, 2021','https://filehost.29mayis.edu.tr/upload/2022/04/12/ic-degerlendirme-2021.pdf'],
+  ['Kurum İç Değerlendirme Raporu, 2020','https://filehost.29mayis.edu.tr/upload/2021/05/27/ic-degerlendirme-2020.pdf'],
+  ['Kurum İç Değerlendirme Raporu, 2019','https://filehost.29mayis.edu.tr/upload/2020/03/11/ic-degerlendirme-2019.pdf'],
+  ['Kurum İç Değerlendirme Raporu, 2018','https://filehost.29mayis.edu.tr/upload/2019/04/29/ic-degerlendirme-2018.pdf'],
+  ['Kurum İç Değerlendirme Raporu, 2017','https://www.29mayis.edu.tr/upload/2018/06/08/kidr_2017_15b1a448cef41e.pdf'],
+  ['Kurum İç Değerlendirme Raporu, 2016','https://www.29mayis.edu.tr/upload/2018/06/08/kidr-2016_15b1a462fe2055.pdf'],
+  ['Kurum İç Değerlendirme Raporu, 2015','https://www.29mayis.edu.tr/upload/2018/06/08/kidr-2015_15b1a45dd48cd2.pdf']
+])},
+
+'faaliyet-raporlari':{ title:'Faaliyet Raporları', breadcrumb:['İzleme ve Değerlendirme','Faaliyet Raporları'], icon:'fa-clipboard-list',
+render:()=>reportList([
+  ['2024-2025 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2024-2025'],
+  ['2023-2024 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2023-2024'],
+  ['2022-2023 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2022-2023'],
+  ['2021-2022 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2021-2022'],
+  ['2020-2021 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2020-2021'],
+  ['2019-2020 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2019-2020'],
+  ['2018-2019 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2018-2019'],
+  ['2017-2018 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2017-2018'],
+  ['2016-2017 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2016-2017'],
+  ['2015-2016 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2015-2016'],
+  ['2014-2015 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2014-2015'],
+  ['2013-2014 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2013-2014'],
+  ['2012-2013 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2012-2013'],
+  ['2011-2012 Eğitim Öğretim Yılı Faaliyet Raporu','https://portal.29mayis.edu.tr/dosya/faaliyet-raporu-2011-2012']
+])},
+
+'dis-degerlendirme-geri-bildirim':{ title:'Dış Değerlendirme Geri Bildirim Raporu', breadcrumb:['İzleme ve Değerlendirme','Dış Değ. Geri Bildirim'], icon:'fa-file-import',
+render:()=>`
+  <div class="info-box">Dış değerlendirme geri bildirim raporu, YOKAK tarafından hazırlanmış olup kurumsal güçlü ve gelişime açık yönleri içermektedir.</div>
+  ${reportList([['Dış Değerlendirme Kurumsal Geri Bildirim Raporu, 2021','https://filehost.29mayis.edu.tr/upload/2021/12/22/externalreportpublic.pdf']])}`},
+
+'dis-degerlendirme-kurumsal-izleme':{ title:'Dış Değerlendirme Kurumsal İzleme Raporu', breadcrumb:['İzleme ve Değerlendirme','Dış Değ. Kurumsal İzleme'], icon:'fa-search-plus',
+render:()=>`
+  <div class="info-box">Dış değerlendirme kurumsal izleme raporu, YOKAK tarafından hazırlanmış olup kurumun izleme ve iyileştirme süreçlerini kapsamaktadır.</div>
+  ${reportList([['Dış Değerlendirme Kurumsal İzleme Raporu, 2022','https://mis.yokak.gov.tr/images/report/izleme-1117-2022.pdf']])}`},
+
+'istatistikler':{ title:'Sayılarla Üniversitemiz', breadcrumb:['Hakkımızda','Sayılarla Üniversitemiz'], icon:'fa-chart-pie',
+render:()=>`
+  <p class="text-gray-600 mb-4 text-sm">İstanbul 29 Mayıs Üniversitesi'ne ait güncel istatistikler (2025 yılı). Rakamlar resmi üniversite istatistiklerinden alınmıştır.</p>
+
+  <a href="dashboard/index.html" style="display:flex;align-items:center;gap:14px;background:linear-gradient(90deg,#1c355e,#2a4a7f);border-radius:12px;padding:14px 20px;margin-bottom:22px;text-decoration:none">
+    <span style="width:42px;height:42px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0"></span>
+    <span style="flex:1;min-width:0"><span style="display:block;color:#fff;font-weight:700;font-size:14.5px">Kalite Göstergeleri Panosu</span><span style="display:block;color:#cfe0f5;font-size:12.5px">Sayılarla Üniversitemiz ve YÖKAK performans göstergelerinin tamamı, interaktif grafiklerle</span></span>
+    <span style="display:inline-flex;align-items:center;gap:7px;background:#c8a84b;color:#fff;font-size:12.5px;font-weight:700;padding:8px 15px;border-radius:8px;white-space:nowrap;flex-shrink:0">Panoya Git </span>
+  </a>
+
+  <!-- ANA KPI -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:26px">
+    ${[
+      {ico:'fa-user-graduate',c:'#1c355e',val:'5.846',lbl:'Toplam Öğrenci',sub:'2026'},
+      {ico:'fa-globe',c:'#0891b2',val:'333',lbl:'Uluslararası Öğrenci',sub:'2025'},
+      {ico:'fa-chalkboard-teacher',c:'#4bb5e8',val:'197',lbl:'Akademik Personel',sub:'2026'},
+      {ico:'fa-user-tie',c:'#7c3aed',val:'81',lbl:'İdari Personel',sub:'2 yabancı uyruklu'},
+      {ico:'fa-user-check',c:'#059669',val:'2.701',lbl:'Toplam Mezun',sub:'2017-2025'},
+      {ico:'fa-book',c:'#c8a84b',val:'148.745',lbl:'Kütüphane Kitap Sayısı',sub:'2025'}
+    ].map(k=>`<div class="kpi" style="--kc:${k.c}"><div class="kpi-val">${k.val}</div><div class="kpi-lbl">${k.lbl}</div><div class="kpi-sub">${k.sub}</div></div>`).join('')}
+  </div>
+
+  <!-- YILLARA GÖRE GÖSTERGELER (birleşik grafik + aç/kapa) -->
+  <p class="sh">Yıllara Göre Göstergeler</p>
+  <p style="font-size:13px;color:var(--text);margin:-4px 0 14px">Her grafikte ilgili istatistikleri, üstteki <strong>etiketlere tıklayarak</strong> açıp kapatabilirsiniz.</p>
+  ${DASH_GROUPS.map(tcCard).join('')}
+
+  <!-- 2025 ANLIK: öğrenci düzeyi + özet -->
+  <div class="tc-grid" style="margin-bottom:26px">
+    <div class="chart-card">
+      <h4>Öğrenci Düzeyi Dağılımı</h4>
+      <div class="sub">2026, toplam 5.846 öğrenci</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="ist-level"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h4>2025 Özeti</h4>
+      <div class="sub">Akademik birim ve programlar</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px">
+        ${[
+          ['Fakülte','8'],['Enstitü','3'],['Yüksekokul','1'],
+          ['Meslek Y.O.','1'],['Arş. Merkezi','8'],['Lisans Prog.','23'],
+          ['Ön Lisans Prog.','2'],['Y. Lisans Prog.','33'],['Doktora Prog.','7']
+        ].map(([l,v])=>`<div style="background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center"><div style="font-size:22px;font-weight:800;color:var(--navy);line-height:1">${v}</div><div style="font-size:11px;color:var(--muted);margin-top:4px">${l}</div></div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- FAKÜLTE / BİRİM BAZLI DAĞILIM (GERÇEK VERİ - 31.08.2026) -->
+  <p class="sh">Fakülte / Birim Bazlı Dağılım</p>
+  <div class="info-box" style="margin-bottom:18px">Fakülte/birim bazlı kırılım 31.08.2026 tarihli resmi öğrenci ve akademik personel verilerine dayanmaktadır.</div>
+
+  <!-- FİLTRELER -->
+  <div style="display:flex;flex-wrap:wrap;align-items:end;gap:14px;background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:22px">
+    <div>
+      <label style="display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px">Fakülte / Birim</label>
+      <select id="dash-fac" class="dash-select" style="min-width:230px">
+        <option value="">Tüm Fakülteler / Birimler</option>
+        ${DASH.faculties.map(f=>`<option value="${f.id}">${f.ad}</option>`).join('')}
+      </select>
+    </div>
+    <div>
+      <label style="display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px">Bölüm / Program</label>
+      <select id="dash-bol" class="dash-select" style="min-width:230px" disabled>
+        <option value="">Tüm Bölümler</option>
+      </select>
+    </div>
+    <button id="dash-reset" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit">
+      Sıfırla
+    </button>
+    <div style="margin-left:auto;align-self:center;font-size:11px;color:#94a3b8">Dönem: <strong style="color:var(--navy)">${DASH.donem}</strong></div>
+  </div>
+
+  <div id="dash-kpi" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:24px"></div>
+
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:18px" class="dash-grid-a">
+    <div class="chart-card">
+      <h4><span id="ch-dist-title">Fakültelere Göre Öğrenci Dağılımı</span></h4>
+      <div class="sub">Öğrenci sayısı</div>
+      <div class="chart-wrap" style="height:300px"><canvas id="ch-dist"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h4>Cinsiyet Dağılımı</h4>
+      <div class="sub">Öğrenci</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="ch-gender"></canvas></div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 2fr;gap:18px;margin-bottom:24px" class="dash-grid-b">
+    <div class="chart-card">
+      <h4>Akademik Unvan Dağılımı</h4>
+      <div class="sub">Öğretim elemanı sayısı</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="ch-unvan"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h4>Yıllara Göre Değişim</h4>
+      <div class="sub">2017-2025, üniversite geneli</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="ch-trend"></canvas></div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="padding:0;overflow:hidden">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border)">
+      <h4 style="margin:0"><span id="dash-table-title">Fakülte / Birim Detayı</span></h4>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="dash-table">
+        <thead><tr><th>Birim / Bölüm</th><th>Öğrenci</th><th>Akademik</th><th>Öğr./Akd.</th></tr></thead>
+        <tbody id="dash-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="text-xs text-gray-400 mt-4 text-right">Resmi veriler 2025 yılına aittir. Kaynak: <a href="https://www.29mayis.edu.tr/tr/istatistikler" target="_blank" class="hover:underline text-[#4bb5e8]">İ29MÜ İstatistikler</a></p>
+
+  <style>
+    @media (max-width:820px){ .dash-grid-a,.dash-grid-b{ grid-template-columns:1fr !important; } }
+  </style>`,
+onMount:()=>{
+  if (typeof Chart === 'undefined') return;
+  Chart.defaults.font.family = "'Roboto Slab', serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = '#5a6a80';
+  const gridColor='rgba(0,0,0,.05)';
+
+  // Birleşik (toggle) grafikler, yıllara göre göstergeler
+  tcBuildAll(DASH_GROUPS);
+
+  // 2025 anlık: öğrenci düzeyi halkası
+  if (window.IST_CHARTS) window.IST_CHARTS.forEach(c=>{try{c.destroy();}catch(e){}});
+  window.IST_CHARTS=[];
+  IST_CHARTS.push(new Chart(document.getElementById('ist-level'), {
+    type:'doughnut',
+    data:{ labels:['Lisans','Yüksek Lisans','Doktora','Ön Lisans'], datasets:[{ data:[4986,359,124,76], backgroundColor:['#1c355e','#4bb5e8','#7c3aed','#c8a84b'], borderWidth:2, borderColor:'#fff' }] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'58%', plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:12}}} }
+  }));
+
+  // Fakülte / birim panosu (temsili)
+  const fSel=document.getElementById('dash-fac');
+  const bSel=document.getElementById('dash-bol');
+  const reset=document.getElementById('dash-reset');
+  function syncTitles(){
+    const fac=DASH.faculties.find(f=>f.id===fSel.value);
+    document.getElementById('ch-dist-title').textContent = fac? fac.kisa+', Bölümlere Göre Öğrenci' : 'Fakültelere Göre Öğrenci Dağılımı';
+    document.getElementById('dash-table-title').textContent = fac? fac.ad+', Bölüm Detayı' : 'Fakülte / Birim Detayı';
+  }
+  fSel.addEventListener('change',()=>{ syncTitles(); dashRender(); });
+  bSel.addEventListener('change', dashUpdate);
+  reset.addEventListener('click',()=>{ fSel.value=''; syncTitles(); dashRender(); });
+  syncTitles();
+  dashRender();
+}},
+
+'vakif-yuksekogretim-raporu':{ title:'Vakıf Yükseköğretim Kurumları Raporu', breadcrumb:['İzleme ve Değerlendirme','Vakıf YÖK Raporu'], icon:'fa-landmark',
+render:()=>reportList([
+  ['Üniversite İzleme ve Değerlendirme Genel Raporu, 2024','https://eski.yok.gov.tr/Documents/2024/universite-izleme-ve-degerlendirme-genel-raporu-2024.pdf'],
+  ['Üniversite İzleme ve Değerlendirme Genel Raporu, 2023','https://eski.yok.gov.tr/Sayfalar/Haberler/2023/2023-universite-izleme-ve-degerlendirme-genel-raporu-yayimlandi.aspx'],
+  ['Üniversite İzleme ve Değerlendirme Genel Raporu, 2022','https://eski.yok.gov.tr/Sayfalar/Haberler/2022/2022-universite-izleme-ve-degerlendirme-genel-raporu-yayimlandi.aspx'],
+  ['YÖK Vakıf Yükseköğretim Kurumları Raporu, 2021','https://eski.yok.gov.tr/Sayfalar/Haberler/2021/yok-vakif-yuksekogretim-kurumlari-2021-raporunu-yayimladi.aspx'],
+  ['YÖK Vakıf Yükseköğretim Kurumları Raporu, 2020','https://eski.yok.gov.tr/Sayfalar/Haberler/2020/vakif-yuksekogretim-kurumlari-2020-raporu-yayimlandi.aspx'],
+  ['YÖK Vakıf Yükseköğretim Kurumları Raporu, 2019','https://eski.yok.gov.tr/Sayfalar/Haberler/2019/vakif-yuksekogretim-kurumlari-raporu-2019.aspx'],
+  ['YÖK Vakıf Yükseköğretim Kurumları Raporu, 2018','https://eski.yok.gov.tr/Documents/Yayinlar/Yayinlarimiz/vakif_yuksekogretim_kurumlari_kitab%C4%B1_2018.pdf']
+])},
+
+'tuma-arastirmalari':{ title:'Ulusal İzleme ve Değerlendirme Raporları', breadcrumb:['İzleme ve Değerlendirme','Ulusal İzleme ve Değerlendirme Raporları'], icon:'fa-clipboard-check',
+render:()=>reportList([
+  ['TÜMA Türkiye Üniversite Memnuniyet Araştırması, 2025','https://www.uniar.net/_files/ugd/779fe1_92f086be80fb456d8a4d96e60e018212.pdf'],
+  ['TÜMA Türkiye Üniversite Memnuniyet Araştırması, 2024','https://www.uniar.net/_files/ugd/779fe1_a9d7928b211f4426bbda59c3d3881fba.pdf'],
+  ['TÜMA Türkiye Üniversite Memnuniyet Araştırması, 2023','https://www.uniar.net/_files/ugd/779fe1_9485b312238f4f8e93c478dd33852036.pdf'],
+  ['TÜMA Türkiye Üniversite Memnuniyet Araştırması, 2022','https://www.uniar.net/_files/ugd/779fe1_5d660b5f472e4e1ab70623097c2ff856.pdf'],
+  ['TÜMA Türkiye Üniversite Memnuniyet Araştırması, 2021','https://www.uniar.net/_files/ugd/779fe1_9715270bbb264da3b51ec6c34c622322.pdf'],
+  ['TÜMA Türkiye Üniversite Memnuniyet Araştırması, 2020','https://www.uniar.net/_files/ugd/779fe1_673141f15a3c480d9a3266a0c4cb1067.pdf'],
+  ['TÜMA Türkiye Üniversite Memnuniyet Araştırması, 2019','https://www.uniar.net/_files/ugd/779fe1_8115cf2ca8b2478eaab50c316a71ff4e.pdf'],
+  ['TÜMA Türkiye Üniversite Memnuniyet Araştırması, 2018','https://www.uniar.net/_files/ugd/779fe1_1447d395e48c4c33b91cef53a24b0fc1.pdf'],
+  ['TÜMA Türkiye Üniversite Memnuniyet Araştırması, 2017','https://www.uniar.net/_files/ugd/779fe1_df4bc17412614459a0bc18222ca7e433.pdf'],
+  ['TÜMA Türkiye Üniversite Memnuniyet Araştırması, 2016','https://www.uniar.net/_files/ugd/779fe1_c3f3b3d951a04f2b8df780beae7bc75f.pdf']
+])},
+
+'ilgili-mevzuat':{ title:'İlgili Mevzuat', breadcrumb:['Operasyonel Süreçler','İlgili Mevzuat'], icon:'fa-gavel',
+render:()=>`
+  <p class="text-gray-600 mb-6 text-sm">Kalite güvencesi ile ilgili yönetmelik, yönerge ve esaslar.</p>
+  <div class="space-y-2">
+    ${[['Yükseköğretim Kalite Güvencesi ve YOKAK Yönetmeliği (YÖK)','https://www.resmigazete.gov.tr/eskiler/2018/11/20181123-16.htm','fa-file-alt'],['Kalite Komisyonu Çalışma Usul ve Esasları','https://filehost.29mayis.edu.tr/upload/2021/05/05/kalite_komisyonu_calisma_usul_ve_esaslari_ikd.pdf?v=2','fa-file-pdf'],['KGS İzleme ve Değerlendirme Rehberi','https://filehost.29mayis.edu.tr/upload/2020/09/18/kgs_izleme_ve_degerlendirme_rehberi.pdf','fa-file-pdf'],['KGS Organizasyonel Şeması','https://filehost.29mayis.edu.tr/upload/2020/09/18/kalite-guvence-sistemi-organizasyonel-semasi.docx','fa-file-word'],['Krize Müdahale ve Risk Yönetim Süreci Rehberi','https://filehost.29mayis.edu.tr/upload/2023/02/10/krize-mudahale-ve-risk-yonetim-sureci-rehberi-2022-09-2.pdf','fa-file-pdf'],['Kurumsal Değişim Yönetimi Rehberi','https://filehost.29mayis.edu.tr/upload/2023/02/10/kurumsal-degisim-yonetimi-rehberi-2022-09-1.pdf','fa-file-pdf'],['Uzaktan Eğitim Uygulama Esasları','https://www.29mayis.edu.tr/tr/uzaktan-egitim-uygulama-esaslari','fa-file-alt']].map(([t,u,ic])=>'<a href="'+u+'" target="_blank" rel="noopener" class="flex items-center justify-between p-3 border border-gray-100 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors group"><div class="flex items-center min-w-0"><span class="text-sm font-medium text-gray-700 group-hover:text-[#1c355e]">'+t+'</span></div></a>').join('')}
+  </div>`},
+
+'sertifikalarimiz':{ title:'Sertifikalarımız', breadcrumb:['Operasyonel Süreçler','Sertifikalarımız'], icon:'fa-medal',
+render:()=>`
+  <p class="text-gray-600 mb-6 text-sm">Üniversitemizin kalite, güvenlik ve sürdürülebilirlik alanlarındaki belge ve sertifikaları.</p>
+  <div class="policy-grid">
+    ${[{title:'İAA Ulusal Akreditasyon Sertifikası',body:'İlahiyat Fakültesi lisans programlarının ulusal akreditasyon belgesi.',gold:false},{title:'ISO 27001 Bilgi Güvenliği Belgesi, 2025',body:'TURKAK tarafından verilen Bilgi Güvenliği Yönetim Sistemi belgesi.',gold:true},{title:'Sıfır Atık Belgesi, 2023',body:'Çevre Bakanlığı sıfır atık yönetimi belgesi.',gold:true},{title:'Yenilenebilir Enerji Sertifikası, 2024',body:'Yenilenebilir enerji tedarikini belgeleyen sertifika.',gold:false},{title:'Yeşil Enerji Sertifikası, 2024',body:'Enerji verimliliği ve yeşil enerji kullanımı belgesi.',gold:true},{title:'Engelsiz Üniversite Ödülleri',body:'2021-2022 ve 2022-2023 dönemlerine ait "Fakülteler Binası Mekânda Erişim" kategorisi ödülleri.',gold:false}].map(c=>'<div class="policy-card '+(c.gold?'gold':'')+'"><h3>'+c.title+'</h3><p>'+c.body+'</p></div>').join('')}
+  </div>
+  <div class="mt-6">
+    <a href="https://www.29mayis.edu.tr/tr/sertifikalarimiz" target="_blank" rel="noopener"
+       class="inline-flex items-center px-5 py-2.5 bg-[#1c355e] text-white font-semibold rounded-lg hover:bg-[#142643] transition-colors text-sm">
+      Sertifikaları Görüntüle
+    </a>
+  </div>`},
+
+'kalite-etkinlikleri':{ title:'Kalite Etkinlikleri', breadcrumb:['Kalite Dokümanları','Kalite Etkinlikleri'], icon:'fa-calendar-check',
+render:()=>{
+  const evs = (window.CMS&&CMS.home&&CMS.home.events&&CMS.home.events.length) ? CMS.home.events : EVENTS;
+  return `
+  <div class="prose"><p>Kalite Güvence Sistemi kapsamında düzenlenen toplantı, eğitim, çalıştay ve tören gibi <strong>kalite etkinlikleri</strong> bu sayfada paylaşılmaktadır.</p></div>
+  <div class="event-grid" style="margin-top:22px">
+    ${evs.map(e=>{
+      const hasFoto = e.slug && e.foto;
+      const top = hasFoto
+        ? `<div class="event-card-top" style="padding:0;overflow:hidden;background:${e.color}">
+             <img src="assets/etkinlikler/${e.slug}/thumb/01.jpg" loading="lazy" alt="${e.baslik}" style="width:100%;height:100%;object-fit:cover">
+             <span class="event-cat">${e.kategori}</span>
+             <span style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:600;border-radius:20px;padding:3px 9px">${e.foto}</span>
+           </div>`
+        : `<div class="event-card-top" style="background:linear-gradient(135deg,${e.color},${e.color}cc)">
+                          <span class="event-cat">${e.kategori}</span>
+           </div>`;
+      return `
+      <div class="event-card" style="${hasFoto?'cursor:pointer':'cursor:default'}" ${hasFoto?`onclick="openEtkinlik('${e.slug}')"`:''}>
+        ${top}
+        <div class="event-card-body">
+          <div class="event-date">${e.tarih}</div>
+          <h4>${e.baslik}</h4>
+          <p>${e.ozet}</p>
+          ${hasFoto?`<div style="margin-top:10px;font-size:12.5px;font-weight:600;color:#4bb5e8">Fotoğrafları Gör</div>`:''}
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}},
+
+'ilkelerimiz':{ title:'İlkelerimiz', breadcrumb:['Geleceğe Bakış','İlkelerimiz'], icon:'fa-scale-balanced',
+render:()=>`
+  <div class="prose"><p>İstanbul 29 Mayıs Üniversitesi kalite güvence sistemini yönlendiren temel <strong>ilkelerimiz</strong>:</p></div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
+    ${[
+      {icon:'fa-eye',title:'Şeffaflık',body:'Tüm kalite süreçlerini paydaşlara açık ve izlenebilir biçimde yürütmek.'},
+      {icon:'fa-users',title:'Katılımcılık',body:'Karar ve iyileştirme süreçlerini iç ve dış paydaş katılımıyla şekillendirmek.'},
+      {icon:'fa-sync-alt',title:'Sürekli İyileştirme',body:'PÜKÖ döngüsü ile süreçleri düzenli olarak gözden geçirip geliştirmek.'},
+      {icon:'fa-balance-scale',title:'Hesap Verebilirlik',body:'Kaynak kullanımı ve sonuçlar konusunda paydaşlara karşı sorumlu olmak.'},
+      {icon:'fa-bullseye',title:'Kanıta Dayalılık',body:'Kararları veri ve göstergelere dayandırmak.'},
+      {icon:'fa-hand-holding-heart',title:'Etik Değerler',body:'Tüm faaliyetlerde kurumsal ve akademik etik ilkelere bağlı kalmak.'},
+    ].map(v=>`
+      <div class="border border-gray-100 bg-white p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+        <h4 class="font-bold text-[#1c355e] mb-2 flex items-center">${v.title}</h4>
+        <p class="text-sm text-gray-600 leading-relaxed">${v.body}</p>
+      </div>`).join('')}
+  </div>`},
+
+'uluslararasi-izleme':{ title:'Uluslararası İzleme', breadcrumb:['İzleme ve Değerlendirme','Uluslararası İzleme'], icon:'fa-globe',
+render:()=>`
+  <div class="prose"><p>Üniversitemizin uluslararası akreditasyon, sıralama ve karşılaştırma (benchmarking) süreçlerine ilişkin <strong>uluslararası izleme</strong> göstergeleri bu sayfada değerlendirilecektir.</p></div>
+  <div class="info-box">Bu bölüm güncellenmektedir. Uluslararası izleme ve değerlendirme verilerimiz yakında paylaşılacaktır.</div>`},
+
+'paydas-katilim':{ title:'Paydaş Katılım / Geri Bildirim Formu', breadcrumb:['İzleme ve Değerlendirme','Paydaş Katılım Formu'], icon:'fa-comments',
+render:()=>`
+  <div class="prose"><p>Kalite güvence sistemimizi birlikte geliştirmek için görüş, öneri ve geri bildirimlerinizi bekliyoruz. Paydaş görüşlerinizi resmi <strong>Geri Bildirim Sistemi</strong> üzerinden iletebilirsiniz.</p></div>
+  <div style="text-align:center;margin:28px 0">
+    <a href="https://kalite.29mayis.edu.tr/geri-bildirim/" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#c8a84b] text-white font-semibold hover:bg-[#b8943a] transition-colors shadow-md">
+      Geri Bildirim Formuna Git
+          </a>
+  </div>
+  <div class="info-box" style="margin-top:18px">Geri bildirimleriniz Kalite Güvencesi ve Akreditasyon Koordinatörlüğü tarafından değerlendirilir.</div>`},
+
+/* ── YENİ KOMİSYONLAR ── */
+'uygulama-arastirma-kalite-komisyonu':{ title:'Uygulama ve Araştırma Merkezleri Kalite Alt Komisyonu', breadcrumb:['Kalite Komisyonları','Uyg. ve Araştırma Merkezleri Kalite Alt Komisyonu'], icon:'fa-flask',
+render:()=>`
+  <div class="prose"><p>Uygulama ve Araştırma Merkezleri Kalite Komisyonu; üniversitemizin uygulama ve araştırma merkezlerinde kalite güvence sisteminin kurulması, performans göstergelerinin izlenmesi ve kalite kültürünün geliştirilmesi amacıyla Kalite Yönergesi'nin 12. maddesi uyarınca oluşturulmuştur. Üyeler üç yıl süreyle görevlendirilir.</p></div>
+  <p class="sh">Görev Tanımı</p>
+  <div class="prose"><ul><li>Üniversitenin stratejik planı ve hedefleri doğrultusunda eğitim-öğretim, araştırma ve toplumsal katkı faaliyetleri ile idari hizmetlerin değerlendirilmesi, izlenmesi ve kalitesinin geliştirilmesi amacıyla iç ve dış kalite güvence sistemini kurmak, anahtar performans göstergelerini tespit etmek, program değerlendirmesi yapmak ve çalışmaları Kalite Komisyonuna sunmak,</li><li>Kalite ana süreçleriyle ilgili yıllık faaliyet ve eylem planları ile takvimini hazırlayarak Kalite Komisyonuna sunmak; faaliyet raporunu Aralık ayı son haftasına kadar sunmak,</li><li>Yıllık Uygulama ve Araştırma Merkezi İç Değerlendirme Raporunu hazırlayıp Kalite Komisyonuna sunmak ve merkezlerin web sayfasında paylaşmak,</li><li>İç ve dış değerlendirme raporları sonucunda iyileştirmeye gereksinim duyulan alanlarla ilgili gerekli çalışmaları yapmak,</li><li>Merkezlerdeki personel, öğrenci ve paydaşları kalite güvencesi, akreditasyon ve değerlendirme süreçleri hakkında bilgilendirmek, farkındalık oluşturmak ve katılımı teşvik etmek,</li><li>Kalite kültürünün geliştirilmesi için eğitim, toplantı ve çalıştaylar düzenlemek.</li></ul></div>
+  <p class="sh">Komisyon Üyeleri</p>
+  <table class="member-table">
+    <thead><tr><th>Ad Soyad</th><th>Görev / Merkez</th></tr></thead>
+    <tbody><tr><td>Dr. Öğr. Üyesi Mehtap GÜVEN ÇOBAN<span class="chair-badge">Başkan</span></td><td>Sürekli Eğitim Uyg. ve Arş. Merkezi (SÜREM) Müdürü</td></tr><tr><td>Dr. Öğr. Üyesi Gülsüm PEHLİVAN AĞIRAKÇA</td><td>Aile Çalışmaları Uyg. ve Arş. Merkezi (AÇMER) Müdürü</td></tr><tr><td>Dr. Öğr. Üyesi İbrahim HELALŞAH</td><td>Arapça Öğretimi Uyg. ve Arş. Merkezi (ARÖMER)</td></tr><tr><td>Doç. Dr. Harun ŞENCAL</td><td>Ekonomik ve Finansal Sistemler Uyg. ve Arş. Merkezi (EFSAM) Müdürü</td></tr><tr><td>Prof. Dr. Ali BARDAKOĞLU</td><td>Kur'ân-ı Kerîm Araştırmaları Uyg. ve Arş. Merkezi (KURAMER) Müdürü</td></tr><tr><td>Dr. Öğr. Üyesi Müge EKERİM AKBULUT</td><td>Psikoloji Uyg. ve Arş. Merkezi (PAMER) Müdürü</td></tr><tr><td>Dr. Öğr. Üyesi İbrahim HELALŞAH</td><td>Türkçe Öğretimi Uyg. ve Arş. Merkezi (TÜRÖMER) Müdürü</td></tr><tr><td>Dr. Öğr. Üyesi Abdullah ÖMER</td><td>Kudüs Çalışmaları Uyg. ve Arş. Merkezi (KUDAM) Müdürü</td></tr></tbody>
+  </table>`},
+
+'danisma-kurullari':{ title:'Danışma Kurulları', breadcrumb:['Kalite Komisyonları','Danışma Kurulları'], icon:'fa-comments',
+render:()=>`
+  <div class="prose"><p>Danışma kurulları; üniversitemizin akademik birimleri ile iç ve dış paydaşlarının katılımıyla oluşturulan, kalite süreçlerine görüş ve öneri sunan istişari kurullardır. Üniversite Danışma Kurulu, rektörün başkanlığında akademik birim yöneticileri ile kamu, sivil toplum, özel sektör, mezun ve öğrenci temsilcilerinden oluşur.</p></div>
+  <p class="sh">Üniversite Danışma Kurulu Üyeleri</p>
+  <table class="member-table">
+    <thead><tr><th>Ad Soyad</th><th>Görev / Temsil</th></tr></thead>
+    <tbody><tr><td>Prof. Dr. Mustafa SİNANOĞLU</td><td>Rektör</td></tr><tr><td>Prof. Dr. İlyas ÇELEBİ</td><td>Rektör Yardımcısı</td></tr><tr><td>Doç. Dr. Talip YİĞİT</td><td>Kalite ve Akreditasyon Koordinatörü</td></tr><tr><td>Prof. Dr. M. Feridun EMECEN</td><td>Edebiyat Fakültesi Dekanı</td></tr><tr><td>Prof. Dr. Sera REYHANİ YÜKSEL</td><td>Hukuk Fakültesi Dekanı V.</td></tr><tr><td>Prof. Dr. Mustafa SİNANOĞLU</td><td>İktisadi ve İdari Bilimler Fakültesi Dekanı V.</td></tr><tr><td>Prof. Dr. Halil İbrahim SAĞLAM</td><td>Eğitim Fakültesi Dekanı</td></tr><tr><td>Prof. Dr. Ahmet YÜCEL</td><td>İlahiyat Fakültesi Dekanı</td></tr><tr><td>Prof. Dr. Abdulsamet HAŞILOĞLU</td><td>Mühendislik ve Doğa Bilimleri Fakültesi Dekanı</td></tr><tr><td>Doç. Dr. M. Taha BOYALIK</td><td>Sosyal Bilimler Enstitüsü Müdürü</td></tr><tr><td>Dr. Öğr. Üyesi İbrahim HELALŞAH</td><td>Yabancı Diller Yüksekokulu Müdürü</td></tr><tr><td>Dr. Öğr. Üyesi Metin DUMANLI</td><td>Bilişim Teknolojileri MYO Müdürü</td></tr></tbody>
+  </table>
+  <p class="sh">Dış Paydaş Temsilcileri</p>
+  <table class="member-table">
+    <thead><tr><th>Ad Soyad</th><th>Görev / Temsil</th></tr></thead>
+    <tbody><tr><td>Mustafa ÖZEN</td><td>Ümraniye İlçe Milli Eğitim Müdürü, Kamu kurum ve kuruluşları temsilcisi</td></tr><tr><td>Abdülkerim ÇELİK</td><td>Ümraniye İlçe Müftüsü, Kamu kurum ve kuruluşları temsilcisi</td></tr><tr><td>Ahmet YILDIZ</td><td>İslami Araştırmalar Vakfı Mütevelli Heyet Üyesi, STK ve meslek kuruluşları temsilcisi</td></tr><tr><td>Abdülselam FERŞATOĞLU</td><td>Grafiker-Fotoğrafçı (Üsküdar), Özel sektör temsilcisi</td></tr><tr><td>Mustafa Çemil EFE</td><td>Hattat (Üsküdar), Kültür, sanat ve spor temsilcisi</td></tr><tr><td>Emrullah Ahmet DEMİREL</td><td>Üniversite mezun temsilcisi</td></tr><tr><td>Hacer Pınar ER</td><td>Üniversite Öğrenci Kalite Komisyonu Başkanı</td></tr></tbody>
+  </table>`},
+
+'surec-el-kitabi-komisyonu':{ title:'Süreç El Kitabı Hazırlama Komisyonu', breadcrumb:['Kalite Komisyonları','Süreç El Kitabı Hazırlama Komisyonu'], icon:'fa-book',
+render:()=>`
+  <div class="prose"><p>Süreç El Kitabı Hazırlama Komisyonu; üniversitemizin süreçlerinin tanımlanması ve İstanbul 29 Mayıs Üniversitesi Süreç Yönetimi El Kitabı'nın hazırlanması amacıyla görevlendirilmiştir.</p></div>
+  <p class="sh">Komisyon Üyeleri</p>
+  <table class="member-table">
+    <thead><tr><th>Ad Soyad</th><th>Birim / Görev</th></tr></thead>
+    <tbody><tr><td>Dr. Öğr. Üyesi Yunus ADIGÜZEL<span class="chair-badge">Başkan</span></td><td>İİBF / Yönetim Bilişim Sistemleri</td></tr><tr><td>Öğr. Gör. Büşranur NALBANT</td><td>MYO / Kurumsal Bilişim Uzmanlığı</td></tr><tr><td>Öğr. Gör. Kadir YAZ</td><td>MYO / Bilgisayar Programcılığı</td></tr><tr><td>Arş. Gör. Rabia KARABEKMEZ</td><td>İİBF / Yönetim Bilişim Sistemleri</td></tr><tr><td>Arş. Gör. Muhammet Raşit SULU</td><td>İİBF / Siyaset Bilimi ve Uluslararası İlişkiler</td></tr><tr><td>Arş. Gör. Uzay ERYILMAZ</td><td>İİBF / Ekonomi</td></tr><tr><td>Merve AKTAŞ AKYILDIZ</td><td>Raportör</td></tr></tbody>
+  </table>`},
+
+'olcme-degerlendirme-komisyonu':{ title:'Ölçme, Değerlendirme ve İyileştirme Komisyonu', breadcrumb:['Kalite Komisyonları','Ölçme, Değerlendirme ve İyileştirme Komisyonu'], icon:'fa-tachometer-alt',
+render:()=>`
+  <div class="prose"><p>Ölçme, Değerlendirme ve Sürekli İyileştirme Kalite Alt Komisyonu; üniversitemizin amaç ve hedeflerine ulaşma düzeyini ölçmek, memnuniyet anketlerini yürütmek ve ölçme-değerlendirme süreçlerini program çıktıları doğrultusunda sürekli iyileştirmek amacıyla çalışır.</p></div>
+  <p class="sh">Görev Tanımı</p>
+  <div class="prose"><ul><li>Stratejik Planın ölçme-değerlendirme ile ilgili stratejik hedef ve performans göstergelerinin belirlenmesi, izlenmesi, iyileştirilmesi ve değerlendirilmesine ilişkin çalışmalar yapmak,</li><li>Ölçme-değerlendirme süreçlerine yönelik yıllık faaliyet ve eylem planları ile takvimini hazırlayarak Kalite Komisyonuna sunmak,</li><li>Akademik personel, idari personel, öğrenci, mezun ve dış paydaş memnuniyet anketlerinin güncellenmesini, uygulanmasını, sonuçlandırılmasını ve raporlanmasını sağlamak; anket sonuçlarını analiz ederek iyileştirme önerileri hazırlamak,</li><li>Üniversitenin amaç ve hedeflerine ulaşma düzeyini ölçmek, izlemek ve raporlamak,</li><li>Sınav düzeneği, soru biçimi ve tekniğiyle ilgili hataların en aza indirilmesi için gerekli çalışmaları yapmak,</li><li>Ölçme-değerlendirme uygulamalarına ilişkin yönerge ve kılavuzları hazırlamak veya güncellemek ve duyurulmasını sağlamak,</li><li>Farklı eğitim yöntemlerine (yüz yüze, hibrit, uzaktan) yönelik ölçme ve değerlendirmenin geliştirilmesi için birimlerle iş birliği yapmak,</li><li>Ölçme-değerlendirme faaliyetlerinin program ve öğrenim çıktıları doğrultusunda yürütülmesini sağlamak; araç ve yöntemlerin geçerlik ve güvenirliğini artıracak şekilde güncellenmesini sağlamak,</li><li>PUKÖ döngüsü çerçevesinde iç kalite güvence sistemini kurmak ve Kurum İç Değerlendirme Raporunun ilgili bölümünü hazırlamak.</li></ul></div>
+  <p class="sh">Komisyon Üyeleri</p>
+  <table class="member-table">
+    <thead><tr><th>Ad Soyad</th><th>Görev</th></tr></thead>
+    <tbody><tr><td>Prof. Dr. Murat DOĞRUEL<span class="chair-badge">Başkan</span></td><td>Rektör Yardımcısı</td></tr><tr><td>Dr. Öğr. Üyesi Mehmet Yılmaz AKBULUT</td><td>Üye</td></tr><tr><td>Dr. Öğr. Üyesi Mehmet AKINCI</td><td>Üye</td></tr><tr><td>Dr. Öğr. Üyesi Gökay YILDIZ</td><td>Üye</td></tr><tr><td>Öğr. Gör. Zübeyde YAVUZ</td><td>Üye</td></tr><tr><td>Öğr. Gör. Betül Sena ÇAĞLAR</td><td>Üye</td></tr><tr><td>Gülsüm MAMAŞ</td><td>Üye</td></tr></tbody>
+  </table>`},
+
+/* ── AKREDİTASYON ── */
+'program-akreditasyonlari':{ title:'Program Akreditasyonları', breadcrumb:['Geleceğe Bakış','Program Akreditasyonları'], icon:'fa-award',
+render:()=>`
+  <div class="prose"><p>Üniversitemiz lisans ve lisansüstü programlarının ulusal ve uluslararası akreditasyon çalışmaları bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">Program akreditasyonlarına ilişkin belgeler ve detaylar yakında eklenecektir.</div>`},
+
+'kurum-akreditasyonlari':{ title:'Kurum Akreditasyonları', breadcrumb:['Geleceğe Bakış','Kurum Akreditasyonları'], icon:'fa-university',
+render:()=>`
+  <div class="prose"><p>Üniversitemizin kurumsal akreditasyon süreçlerine ilişkin bilgiler bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">Kurum akreditasyonlarına ilişkin belgeler ve detaylar yakında eklenecektir.</div>`},
+
+'degerlendirme-programlari':{ title:'Değerlendirme Programları', breadcrumb:['Akreditasyon','Değerlendirme Programları'], icon:'fa-clipboard-check',
+render:()=>`
+  <div class="prose"><p>Değerlendirme programları, kalite güvencesi kapsamında yürütülen öz değerlendirme ve akran değerlendirme faaliyetlerini kapsamaktadır.</p></div>
+  <div class="policy-grid" style="margin-top:16px">
+    <div class="policy-card"><h3>Öz Değerlendirme</h3><p>Birimlerin kendi süreçlerini değerlendirdiği içsel değerlendirme programı.</p><p style="margin-top:10px;font-size:12px;color:#4bb5e8"><a href="#" onclick="loadPage('oz-degerlendirme')">Detaylar</a></p></div>
+    <div class="policy-card gold"><h3>Akran Değerlendirme</h3><p>Birimler arası karşılıklı değerlendirme programı.</p><p style="margin-top:10px;font-size:12px;color:#4bb5e8"><a href="#" onclick="loadPage('akran-degerlendirme')">Detaylar</a></p></div>
+  </div>`},
+
+'oz-degerlendirme':{ title:'Öz Değerlendirme', breadcrumb:['İzleme ve Değerlendirme','Öz Değerlendirme'], icon:'fa-user-check',
+render:()=>`
+  <div class="prose"><p>Öz değerlendirme programı kapsamında birimlerimizin kendi kalite süreçlerini değerlendirdiği çalışmalar bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">Öz değerlendirme raporları ve süreç bilgileri yakında eklenecektir.</div>`},
+
+'akran-degerlendirme':{ title:'Akran Değerlendirme', breadcrumb:['İzleme ve Değerlendirme','Akran Değerlendirme'], icon:'fa-users',
+render:()=>`
+  <div class="prose"><p>Akran değerlendirme programı kapsamında birimler arası karşılıklı değerlendirme çalışmaları bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">Akran değerlendirme raporları ve süreç bilgileri yakında eklenecektir.</div>`},
+
+'puko-donguleri':{ title:'Kalite Etkinlik Alanları ve PUKÖ Döngüleri', breadcrumb:['Hakkımızda','PUKÖ Döngüleri'], icon:'fa-sync-alt',
+render:()=>`
+  <div class="prose"><p>Üniversitemiz kalite güvence sistemi, tüm etkinlik alanlarında PUKÖ (Planla-Uygula-Kontrol Et-Önlem Al) döngüsü esasına göre yönetilir. Her kalite etkinlik alanında hedefler planlanır, uygulanır, sonuçlar izlenip değerlendirilir ve iyileştirme önlemleri alınarak döngü sürekli kılınır.</p></div>
+  <p class="sh">PUKÖ Döngüsü Organizasyon Şemaları</p>
+  <p style="font-size:13px;color:var(--text);margin:-4px 0 4px">Her etkinlik alanına ait PUKÖ döngüsü şemasını büyütmek için üzerine tıklayınız.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-3">
+    ${[
+      {img:'kalite-guvence-sistemi', title:'Kalite Güvence Sistemi PUKÖ Döngüsü'},
+      {img:'egitim-ogretim',         title:'Eğitim-Öğretim Süreçleri PUKÖ Döngüsü'},
+      {img:'arastirma-gelistirme',   title:'Araştırma-Geliştirme Süreçleri PUKÖ Döngüsü'},
+      {img:'toplumsal-katki',        title:'Toplumsal Katkı Süreçleri PUKÖ Döngüsü'},
+      {img:'uluslararasilasma',      title:'Uluslararasılaşma Süreçleri PUKÖ Döngüsü'},
+      {img:'yonetisim',              title:'Yönetişim Süreçleri PUKÖ Döngüsü'}
+    ].map(c=>{
+      const src = 'assets/puko/'+c.img+'.jpg';
+      return `<div onclick="openLightbox('${src}','${c.title.replace(/'/g,"\\'")}')" class="group cursor-pointer rounded-xl border border-gray-200 bg-white overflow-hidden hover:shadow-lg hover:border-[#4bb5e8] transition">
+        <div class="relative overflow-hidden bg-gray-50" style="aspect-ratio:3/4;">
+          <img src="${src}" loading="lazy" alt="${c.title}" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition duration-300">
+          <span class="absolute inset-0 flex items-center justify-center transition" style="background:rgba(0,0,0,0)"></span>
+        </div>
+        <div class="px-4 py-3 text-sm font-semibold text-[#1c355e] leading-snug">${c.title}</div>
+      </div>`;
+    }).join('')}
+  </div>
+  <p class="sh">PUKÖ Döngüsü Aşamaları</p>
+  <div class="policy-grid">
+    ${[
+      {title:'Planla','body':'Hedeflerin ve süreçlerin belirlenmesi.'},
+      {title:'Uygula','body':'Planların hayata geçirilmesi.'},
+      {title:'Kontrol Et','body':'Sonuçların izlenmesi ve değerlendirilmesi.'},
+      {title:'Önlem Al','body':'İyileştirme önlemlerinin alınıp döngünün sürdürülmesi.'}
+    ].map((c,i)=>`<div class="policy-card"><h3>${i+1}. ${c.title}</h3><p>${c.body}</p></div>`).join('')}
+  </div>`},
+
+/* ── İYİLEŞTİRME ── */
+'iyilestirme-liderlik':{ title:'Liderlik, Yönetişim ve Kalite, İyileştirme', breadcrumb:['İyileştirme','Liderlik, Yönetişim ve Kalite'], icon:'fa-crown',
+render:()=>`
+  <div class="prose"><p>Liderlik, yönetişim ve kalite güvence süreçlerinde iç ve dış değerlendirme sonuçlarına dayalı olarak yürütülen iyileştirme çalışmaları bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">Liderlik ve yönetişim alanına ait iyileştirme kararları, aksiyon planları ve kapanan PUKÖ döngüleri yakında eklenecektir.</div>`},
+
+'iyilestirme-egitim-ogretim':{ title:'Eğitim & Öğretim, İyileştirme', breadcrumb:['İyileştirme','Eğitim & Öğretim'], icon:'fa-graduation-cap',
+render:()=>`
+  <div class="prose"><p>Eğitim-öğretim süreçlerinde program değerlendirme, öğrenci geri bildirimleri ve akreditasyon sonuçlarına dayalı iyileştirme çalışmaları bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">Eğitim-öğretim alanına ait iyileştirme kararları ve aksiyon planları yakında eklenecektir.</div>`},
+
+'iyilestirme-arastirma':{ title:'Araştırma Geliştirme, İyileştirme', breadcrumb:['İyileştirme','Araştırma Geliştirme'], icon:'fa-flask',
+render:()=>`
+  <div class="prose"><p>Araştırma-geliştirme süreçlerinde performans göstergeleri ve çıktı analizlerine dayalı olarak yürütülen iyileştirme çalışmaları bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">Araştırma-geliştirme alanına ait iyileştirme kararları ve aksiyon planları yakında eklenecektir.</div>`},
+
+'iyilestirme-toplumsal':{ title:'Toplumsal Katkı, İyileştirme', breadcrumb:['İyileştirme','Toplumsal Katkı'], icon:'fa-hands-helping',
+render:()=>`
+  <div class="prose"><p>Toplumsal katkı süreçlerinde paydaş geri bildirimleri ve etki değerlendirmelerine dayalı iyileştirme çalışmaları bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">Toplumsal katkı alanına ait iyileştirme kararları ve aksiyon planları yakında eklenecektir.</div>`},
+
+'iyilestirme-performans':{ title:'Kurumsal Performans Göstergeleri', breadcrumb:['İyileştirme','Kurumsal Performans Göstergeleri'], icon:'fa-chart-line',
+render:()=>`
+  <div class="prose"><p>Üniversitemizin stratejik plan hedefleriyle ilişkilendirilmiş kurumsal performans göstergeleri, hedef-gerçekleşme değerleri ve yıllara göre değişimleri bu bölümde izlenecektir.</p></div>
+  <div class="info-box" style="margin-top:14px">Kurumsal performans göstergeleri tablosu ve gösterge kartları yakında eklenecektir.</div>`},
+
+/* ── GELECEĞE BAKIŞ ── */
+'vizyon-2030':{ title:'2030 Vizyonu', breadcrumb:['Geleceğe Bakış','2030 Vizyonu'], icon:'fa-binoculars',
+render:()=>`
+  <div class="prose"><p>İstanbul 29 Mayıs Üniversitesi'nin 2030 yılına yönelik kalite odaklı gelişim vizyonu, stratejik öncelikleri ve dönüşüm hedefleri bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">2030 Vizyonu belgesi ve stratejik öncelikler yakında eklenecektir.</div>`},
+
+'kurumsal-donusum-kapasitesi':{ title:'Kurumsal Dönüşüm Kapasitesi', breadcrumb:['Geleceğe Bakış','Kurumsal Dönüşüm Kapasitesi'], icon:'fa-sync',
+render:()=>`
+  <div class="prose"><p>Üniversitemizin değişime uyum, yenilikçilik ve sürdürülebilir gelişim kapasitesini gösteren kurumsal dönüşüm çalışmaları bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">Kurumsal dönüşüm kapasitesi değerlendirmesi ve gelişim alanları yakında eklenecektir.</div>`},
+
+'kap':{ title:'Kurumsal Akreditasyon Programı (KAP)', breadcrumb:['Geleceğe Bakış','Kurumsal Akreditasyon Programı (KAP)'], icon:'fa-stamp',
+render:()=>`
+  <div class="prose"><p>YÖKAK Kurumsal Akreditasyon Programı (KAP) kapsamında üniversitemizin akreditasyon süreci, hazırlık çalışmaları ve elde edilen sonuçlar bu bölümde yer alacaktır.</p></div>
+  <div class="info-box" style="margin-top:14px">Kurumsal Akreditasyon Programı (KAP) süreç bilgileri ve raporları yakında eklenecektir.</div>`}
+
+};
+
+/* ── HELPERS ── */
+function reportList(items) {
+  return '<div class="space-y-2 mt-4">' + items.map(function(item) {
+    var t = item[0], u = item[1];
+    return '<a href="' + u + '" target="_blank" rel="noopener" class="flex items-center justify-between p-3 border border-gray-100 rounded-lg hover:bg-blue-50 hover:border-blue-200 transition-colors group"><div class="flex items-center min-w-0"><span class="text-sm font-medium text-gray-700 group-hover:text-[#1c355e]">' + t + '</span></div></a>';
+  }).join('') + '</div>';
+}
+
+/* ── DASHBOARD (SAYILARLA ÜNİVERSİTEMİZ) ── */
+let DASH = {
+  donem: '2025-2026',
+  trend: {
+    labels: ['2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+    ogrenci: [1797,1844,1908,2190,2670,3363,4405,5100,5545,5846],
+    akademik: [110,104,99,121,145,156,161,158,175,197],
+    uluslararasi: [211,197,210,223,262,308,354,329,333,298]
+  },
+    faculties: [
+    { id:'ilahiyat', ad:"İlahiyat Fakültesi", kisa:"İlahiyat", renk:'#1c355e',
+      kadin:170, erkek:216, uluslararasi:80,
+      unvan:{ prof:10, docent:3, drOgr:11, ogrGor:0, arasGor:5 },
+      bolumler:[ {ad:"İlahiyat", ogrenci:383, akademik:0}, {ad:"İslam ve Din Bilimleri", ogrenci:3, akademik:0} ] },
+    { id:'edebiyat', ad:"Edebiyat Fakültesi", kisa:"Edebiyat", renk:'#4bb5e8',
+      kadin:1005, erkek:412, uluslararasi:55,
+      unvan:{ prof:10, docent:8, drOgr:21, ogrGor:1, arasGor:8 },
+      bolumler:[ {ad:"Arapça Mütercim ve Tercümanlık", ogrenci:185, akademik:10}, {ad:"Bilgi ve Belge Yönetimi", ogrenci:93, akademik:4}, {ad:"Felsefe", ogrenci:71, akademik:8}, {ad:"İngiliz Dili ve Edebiyatı", ogrenci:211, akademik:4}, {ad:"İngilizce Mütercim ve Tercümanlık", ogrenci:225, akademik:10}, {ad:"Mütercim-Tercümanlık (Arapça)", ogrenci:32, akademik:10}, {ad:"Mütercim-Tercümanlık (İngilizce)", ogrenci:42, akademik:10}, {ad:"Psikoloji", ogrenci:345, akademik:7}, {ad:"Tarih", ogrenci:108, akademik:8}, {ad:"Türk Dili ve Edebiyatı", ogrenci:105, akademik:7} ] },
+    { id:'egitim', ad:"Eğitim Fakültesi", kisa:"Eğitim", renk:'#7c3aed',
+      kadin:1215, erkek:336, uluslararasi:39,
+      unvan:{ prof:4, docent:5, drOgr:21, ogrGor:0, arasGor:8 },
+      bolumler:[ {ad:"Arapça Öğretmenliği", ogrenci:171, akademik:0}, {ad:"İlköğretim Matematik Öğretmenliği", ogrenci:97, akademik:0}, {ad:"İngilizce Öğretmenliği", ogrenci:263, akademik:0}, {ad:"Okul Öncesi Öğretmenliği", ogrenci:220, akademik:0}, {ad:"Özel Eğitim Öğretmenliği", ogrenci:209, akademik:4}, {ad:"Rehberlik ve Psikolojik Danışmanlık", ogrenci:198, akademik:0}, {ad:"Sınıf Öğretmenliği", ogrenci:211, akademik:0}, {ad:"Türkçe Öğretmenliği", ogrenci:182, akademik:0} ] },
+    { id:'hukuk', ad:"Hukuk Fakültesi", kisa:"Hukuk", renk:'#c8a84b',
+      kadin:443, erkek:340, uluslararasi:6,
+      unvan:{ prof:7, docent:3, drOgr:8, ogrGor:0, arasGor:7 },
+      bolumler:[ {ad:"Hukuk", ogrenci:783, akademik:11} ] },
+    { id:'iibf', ad:"İktisadi ve İdari Bilimler Fakültesi", kisa:"İİBF", renk:'#d97706',
+      kadin:539, erkek:404, uluslararasi:71,
+      unvan:{ prof:4, docent:2, drOgr:8, ogrGor:0, arasGor:3 },
+      bolumler:[ {ad:"Ekonomi (İngilizce)", ogrenci:237, akademik:6}, {ad:"Siyaset Bilimi ve Uluslararası İlişkiler (İngilizce)", ogrenci:254, akademik:4}, {ad:"Sosyal Hizmet", ogrenci:186, akademik:4}, {ad:"Yönetim Bilişim Sistemleri", ogrenci:266, akademik:3} ] },
+    { id:'muhendislik', ad:"Mühendislik ve Doğa Bilimleri Fakültesi", kisa:"Mühendislik", renk:'#0d9488',
+      kadin:33, erkek:42, uluslararasi:2,
+      unvan:{ prof:3, docent:0, drOgr:9, ogrGor:0, arasGor:2 },
+      bolumler:[ {ad:"Bilgisayar Mühendisliği", ogrenci:55, akademik:5}, {ad:"Elektrik-Elektronik Mühendisliği (İngilizce)", ogrenci:12, akademik:5}, {ad:"Yapay Zeka Mühendisliği", ogrenci:8, akademik:4} ] },
+    { id:'myo', ad:"Bilişim Teknolojileri Meslek Yüksekokulu", kisa:"MYO", renk:'#9333ea',
+      kadin:63, erkek:89, uluslararasi:4,
+      unvan:{ prof:0, docent:0, drOgr:0, ogrGor:12, arasGor:0 },
+      bolumler:[ {ad:"Bilgisayar Programcılığı", ogrenci:27, akademik:3}, {ad:"Büyük Veri Analistliği", ogrenci:60, akademik:0}, {ad:"Kurumsal Bilişim Uzmanlığı", ogrenci:51, akademik:0}, {ad:"Yapay Zeka Operatörlüğü", ogrenci:14, akademik:0} ] },
+    { id:'enstitu', ad:"Sosyal Bilimler Enstitüsü", kisa:"Enstitü", renk:'#e11d48',
+      kadin:311, erkek:203, uluslararasi:41,
+      unvan:{ prof:0, docent:0, drOgr:0, ogrGor:0, arasGor:0 },
+      bolumler:[ {ad:"Aile Danışmanlığı (Yüksek Lisans)", ogrenci:6, akademik:0}, {ad:"Arap Dili Eğitimi (Arapça) (Yüksek Lisans)", ogrenci:5, akademik:0}, {ad:"Arap Dili Eğitimi (Yüksek Lisans - Tezsiz)", ogrenci:1, akademik:0}, {ad:"Arap Dili Eğitimi (Yüksek Lisans)", ogrenci:19, akademik:0}, {ad:"Çeviribilim (İngilizce) (Doktora)", ogrenci:13, akademik:0}, {ad:"Çeviribilim (İngilizce) (Yüksek Lisans)", ogrenci:11, akademik:0}, {ad:"Çeviribilim Arapça (%30 Arapça) (Yüksek Lisans - Tezsiz)", ogrenci:1, akademik:0}, {ad:"Çeviribilim Arapça (%30 Arapça) (Yüksek Lisans)", ogrenci:18, akademik:0}, {ad:"Erken Çocuklukta Ahlak ve Değer Eğitimi (Yüksek Lisans - Tezsiz)", ogrenci:2, akademik:0}, {ad:"Erken Çocuklukta Ahlak ve Değer Eğitimi (Yüksek Lisans)", ogrenci:34, akademik:0}, {ad:"Felsefe (Doktora)", ogrenci:37, akademik:0}, {ad:"Felsefe (Yüksek Lisans)", ogrenci:38, akademik:0}, {ad:"Felsefe ve Din Bilimleri (Yüksek Lisans)", ogrenci:33, akademik:0}, {ad:"İslam Ekonomisi ve Finansı (Yüksek Lisans)", ogrenci:17, akademik:0}, {ad:"Kamu Hukuku (Yüksek Lisans)", ogrenci:16, akademik:0}, {ad:"Manevi Danışmanlık ve Rehberlik  (Yüksek Lisans - Tezsiz)", ogrenci:2, akademik:0}, {ad:"Manevi Danışmanlık ve Rehberlik (Yüksek Lisans)", ogrenci:33, akademik:0}, {ad:"Özel Hukuk (Yüksek Lisans)", ogrenci:21, akademik:0}, {ad:"Psikoloji (Yüksek Lisans)", ogrenci:13, akademik:0}, {ad:"Siyaset Bilimi ve Uluslararası İlişkiler (İngilizce) (Yüksek Lisans)", ogrenci:9, akademik:0}, {ad:"Siyaset Bilimi ve Uluslararası İlişkiler (Yüksek Lisans)", ogrenci:2, akademik:0}, {ad:"Tarih (Doktora)", ogrenci:6, akademik:0}, {ad:"Tarih (Yüksek Lisans)", ogrenci:25, akademik:0}, {ad:"Temel İslam Bilimleri (Doktora)", ogrenci:56, akademik:0}, {ad:"Temel İslam Bilimleri (Yüksek Lisans)", ogrenci:74, akademik:0}, {ad:"Türk Dili ve Edebiyatı (Doktora)", ogrenci:14, akademik:0}, {ad:"Türk Dili ve Edebiyatı (Yüksek Lisans)", ogrenci:8, akademik:0} ] }
+  ]
+};
+function normalizeDash(){
+  if(!DASH || !Array.isArray(DASH.faculties)) return;
+  DASH.faculties.forEach(f=>{
+    const u = f.unvan || {};
+    f.ogrenci = (f.kadin||0) + (f.erkek||0);
+    f.akademik = (u.prof||0) + (u.docent||0) + (u.drOgr||0) + (u.ogrGor||0) + (u.arasGor||0);
+  });
+}
+normalizeDash();
+const UNVAN_LABELS = { prof:'Profesör', docent:'Doçent', drOgr:'Dr. Öğr. Üyesi', ogrGor:'Öğr. Görevlisi', arasGor:'Araştırma Görevlisi' };
+const UNVAN_RENK   = { prof:'#1c355e', docent:'#2d5986', drOgr:'#4bb5e8', ogrGor:'#c8a84b', arasGor:'#94a3b8' };
+
+function dashTotals(list) {
+  const t = { ogrenci:0, kadin:0, erkek:0, akademik:0, uluslararasi:0, bolum:0,
+              unvan:{prof:0,docent:0,drOgr:0,ogrGor:0,arasGor:0} };
+  list.forEach(f=>{
+    t.ogrenci+=f.ogrenci; t.kadin+=f.kadin; t.erkek+=f.erkek;
+    t.akademik+=f.akademik; t.uluslararasi+=f.uluslararasi; t.bolum+=f.bolumler.length;
+    for (const k in t.unvan) t.unvan[k]+=f.unvan[k];
+  });
+  return t;
+}
+function nf(n){ return n.toLocaleString('tr-TR'); }
+
+let DASH_CHARTS = [];
+function dashDestroy(){ DASH_CHARTS.forEach(c=>{try{c.destroy();}catch(e){}}); DASH_CHARTS=[]; }
+
+function dashRender() {
+  if (typeof Chart === 'undefined') return;
+  const fSel = document.getElementById('dash-fac');
+  const bSel = document.getElementById('dash-bol');
+  if (!fSel) return;
+  const facId = fSel.value;
+  const fac = DASH.faculties.find(f=>f.id===facId);
+
+  // Bölüm dropdown fac'e göre doldur
+  if (fac) {
+    bSel.disabled = false;
+    bSel.innerHTML = '<option value="">Tüm Bölümler</option>' +
+      fac.bolumler.map((b,i)=>`<option value="${i}">${b.ad}</option>`).join('');
+  } else {
+    bSel.disabled = true;
+    bSel.innerHTML = '<option value="">Tüm Bölümler</option>';
+  }
+  dashUpdate();
+}
+
+function dashUpdate() {
+  dashDestroy();
+  const fSel = document.getElementById('dash-fac');
+  const bSel = document.getElementById('dash-bol');
+  const facId = fSel.value;
+  const fac = DASH.faculties.find(f=>f.id===facId);
+  const bolIdx = bSel.value===''? -1 : parseInt(bSel.value,10);
+  const scope = fac ? [fac] : DASH.faculties;
+  const t = dashTotals(scope);
+
+  // Bölüm seçiliyse öğrenci/bölüm sayısını daralt
+  let ogrenciVal = t.ogrenci, bolumVal = t.bolum, akademikVal = t.akademik, kapsamEtiket = fac? fac.ad : 'Tüm Üniversite';
+  if (fac && bolIdx>=0) { const b=fac.bolumler[bolIdx]; ogrenciVal=b.ogrenci; bolumVal=1; akademikVal=b.akademik; kapsamEtiket=fac.kisa+' / '+b.ad; }
+
+  const kadinOran = t.ogrenci? Math.round(t.kadin/t.ogrenci*100):0;
+  const oranOA = akademikVal? (ogrenciVal/akademikVal).toFixed(1):'0';
+
+  // KPI'lar
+  const kpis = [
+    { ico:'fa-user-graduate', c:'#1c355e', val:nf(ogrenciVal), lbl:'Öğrenci', sub:kapsamEtiket },
+    { ico:'fa-chalkboard-teacher', c:'#4bb5e8', val:nf(akademikVal), lbl:'Akademik Personel', sub:DASH.donem },
+    { ico:'fa-sitemap', c:'#7c3aed', val:nf(bolumVal), lbl:(fac&&bolIdx>=0)?'Program':'Bölüm / Program', sub:fac?fac.kisa:(DASH.faculties.length+' Akademik Birim') },
+    { ico:'fa-globe', c:'#0891b2', val:nf(fac?fac.uluslararasi:t.uluslararasi), lbl:'Uluslararası Öğrenci', sub:kapsamEtiket },
+    { ico:'fa-venus', c:'#e11d48', val:'%'+kadinOran, lbl:'Kadın Öğrenci Oranı', sub:nf(t.kadin)+' / '+nf(t.ogrenci) },
+    { ico:'fa-people-arrows', c:'#059669', val:oranOA, lbl:'Öğrenci / Akd. Personel', sub:'oran' }
+  ];
+  document.getElementById('dash-kpi').innerHTML = kpis.map(k=>`
+    <div class="kpi" style="--kc:${k.c}">
+      <div class="kpi-val">${k.val}</div>
+      <div class="kpi-lbl">${k.lbl}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>`).join('');
+
+  const gridColor='rgba(0,0,0,.05)';
+  Chart.defaults.font.family = "'Roboto Slab', serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = '#5a6a80';
+
+  // 1) Dağılım bar: fakülte bazlı ya da bölüm bazlı
+  const distLabels = fac ? fac.bolumler.map(b=>b.ad) : DASH.faculties.map(f=>f.kisa);
+  const distData   = fac ? fac.bolumler.map(b=>b.ogrenci) : DASH.faculties.map(f=>f.ogrenci);
+  const distColors = fac ? fac.bolumler.map(()=>fac.renk) : DASH.faculties.map(f=>f.renk);
+  DASH_CHARTS.push(new Chart(document.getElementById('ch-dist'), {
+    type:'bar',
+    data:{ labels:distLabels, datasets:[{ label:'Öğrenci', data:distData, backgroundColor:distColors, borderRadius:6, maxBarThickness:46 }] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+      scales:{ x:{grid:{display:false},ticks:{maxRotation:38,minRotation:0,autoSkip:false,font:{size:10}}}, y:{grid:{color:gridColor},beginAtZero:true} } }
+  }));
+
+  // 2) Cinsiyet doughnut
+  DASH_CHARTS.push(new Chart(document.getElementById('ch-gender'), {
+    type:'doughnut',
+    data:{ labels:['Kadın','Erkek'], datasets:[{ data:[t.kadin,t.erkek], backgroundColor:['#e11d48','#1c355e'], borderWidth:2, borderColor:'#fff' }] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'62%', plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:14}}} }
+  }));
+
+  // 3) Akademik unvan yatay bar
+  const uKeys=['prof','docent','drOgr','ogrGor','arasGor'];
+  DASH_CHARTS.push(new Chart(document.getElementById('ch-unvan'), {
+    type:'bar',
+    data:{ labels:uKeys.map(k=>UNVAN_LABELS[k]), datasets:[{ data:uKeys.map(k=>t.unvan[k]), backgroundColor:uKeys.map(k=>UNVAN_RENK[k]), borderRadius:5, maxBarThickness:24 }] },
+    options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+      scales:{ x:{grid:{color:gridColor},beginAtZero:true}, y:{grid:{display:false}} } }
+  }));
+
+  // 4) Yıllara göre trend (üniversite geneli, filtreden bağımsız)
+  DASH_CHARTS.push(new Chart(document.getElementById('ch-trend'), {
+    type:'line',
+    data:{ labels:DASH.trend.labels, datasets:[
+      { label:'Öğrenci', data:DASH.trend.ogrenci, borderColor:'#1c355e', backgroundColor:'rgba(28,53,94,.08)', fill:true, tension:.35, borderWidth:2.5, pointRadius:3, pointBackgroundColor:'#1c355e', yAxisID:'y' },
+      { label:'Uluslararası Öğrenci', data:DASH.trend.uluslararasi, borderColor:'#c8a84b', backgroundColor:'rgba(200,168,75,.10)', fill:true, tension:.35, borderWidth:2, pointRadius:3, pointBackgroundColor:'#c8a84b', yAxisID:'y1' },
+      { label:'Akademik Personel', data:DASH.trend.akademik, borderColor:'#4bb5e8', backgroundColor:'transparent', tension:.35, borderWidth:2, pointRadius:3, pointBackgroundColor:'#4bb5e8', yAxisID:'y1' }
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:14,usePointStyle:true}}},
+      scales:{ x:{grid:{display:false}}, y:{position:'left',grid:{color:gridColor},beginAtZero:true,title:{display:true,text:'Öğrenci'}}, y1:{position:'right',grid:{display:false},beginAtZero:true,title:{display:true,text:'Personel / Ulus.'}} } }
+  }));
+
+  // Bölüm tablosu
+  const rows = fac ? fac.bolumler.map(b=>({ad:b.ad, ogrenci:b.ogrenci, akademik:b.akademik}))
+                   : DASH.faculties.map(f=>({ad:f.ad, ogrenci:f.ogrenci, akademik:f.akademik}));
+  const maxO = Math.max.apply(null, rows.map(r=>r.ogrenci));
+  document.getElementById('dash-tbody').innerHTML = rows.map(r=>`
+    <tr>
+      <td>${r.ad}</td>
+      <td>${nf(r.ogrenci)}<span class="dash-bar" style="width:${Math.max(6,Math.round(r.ogrenci/maxO*70))}px"></span></td>
+      <td>${nf(r.akademik)}</td>
+      <td>${r.akademik? (r.ogrenci/r.akademik).toFixed(1):'-'}</td>
+    </tr>`).join('') +
+    `<tr style="background:#f4f6fb;font-weight:700">
+      <td style="font-weight:800">${fac?fac.kisa+' Toplam':'GENEL TOPLAM'}</td>
+      <td>${nf(rows.reduce((s,r)=>s+r.ogrenci,0))}</td>
+      <td>${nf(rows.reduce((s,r)=>s+r.akademik,0))}</td>
+      <td>${(rows.reduce((s,r)=>s+r.ogrenci,0)/Math.max(1,rows.reduce((s,r)=>s+r.akademik,0))).toFixed(1)}</td>
+    </tr>`;
+}
+
+/* ── SIDEBAR ── */
+function buildSidebar(groupId, activeId) {
+  const g = NAV_GROUPS[groupId];
+  if (!g) return '';
+  return `
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sticky top-24">
+      <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 px-2">${g.label}</h3>
+      <nav class="space-y-0.5">
+        ${g.links.map(l=>`
+          <a href="#" onclick="loadPage('${l.id}')"
+             class="sidebar-link flex items-center px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-gray-50 hover:text-[#1c355e] font-medium transition-colors ${l.id===activeId?'active':''}">
+            ${l.text}
+          </a>`).join('')}
+      </nav>
+    </div>`;
+}
+
+/* ── CAROUSEL ── */
+let _carIdx = 0, _carTimer = null, _carTotal = 0;
+function carouselGoTo(i) {
+  const track = document.getElementById('carousel-track');
+  const dots  = document.querySelectorAll('.carousel-dot');
+  if (!track) return;
+  _carTotal = track.children.length;
+  _carIdx = (i + _carTotal) % _carTotal;
+  track.style.transform = `translateX(-${_carIdx * 100}%)`;
+  dots.forEach((d,j)=>d.classList.toggle('active', j===_carIdx));
+}
+function carouselNext() { carouselGoTo(_carIdx + 1); }
+function carouselPrev() { carouselGoTo(_carIdx - 1); }
+function carouselStart() {
+  clearInterval(_carTimer);
+  _carTimer = setInterval(carouselNext, 5000);
+}
+function carouselStop()  { clearInterval(_carTimer); }
+
+/* ── ROUTER ── */
+function loadPage(pageId) {
+  const cfg = PAGES[pageId];
+  if (!cfg) return;
+
+  const isHome = pageId === 'home';
+  const titleBar   = document.getElementById('page-title-bar');
+  const innerLayout = document.getElementById('inner-layout');
+  const homeLayout  = document.getElementById('home-layout');
+
+  if (isHome) {
+    titleBar.style.display    = 'none';
+    innerLayout.style.display = 'none';
+    homeLayout.style.display  = '';
+    homeLayout.innerHTML = cfg.render();
+    // start carousel after render
+    _carIdx = 0;
+    const track = document.getElementById('carousel-track');
+    if (track) { _carTotal = track.children.length; track.style.transform='translateX(0)'; }
+    carouselStart();
+    document.getElementById('home-carousel').addEventListener('mouseenter', carouselStop);
+    document.getElementById('home-carousel').addEventListener('mouseleave', carouselStart);
+    if (cfg.onMount) cfg.onMount();
+    history.replaceState(null,'','#home');
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+
+  // Geri inner layout'a geç
+  clearInterval(_carTimer);
+  titleBar.style.display    = '';
+  innerLayout.style.display = '';
+  homeLayout.style.display  = 'none';
+  homeLayout.innerHTML = '';
+
+  const header = `
+    <div class="mb-7 pb-6 border-b border-gray-100">
+      <h2 class="text-xl font-bold text-gray-900">${cfg.title}</h2>
+    </div>`;
+
+  const area = document.getElementById('content-area');
+  area.style.animation = 'none';
+  area.offsetHeight;
+  area.style.animation = '';
+  area.innerHTML = header + cfg.render();
+
+  // Title bar (onMount'tan ÖNCE, onMount hata verse bile başlık doğru kalsın)
+  document.getElementById('page-title').textContent = cfg.title;
+  const bc = cfg.breadcrumb || [cfg.title];
+  if (bc.length > 1) {
+    document.getElementById('bc-section').textContent = bc[0];
+    document.getElementById('bc-sep').style.display = '';
+    document.getElementById('bc-page').textContent = bc[bc.length-1];
+  } else {
+    document.getElementById('bc-section').textContent = '';
+    document.getElementById('bc-sep').style.display = 'none';
+    document.getElementById('bc-page').textContent = bc[0];
+  }
+
+  // Sidebar
+  document.getElementById('sidebar-container').innerHTML =
+    buildSidebar(PAGE_TO_GROUP[pageId], pageId);
+
+  // İçerik yüklendikten sonra etkileşimli bileşenler
+  if (cfg.onMount) { try { cfg.onMount(); } catch(e){ console.error('onMount hata ('+pageId+'):', e); } }
+
+  history.replaceState(null,'','#'+pageId);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── SEARCH ── */
+function initSearch() {
+  const input = document.getElementById('search-input');
+  const dropdown = document.getElementById('search-dropdown');
+  if (!input||!dropdown) return;
+
+  const trLower = s => (s||'').replace(/İ/g,'i').replace(/I/g,'ı').toLowerCase();
+  let index = null;
+  function getIndex() {
+    if (!index) index = Object.entries(PAGES).map(([id,p])=>{
+      let body = '';
+      try { body = (p.render()||'').replace(/<[^>]*>/g,' '); } catch(e){ body = ''; }
+      const title = p.title || id;
+      return { id, title, breadcrumb:p.breadcrumb||[],
+               title_l:trLower(title), text:trLower(title+' '+body) };
+    });
+    return index;
+  }
+
+  input.addEventListener('input',()=>{
+    const q = trLower(input.value.trim());
+    if (q.length<2){dropdown.classList.add('hidden');return;}
+    const hits = getIndex().filter(p=>p.text.includes(q));
+    hits.sort((a,b)=>{
+      const at=a.title_l.includes(q)?0:1, bt=b.title_l.includes(q)?0:1;
+      return at!==bt ? at-bt : a.title.localeCompare(b.title,'tr');
+    });
+    const results = hits.slice(0,7);
+    dropdown.innerHTML = results.length
+      ? results.map(r=>`
+          <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-50 last:border-0 transition-colors normal-case"
+               onclick="loadPage('${r.id}');document.getElementById('search-input').value='';document.getElementById('search-dropdown').classList.add('hidden');document.getElementById('nav-search-box').classList.add('hidden');">
+            <div class="text-sm font-semibold text-[#1c355e] normal-case">${r.title}</div>
+            <div class="text-xs text-gray-400 mt-0.5 normal-case">${r.breadcrumb.join(' / ')}</div>
+          </div>`).join('')
+      : '<div class="px-4 py-4 text-sm text-gray-400 text-center normal-case">Sonuç bulunamadı</div>';
+    dropdown.classList.remove('hidden');
+  });
+
+  document.addEventListener('click',e=>{
+    if (!document.getElementById('search-wrap').contains(e.target)){
+      dropdown.classList.add('hidden');
+      document.getElementById('nav-search-box').classList.add('hidden');
+    }
+  });
+  input.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){dropdown.classList.add('hidden');document.getElementById('nav-search-box').classList.add('hidden');input.blur();}
+  });
+}
+
+function toggleNavSearch(){
+  const box = document.getElementById('nav-search-box');
+  box.classList.toggle('hidden');
+  if(!box.classList.contains('hidden')) setTimeout(()=>document.getElementById('search-input').focus(),30);
+}
+
+/* ── LIGHTBOX (şema görselleri) ── */
+function openLightbox(src, title){
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-cap').textContent = title || '';
+  document.getElementById('lightbox-dl').href = src;
+  lb.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').style.display = 'none';
+  document.getElementById('lightbox-img').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLightbox(); });
+
+/* ── Kalite Etkinliği detayı (açıklama + foto galerisi) ── */
+function openEtkinlik(slug){
+  const evs = (window.CMS&&CMS.home&&CMS.home.events&&CMS.home.events.length) ? CMS.home.events : EVENTS;
+  const e = evs.find(x=>x.slug===slug);
+  if(!e){ loadPage('kalite-etkinlikleri'); return; }
+  const n = e.foto||0;
+  const fotolar = Array.from({length:n},(_,i)=>String(i+1).padStart(2,'0'));
+  const grid = fotolar.map(f=>{
+    const full = `assets/etkinlikler/${slug}/${f}.jpg`;
+    const thumb = `assets/etkinlikler/${slug}/thumb/${f}.jpg`;
+    return `<div onclick="openLightbox('${full}','${(e.baslik||'').replace(/'/g,'')}')" class="group cursor-pointer rounded-lg overflow-hidden border border-gray-200 bg-gray-50 hover:shadow-lg hover:border-[#4bb5e8] transition" style="aspect-ratio:3/2">
+        <img src="${thumb}" loading="lazy" alt="${e.baslik}" class="w-full h-full object-cover group-hover:scale-[1.04] transition duration-300">
+      </div>`;
+  }).join('');
+  const area = document.getElementById('content-area');
+  area.innerHTML = `
+    <a href="#" onclick="loadPage('kalite-etkinlikleri');return false;" class="inline-flex items-center gap-2 text-[13px] font-medium text-[#4bb5e8] hover:text-[#1c355e] mb-5">Kalite Etkinliklerine Dön</a>
+    <div class="mb-5 pb-5 border-b border-gray-100">
+      <div>
+        <span class="event-cat" style="position:static;display:inline-block;margin-bottom:6px">${e.kategori}</span>
+        <h2 class="text-xl font-bold text-gray-900 leading-snug">${e.baslik}</h2>
+        <div class="text-[13px] text-gray-500 mt-1">${e.tarih}</div>
+      </div>
+    </div>
+    <div class="prose"><p>${e.detay||e.ozet||''}</p></div>
+    <p class="sh">Fotoğraf Galerisi</p>
+    <p style="font-size:13px;color:var(--text);margin:-4px 0 8px">Büyütmek için fotoğrafa tıklayın. (${n} fotoğraf)</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">${grid}</div>`;
+  document.getElementById('sidebar-container').scrollIntoView?.({block:'nearest'});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── CMS (Directus) VERİSİNİ UYGULA ── */
+function renderTopMenu(menu){
+  const ul = document.getElementById('top-menu');
+  const rightLi = ul.querySelector('li.ml-auto');
+  if(!ul || !rightLi || !menu || !menu.length) return;
+  [...ul.querySelectorAll('li.nav-item')].forEach(el=>el.remove());
+  const esc = s => (s||'').replace(/'/g,"\\'");
+  const linkHtml = it => `<li><a href="#" onclick="loadPage('${esc(it.page)}')" class="block px-3 py-1.5 hover:bg-gray-50 hover:text-[#4bb5e8] font-medium normal-case text-gray-700 text-[13px] leading-snug rounded">${it.text||''}</a></li>`;
+  const headerCount = (m)=> (m.items||[]).filter(it=>it.type==='header').length;
+  const chunk = (arr, per) => {
+    const n = Math.max(1, Math.ceil(arr.length/per));
+    const size = Math.ceil(arr.length/n);
+    const out=[]; for(let i=0;i<arr.length;i+=size) out.push(arr.slice(i,i+size));
+    return out;
+  };
+  const MAXCOL = 5;
+  const html = menu.map((m,idx)=>{
+    const its = m.items||[];
+    const hasItems = its.length>0;
+    // Vurgulu CTA (dış link destekli)
+    if(m.highlight){
+      const cta = m.url
+        ? `<a href="${m.url}" target="_blank" rel="noopener"`
+        : `<a href="#" onclick="loadPage('${esc(m.page)}')"`;
+      return `<li class="nav-item relative mr-1">
+        ${cta} class="nav-cta inline-flex items-center my-2 px-4 py-2 rounded-full bg-[#c8a84b] text-white hover:bg-[#b8943a] transition-colors">${m.label||''}</a></li>`;
+    }
+    const caret = hasItems ? ' ' : '';
+    if(!hasItems){
+      return `<li class="nav-item relative mr-1">
+        <a href="#" onclick="loadPage('${esc(m.page)}')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">${m.label||''}</a></li>`;
+    }
+    // Sütunları kur: başlıklı menülerde her başlık bir sütun (uzun gruplar bölünür);
+    // düz menülerde linkler dengeli sütunlara bölünür.
+    let cols=[];
+    if(its.some(it=>it.type==='header')){
+      let cur=null;
+      its.forEach(it=>{
+        if(it.type==='header'){ cur={title:it.text||'',links:[]}; cols.push(cur); }
+        else { if(!cur){cur={title:'',links:[]};cols.push(cur);} cur.links.push(it); }
+      });
+      const split=[];
+      cols.forEach(c=>{
+        if(c.links.length<=MAXCOL+1){ split.push(c); }
+        else chunk(c.links,MAXCOL).forEach((ls,i)=>split.push({title:i===0?c.title:'',links:ls}));
+      });
+      cols=split;
+    } else {
+      chunk(its.filter(it=>it.type!=='header'),MAXCOL).forEach(ls=>cols.push({title:'',links:ls}));
+    }
+    if(cols.length<=1){
+      // Kısa tek sütun → sade dar dropdown
+      const items=(cols[0]?cols[0].links:[]).map(linkHtml).join('');
+      const dd=`<ul class="dropdown absolute left-0 top-full bg-white shadow-xl border-t-4 border-[#1c355e] py-2 z-50 rounded-b-lg" style="min-width:262px">${items}</ul>`;
+      return `<li class="nav-item relative mr-1">
+        <a href="#" onclick="loadPage('${esc(m.page)}')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">${m.label||''}${caret}</a>${dd}</li>`;
+    }
+    // Çok sütunlu → yana açılan mega panel
+    const colsHtml=cols.map(c=>`<div class="mega-col">${c.title?`<div class="mega-col-title">${c.title}</div>`:''}<ul>${c.links.map(linkHtml).join('')}</ul></div>`).join('');
+    const dd=`<div class="dropdown mega-menu absolute top-full bg-white shadow-xl border-t-4 border-[#1c355e] z-50 rounded-b-lg">${colsHtml}</div>`;
+    let megaSide = '';
+    if (idx >= menu.length-2) megaSide = ' mega-right';       // en sağdakiler → sağa hizalı
+    else if (idx >= 2) megaSide = ' mega-center';             // ortadakiler → başlık altında ortalı
+    // idx 0,1 → varsayılan sola hizalı
+    return `<li class="nav-item mr-1 nav-item-mega${megaSide}">
+      <a href="#" onclick="loadPage('${esc(m.page)}')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">${m.label||''}${caret}</a>${dd}</li>`;
+  }).join('');
+  const homeItem = `<li class="nav-item relative mr-1"><a href="#" onclick="loadPage('home')" class="inline-flex items-center px-3 py-4 text-[#1c355e] hover:text-[#4bb5e8] transition-colors">ANA SAYFA</a></li>`;
+  rightLi.insertAdjacentHTML('beforebegin', homeItem + html);
+}
+
+function submitPaydasForm(e){
+  e.preventDefault();
+  const f = e.target;
+  const ad=f.ad.value, ep=f.eposta.value, pt=f.paydas.value, kn=f.konu.value, ms=f.mesaj.value;
+  const subject = encodeURIComponent('[Kalite Geri Bildirim] '+kn+', '+ad);
+  const body = encodeURIComponent('Ad Soyad: '+ad+'\nE-posta: '+ep+'\nPaydaş Türü: '+pt+'\nKonu: '+kn+'\n\nMesaj:\n'+ms);
+  window.location.href = 'mailto:kalite@29mayis.edu.tr?subject='+subject+'&body='+body;
+  return false;
+}
+
+function applyCMS(data){
+  window.CMS = data;
+  if(data.dashboard){ DASH = data.dashboard; normalizeDash(); if(Array.isArray(data.dashboard.groups) && data.dashboard.groups.length) DASH_GROUPS = data.dashboard.groups; }
+  if(data.settings){ const st=data.settings, set=(id,v)=>{ const el=document.getElementById(id); if(el&&v) el.textContent=v; };
+    set('ft-addr1', st.address_line1); set('ft-addr2', st.address_line2);
+    set('ft-phone', st.phone?('Tel: '+st.phone):''); set('ft-email', st.email?('E-posta: '+st.email):''); set('ft-copyright', st.copyright); }
+  if(data.navGroups) NAV_GROUPS = data.navGroups;
+  if(data.pageToGroup) PAGE_TO_GROUP = data.pageToGroup;
+  (data.pages||[]).forEach(p=>{
+    const special = ['home','dashboard','puko'].includes(p.render_type);
+    if(special){
+      if(PAGES[p.slug]){ PAGES[p.slug].title=p.title; PAGES[p.slug].breadcrumb=p.breadcrumb; PAGES[p.slug].icon=p.icon; }
+    } else {
+      const body = p.body||'';
+      PAGES[p.slug] = { title:p.title, breadcrumb:p.breadcrumb, icon:p.icon, render:()=>body };
+    }
+  });
+  if(data.menu) renderTopMenu(data.menu);
+}
+
+/* ── INIT ── */
+window.addEventListener('DOMContentLoaded', async ()=>{
+  try{
+    const r = await fetch('data/site.json',{cache:'no-store'});
+    if(r.ok) applyCMS(await r.json());
+    else console.warn('CMS verisi bulunamadı ('+r.status+'), statik içerik kullanılıyor.');
+  }catch(e){ console.warn('CMS verisi yüklenemedi, statik içerik kullanılıyor:', e.message); }
+  initSearch();
+  const hash = location.hash.replace('#','');
+  if(hash.startsWith('etkinlik-')){ loadPage('kalite-etkinlikleri'); openEtkinlik(hash.slice('etkinlik-'.length)); }
+  else loadPage(PAGES[hash]?hash:'home');
+});
+</script>
+
+<!-- Lightbox (şema/görsel büyütme) -->
+<div id="lightbox" onclick="closeLightbox()"
+     style="position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,.92);display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;">
+  <div onclick="event.stopPropagation()" style="max-width:92vw;max-height:92vh;display:flex;flex-direction:column;align-items:center;">
+    <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:10px;gap:16px;">
+      <span id="lightbox-cap" style="color:#fff;font-weight:600;font-size:15px;"></span>
+      <span style="display:flex;gap:10px;flex-shrink:0;">
+        <a id="lightbox-dl" href="#" download target="_blank" rel="noopener"
+           style="color:#fff;background:rgba(255,255,255,.15);border-radius:8px;padding:6px 12px;font-size:13px;text-decoration:none;">İndir</a>
+        <button onclick="closeLightbox()" aria-label="Kapat"
+           style="color:#fff;background:rgba(255,255,255,.15);border-radius:8px;padding:6px 12px;font-size:13px;border:none;cursor:pointer;">Kapat</button>
+      </span>
+    </div>
+    <img id="lightbox-img" src="" alt=""
+         style="max-width:92vw;max-height:82vh;object-fit:contain;background:#fff;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5);">
+  </div>
+</div>
+</body>
+</html>

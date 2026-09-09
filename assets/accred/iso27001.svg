@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="ISO 27001">
+  <defs>
+    <path id="arc27001" d="M 100 100 m -78 0 a 78 78 0 1 1 156 0" fill="none"/>
+  </defs>
+  <circle cx="100" cy="100" r="92" fill="#fff" stroke="#1c355e" stroke-width="4"/>
+  <circle cx="100" cy="100" r="78" fill="none" stroke="#c8a84b" stroke-width="2"/>
+  <text font-family="Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3" fill="#1c355e">
+    <textPath href="#arc27001" startOffset="50%" text-anchor="middle">SERTİFİKALI SİSTEM</textPath>
+  </text>
+  <text x="100" y="88" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" font-weight="800" fill="#1c355e">ISO</text>
+  <text x="100" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="800" fill="#c8a84b">27001</text>
+  <text x="100" y="158" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#4b5563">BİLGİ GÜVENLİĞİ</text>
+</svg>
