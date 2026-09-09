@@ -3,3 +3,6 @@
 
 # Yerel yedekler
 index.backup.*.html
+
+# LibreOffice kilit dosyalari
+.~lock.*#

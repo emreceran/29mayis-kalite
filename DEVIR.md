@@ -46,8 +46,12 @@ Personel için ayrıntılı kılavuz: **`panel-kullanim-kilavuzu.html`**.
 
 ## 6) Bakım notları
 - Site statik → bakım yükü çok düşüktür; içerik güncellemesi panelden yapılır.
-- Gösterge panosundaki (`dashboard/`) fakülte kırılımı bazı yerlerde **temsilî**dir
-  (sayfada uyarısı vardır); kurumdan gerçek "Fakültelere Göre Öğrenci Dağılımı" verisi
-  gelince `data/dashboard.json` / ilgili veri güncellenip yeniden yayınlanabilir.
+- Gösterge panosundaki (`dashboard/`) tüm veriler **kurumun resmî rakamlarına** dayanır
+  (öğrenci ve akademik personel: 31.08.2026; araştırma/teşvik: kurum istatistik belgesi).
+  Daha önceki temsilî fakülte kırılımı kaldırılmıştır.
+- ⚠️ **Pano verisi iki yerde durur:** `dashboard/index.html` içindeki gömülü veri ve
+  `data/dashboard.json`. Sayfa açılırken JSON'ı çekip gömülü verinin **üzerine yazar**.
+  Bu yüzden `dashboard/index.html` içindeki veriyi değiştirdikten sonra mutlaka
+  `node tools/build-dashboard-json.js` çalıştırılmalıdır; aksi hâlde sitede eski veri görünür.
 - Paydaş geri bildirim butonu şu an `https://kalite.29mayis.edu.tr/geri-bildirim/`
   adresine gider; farklı bir form isteniyorsa panelden/ayarlardan değiştirilebilir.

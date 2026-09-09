@@ -17,6 +17,7 @@ için kod bilgisi gerektirmeyen bir **Yönetim Paneli** (`admin.html`) içerir.
 | `dashboard/` | Ayrı gösterge panosu uygulaması (Sayılarla + YÖKAK göstergeleri) |
 | `assets/` | Görseller, logolar, PÜKÖ şemaları, etkinlik fotoğrafları |
 | `admin.html` | **İçerik Yönetim Paneli** (aşağıya bakın) |
+| `tools/build-dashboard-json.js` | `data/dashboard.json`'ı pano verisinden yeniden üretir (aşağıya bakın) |
 | `panel-kullanim-kilavuzu.html` | Panelin kullanım kılavuzu (yazdırılabilir) |
 
 ## İçeriği güncelleme (kod bilmeden)
@@ -26,6 +27,16 @@ için kod bilgisi gerektirmeyen bir **Yönetim Paneli** (`admin.html`) içerir.
 4. İndirilen dosyayı `data/site.json` ile değiştirip siteyi yeniden yayınlayın.
 
 Ayrıntı: **`panel-kullanim-kilavuzu.html`** (tarayıcıda açıp Ctrl+P ile yazdırılabilir).
+
+## Gösterge panosu verisi (önemli)
+Pano verisi iki yerde bulunur: `dashboard/index.html` içindeki gömülü veri ve `data/dashboard.json`.
+Sayfa açılırken JSON'ı çeker ve gömülü verinin **üzerine yazar** — yani canlıda görünen `data/dashboard.json`'dır.
+
+`dashboard/index.html` içindeki veriyi değiştirdikten sonra ikisini eşitleyin:
+```bash
+node tools/build-dashboard-json.js
+```
+Bu adım atlanırsa sitede **eski veri** görünmeye devam eder.
 
 ## Yayınlama (statik)
 Backend olmadığı için site herhangi bir statik web sunucusunda yayınlanabilir:

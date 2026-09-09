@@ -104,15 +104,21 @@
 <script>
 /* ── Gerçek zaman-serisi veriler (Kaynak: Sayılarla İstanbul 29 Mayıs Üniversitesi) ── */
 const Y9  = ['2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+const Y10 = ['2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
 const Y11 = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+const Y12 = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
+const PY4 = ['2023','2024','2025','2026'];
+const AY3 = ['2022-2023','2023-2024','2024-2025'];
+const TY7 = ['2019','2020','2021','2022','2023','2024','2025'];
+const OY5 = ['2020-2021','2021-2022','2022-2023','2023-2024','2024-2025'];
 let SAYILARLA = [
-  { id:'ogrenci', title:'Öğrenci Sayıları', sub:'2017-2025', icon:'fa-user-graduate', accent:'#1c355e', type:'line', labels:Y9, series:[
-    { label:'Toplam Öğrenci', color:'#1c355e', on:true,  data:[1797,1844,1908,2190,2670,3363,4405,5100,5545] },
-    { label:'Lisans',         color:'#4bb5e8', on:true,  data:[1481,1504,1575,1745,2168,2847,3852,4580,4986] },
-    { label:'Yüksek Lisans',  color:'#7c3aed', on:false, data:[259,277,251,344,392,402,432,400,359] },
-    { label:'Doktora',        color:'#059669', on:false, data:[57,63,82,101,110,114,121,120,124] },
-    { label:'Ön Lisans',      color:'#c8a84b', on:false, data:[0,0,0,0,0,0,0,0,76] },
-    { label:'Yabancı Uyruklu',color:'#e11d48', on:true,  data:[211,197,210,223,262,308,354,329,333] },
+  { id:'ogrenci', title:'Öğrenci Sayıları', sub:'2017-2026', icon:'fa-user-graduate', accent:'#1c355e', type:'line', labels:Y10, series:[
+    { label:'Toplam Öğrenci', color:'#1c355e', on:true,  data:[1797,1844,1908,2190,2670,3363,4405,5100,5545,5846] },
+    { label:'Lisans',         color:'#4bb5e8', on:true,  data:[1481,1504,1575,1745,2168,2847,3852,4580,4986,5155] },
+    { label:'Yüksek Lisans',  color:'#7c3aed', on:false, data:[259,277,251,344,392,402,432,400,359,388] },
+    { label:'Doktora',        color:'#059669', on:false, data:[57,63,82,101,110,114,121,120,124,126] },
+    { label:'Ön Lisans',      color:'#c8a84b', on:false, data:[0,0,0,0,0,0,0,0,76,152] },
+    { label:'Yabancı Uyruklu',color:'#e11d48', on:true,  data:[211,197,210,223,262,308,354,329,333,298] },
   ]},
   { id:'birim', title:'Akademik Birimler', sub:'2017-2025', icon:'fa-building-columns', accent:'#0891b2', type:'bar', stacked:true, labels:Y9, series:[
     { label:'Fakülte',   color:'#1c355e', on:true, data:[6,6,6,7,7,7,8,8,8] },
@@ -127,11 +133,18 @@ let SAYILARLA = [
     { label:'Doktora',       color:'#059669', on:true, data:[5,5,5,5,6,6,6,6,7] },
     { label:'Ön Lisans',     color:'#c8a84b', on:true, data:[0,0,0,0,0,0,0,0,2] },
   ]},
-  { id:'personel', title:'Akademik ve İdari Personel', sub:'2015-2025', icon:'fa-users', accent:'#059669', type:'line', labels:Y11, series:[
-    { label:'Akademik Personel', color:'#1c355e', on:true,  data:[95,109,110,104,99,121,145,156,165,165,179] },
-    { label:'İdari Personel',    color:'#4bb5e8', on:true,  data:[76,76,75,68,66,66,66,68,66,72,81] },
-    { label:'Yabancı Akademik',  color:'#c8a84b', on:false, data:[22,32,34,28,18,17,15,16,13,9,8] },
-    { label:'Yabancı İdari',     color:'#e11d48', on:false, data:[1,1,1,1,2,3,3,3,3,1,2] },
+  { id:'personel', title:'Akademik ve İdari Personel', sub:'2015-2026', icon:'fa-users', accent:'#059669', type:'line', labels:Y12, series:[
+    { label:'Akademik Personel', color:'#1c355e', on:true,  data:[95,109,110,104,99,121,145,156,161,158,175,197] },
+    { label:'İdari Personel',    color:'#4bb5e8', on:true,  data:[76,76,75,68,66,66,66,68,66,72,81,null] },
+    { label:'Yabancı Akademik',  color:'#c8a84b', on:false, data:[22,32,34,28,18,17,15,16,13,9,8,null] },
+    { label:'Yabancı İdari',     color:'#e11d48', on:false, data:[1,1,1,1,2,3,3,3,3,1,2,null] },
+  ]},
+  { id:'personel-unvan', title:'Akademik Personelin Unvana Göre Dağılımı', sub:'2023-2026', icon:'fa-user-tie', accent:'#2d5986', type:'bar', stacked:true, labels:PY4, series:[
+    { label:'Profesör',            color:'#1c355e', on:true, data:[29,28,34,38] },
+    { label:'Doçent',              color:'#2d5986', on:true, data:[11,15,19,21] },
+    { label:'Dr. Öğr. Üyesi',      color:'#4bb5e8', on:true, data:[68,67,69,78] },
+    { label:'Öğr. Görevlisi',      color:'#c8a84b', on:true, data:[21,17,21,27] },
+    { label:'Araştırma Görevlisi', color:'#94a3b8', on:true, data:[32,31,32,33] },
   ]},
   { id:'kutuphane', title:'Kütüphane', sub:'2017-2025', icon:'fa-book', accent:'#c8a84b', type:'line', labels:Y9, series:[
     { label:'Toplam Kitap',        color:'#1c355e', on:true,  axis:'y',  data:[70535,76393,87823,97295,113865,119808,129887,141468,148745] },
@@ -141,6 +154,36 @@ let SAYILARLA = [
   ]},
   { id:'mezun', title:'Yıllara Göre Mezun Sayıları', sub:'2017-2025, toplam 2.701', icon:'fa-user-check', accent:'#e11d48', type:'bar', labels:Y9, series:[
     { label:'Mezun', color:'#1c355e', on:true, data:[108,188,294,242,250,250,258,544,567] },
+  ]},
+
+  /* ── Araştırma ve teşvikler (Kaynak: İ29MÜ İstatistiki Bilgiler) ── */
+  { id:'yayin-dagilim', title:'Bilimsel Yayınların Dağılımı', sub:'Akademik yıl, 2022-2025', icon:'fa-file-lines', accent:'#7c3aed', type:'bar', labels:AY3, series:[
+    { label:'SCIE, SSCI Kapsamındaki Makale', color:'#1c355e', on:true, data:[10,6,6] },
+    { label:'AHCI Kapsamındaki Makale',       color:'#2d5986', on:true, data:[0,2,1] },
+    { label:'ESCI veya Scopus Kapsamındaki Makale', color:'#4bb5e8', on:true, data:[5,13,12] },
+    { label:'ULAKBİM TR Dizin Kapsamındaki Makale', color:'#c8a84b', on:true, data:[25,26,42] },
+  ]},
+  { id:'toplanti-proje', title:'Bilimsel Toplantılar ve Tamamlanan Projeler', sub:'Akademik yıl, 2022-2025', icon:'fa-diagram-project', accent:'#0891b2', type:'bar', labels:AY3, series:[
+    { label:'Düzenlenen Ulusal Bilimsel Toplantı', color:'#1c355e', on:true, data:[6,4,3] },
+    { label:'Düzenlenen Uluslararası Bilimsel Toplantı', color:'#4bb5e8', on:true, data:[7,4,3] },
+    { label:'Tamamlanan AB Çerçeve / Uluslararası Araştırma Projesi', color:'#7c3aed', on:true, data:[2,2,1] },
+    { label:'Tamamlanan Uluslararası Kuruluş Projesi (WB, WHO, FAO vb.)', color:'#059669', on:true, data:[4,1,0] },
+    { label:'Tamamlanan TÜBİTAK Projesi', color:'#e11d48', on:true, data:[12,9,1] },
+  ]},
+  { id:'tesvik-kapsam', title:'Teşvik Kapsamı — Öğretim Elemanı, Toplantı ve Yayın Sayısı', sub:'2019-2025', icon:'fa-award', accent:'#c8a84b', type:'bar', labels:TY7, series:[
+    { label:'Toplantı Teşviki Alan Öğretim Elemanı', color:'#1c355e', on:true, data:[9,3,11,16,11,13,16] },
+    { label:'Desteklenen Toplantı Sayısı',           color:'#4bb5e8', on:true, data:[9,4,12,17,13,18,16] },
+    { label:'Yayın Teşviki Alan Öğretim Elemanı',    color:'#c8a84b', on:true, data:[40,34,32,38,42,21,41] },
+    { label:'Teşvik Verilen Yayın Sayısı',           color:'#e11d48', on:true, data:[100,85,77,103,89,52,108] },
+  ]},
+  { id:'tesvik-tutar', title:'Teşvik Tutarları', sub:'2019-2025, toplam ₺1.531.043', icon:'fa-turkish-lira-sign', accent:'#059669', type:'line', unit:'try', labels:TY7, series:[
+    { label:'Bilimsel Toplantı Teşviki', color:'#c8a84b', on:true, data:[13229,2629,12021,26398,23978,34399,49833] },
+    { label:'Bilimsel Yayın Teşviki',    color:'#1c355e', on:true, data:[192832,148167,161492,198750,169175,119250,378890] },
+  ]},
+  { id:'ogrenci-tesvik', title:'Öğrenci Bilimsel Etkinlik Katılım Teşviki', sub:'Akademik yıl, 2020-2025', icon:'fa-user-graduate', accent:'#7c3aed', type:'bar', unitY1:'try', labels:OY5, series:[
+    { label:'Desteklenen Öğrenci Sayısı', color:'#1c355e', on:true, axis:'y',  data:[4,11,18,5,3] },
+    { label:'Desteklenen Toplantı Sayısı',color:'#4bb5e8', on:true, axis:'y',  data:[2,8,6,5,3] },
+    { label:'Teşvik Tutarı',              color:'#c8a84b', on:true, axis:'y1', unit:'try', data:[5694,9135,17475,5000,3000] },
   ]},
 ];
 
@@ -164,13 +207,17 @@ function tcBuild(g){
     label:s.label,data:s.data,hidden:!s.on,borderColor:s.color,
     backgroundColor: bar? s.color : s.color+'22', yAxisID:s.axis||'y',
     tension:.35,borderWidth:2.2,pointRadius:2.4,pointHoverRadius:4,pointBackgroundColor:s.color,fill:false,maxBarThickness:30,borderRadius:5 }));
+  const plain=(v)=>Number(v).toLocaleString('tr-TR'), money=(v)=>'₺'+Number(v).toLocaleString('tr-TR');
+  const fmtY = g.unit==='try'?money:plain, fmtY1 = (g.unitY1==='try'||g.unit==='try')?money:plain;
   if(TC[g.id]){ try{TC[g.id].destroy();}catch(e){} }
   TC[g.id]=new Chart(el,{ type:g.type||'line', data:{labels:g.labels,datasets},
     options:{ responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>` ${c.dataset.label}: ${Number(c.parsed.y).toLocaleString('tr-TR')}`}}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>{
+        const sr=g.series[c.datasetIndex]||{}; const f=(sr.unit==='try'||g.unit==='try')?money:plain;
+        return ` ${c.dataset.label}: ${c.parsed.y===null?'—':f(c.parsed.y)}`; }}}},
       scales:{ x:{grid:{display:false},stacked},
-        y:{position:'left',beginAtZero:true,stacked,grid:{color:gridColor},ticks:{callback:(v)=>Number(v).toLocaleString('tr-TR')}},
-        y1:{display:usesRight?'auto':false,position:'right',beginAtZero:true,grid:{drawOnChartArea:false}} } } });
+        y:{position:'left',beginAtZero:true,stacked,grid:{color:gridColor},ticks:{callback:fmtY}},
+        y1:{display:usesRight?'auto':false,position:'right',beginAtZero:true,grid:{drawOnChartArea:false},ticks:{callback:fmtY1}} } } });
 }
 function tcToggle(gid,idx,btn){ const ch=TC[gid]; if(!ch) return; const ds=ch.data.datasets[idx]; ds.hidden=!ds.hidden; ch.update(); if(btn) btn.classList.toggle('on',!ds.hidden); }
 
@@ -196,6 +243,11 @@ const NAV = [
   { grp:'Akademik Yayınlar', items:[
     {id:'yayinlar', icon:'fa-book-open', text:'Yayın İstatistikleri'},
   ]},
+  { grp:'Araştırma ve Teşvikler', items:[
+    {id:'s-yayin-proje',    icon:'fa-file-lines',     text:'Yayın ve Proje Dağılımı'},
+    {id:'s-tesvik',         icon:'fa-award',          text:'Bilimsel Teşvikler'},
+    {id:'s-ogrenci-tesvik', icon:'fa-user-graduate',  text:'Öğrenci Etkinlik Teşviki'},
+  ]},
   { grp:'YÖKAK Performans Göstergeleri', items:[
     {id:'yokak-kuruma-ait', icon:'fa-building-columns', text:'Kuruma Ait Bilgiler'},
     {id:'yokak-kalite-guvence', icon:'fa-shield-halved', text:'Kalite Güvence Sistemi'},
@@ -206,12 +258,22 @@ const NAV = [
 ];
 
 /* Sayılarla alt bölümleri → hangi grafikleri gösterir */
+const SRC_SAY = 'Kaynak: Sayılarla İstanbul 29 Mayıs Üniversitesi';
+const SRC_IST = 'Kaynak: İstanbul 29 Mayıs Üniversitesi — İstatistiki Bilgiler (kurum tarafından sağlanan resmî veriler)';
 const SAY_SECTIONS = {
-  's-ogrenci':   {title:'Öğrenci Sayıları', icon:'fa-user-graduate', ids:['ogrenci']},
+  's-ogrenci':   {title:'Öğrenci Sayıları', icon:'fa-user-graduate', ids:['ogrenci'],
+                  src:SRC_SAY+'. 2026 verisi 31.08.2026 kesitine aittir; program türüne göre kırılım toplamı 5.821, kurumsal genel toplam 5.846\'dır.'},
   's-akademik':  {title:'Akademik Birimler ve Programlar', icon:'fa-building-columns', ids:['birim','program']},
-  's-personel':  {title:'Akademik ve İdari Personel', icon:'fa-users', ids:['personel']},
+  's-personel':  {title:'Akademik ve İdari Personel', icon:'fa-users', ids:['personel','personel-unvan'],
+                  src:SRC_SAY+'. 2023-2026 akademik personel rakamları kurumun resmî personel tablolarından alınmıştır.'},
   's-kutuphane': {title:'Kütüphane', icon:'fa-book', ids:['kutuphane']},
   's-mezun':     {title:'Mezunlar', icon:'fa-user-check', ids:['mezun']},
+  's-yayin-proje':    {title:'Bilimsel Yayın ve Proje Dağılımı', icon:'fa-file-lines', ids:['yayin-dagilim','toplanti-proje'], src:SRC_IST,
+                       desc:'Üniversitemizde akademik yıl bazında üretilen bilimsel yayınlar ile düzenlenen toplantı ve tamamlanan proje sayıları.'},
+  's-tesvik':         {title:'Bilimsel Toplantı ve Yayın Teşvikleri', icon:'fa-award', ids:['tesvik-kapsam','tesvik-tutar'], src:SRC_IST,
+                       desc:'2019-2025 döneminde öğretim elemanlarımıza sağlanan bilimsel toplantı ve yayın teşvikleri. Yedi yılda 89 toplantı ve 614 yayın desteklenmiş, toplam ₺1.531.043 teşvik ödenmiştir.'},
+  's-ogrenci-tesvik': {title:'Öğrenci Bilimsel Etkinlik Katılım Teşviki', icon:'fa-user-graduate', ids:['ogrenci-tesvik'], src:SRC_IST,
+                       desc:'Öğrencilerimizin bilimsel toplantı ve etkinliklere katılımını desteklemek amacıyla sağlanan teşvikler. 2020-2025 döneminde 41 öğrenci, 24 etkinlik ve toplam ₺40.304 destek.'},
 };
 
 function renderNav(active){
@@ -231,9 +293,9 @@ function go(id){
   if(id==='yayinlar'){ return renderYayinlar(); }
   if(SAY_SECTIONS[id]){
     const s=SAY_SECTIONS[id]; title=s.title; icon=s.icon;
-    desc='İstanbul 29 Mayıs Üniversitesi’ne ait yıllara göre kurumsal veriler. Her grafikte istatistikleri etiketlere tıklayarak açıp kapatabilirsiniz.';
-    groups=SAYILARLA.filter(g=>s.ids.includes(g.id));
-    pre=`<div class="src-note">Kaynak: Sayılarla İstanbul 29 Mayıs Üniversitesi</div>`;
+    desc=(s.desc||'İstanbul 29 Mayıs Üniversitesi’ne ait yıllara göre kurumsal veriler.')+' Her grafikte istatistikleri etiketlere tıklayarak açıp kapatabilirsiniz.';
+    groups=s.ids.map(i=>SAYILARLA.find(g=>g.id===i)).filter(Boolean);
+    pre=`<div class="src-note">${s.src||SRC_SAY}</div>`;
   } else {
     const sid=id.replace('yokak-','');
     const sec=YOKAK.sections.find(s=>s.id===sid);
@@ -255,14 +317,14 @@ function renderGenel(){
     {c:'#7c3aed',val:'40',lbl:'Program Sayısı',sub:'Lisans+Lisansüstü+Ön Lisans'},
     {c:'#059669',val:'1.244',lbl:'İşe Yerleşmiş Mezun',sub:'2024 (kümülatif)'},
     {c:'#c8a84b',val:'148.745',lbl:'Kütüphane Kitap',sub:'2025'},
-    {c:'#e11d48',val:'340',lbl:'Uluslararası Öğrenci',sub:'YÖKAK 2024'},
+    {c:'#e11d48',val:'298',lbl:'Yabancı Uyruklu Öğrenci',sub:'2026'},
   ];
   const feat=[SAYILARLA[0], yokakGroups(YOKAK.sections.find(s=>s.id==='egitim-ogretim'))[3]];
   c.innerHTML = `
     <h2 class="page-title">Genel Bakış</h2>
     <p class="page-desc">İstanbul 29 Mayıs Üniversitesi kalite ve performans göstergeleri panosu. Soldaki menüden fonksiyona göre bölümleri inceleyebilirsiniz.</p>
     <div class="kpi-grid">${kpis.map(k=>`<div class="kpi" style="--kc:${k.c}"><div class="kpi-val">${k.val}</div><div class="kpi-lbl">${k.lbl}</div><div class="kpi-sub">${k.sub}</div></div>`).join('')}</div>
-    <div class="info-box">Bu pano iki veri kümesi sunar: <strong>Sayılarla Üniversitemiz</strong> (kurumsal yıllık veriler) ve <strong>YÖKAK Performans Göstergeleri</strong> (2018-2024). Grafiklerdeki istatistikler etiketlere tıklanarak açılıp kapatılabilir.</div>
+    <div class="info-box">Bu pano üç veri kümesi sunar: <strong>Sayılarla Üniversitemiz</strong> (kurumsal yıllık veriler, 2026 dahil), <strong>Araştırma ve Teşvikler</strong> (bilimsel yayın, proje ve teşvik verileri) ve <strong>YÖKAK Performans Göstergeleri</strong> (2018-2024). Grafiklerdeki istatistikler etiketlere tıklanarak açılıp kapatılabilir.</div>
     ${feat.map(tcCard).join('')}`;
   feat.forEach(tcBuild);
   window.scrollTo({top:0,behavior:'smooth'});
@@ -408,7 +470,7 @@ function renderFakulteBirim(){
   c.innerHTML=`
     <h2 class="page-title">Fakülte / Birim Bazlı Dağılım</h2>
     <p class="page-desc">Fakülte ve bölüm seçerek öğrenci, cinsiyet, akademik unvan ve bölüm kırılımını inceleyin.</p>
-    <div class="info-box">Fakülte/birim bazlı kırılım 31.08.2026 tarihli resmi öğrenci ve akademik personel verilerine dayanmaktadır.</div>
+    <div class="info-box">Fakülte/birim bazlı kırılım 31.08.2026 tarihli resmi öğrenci ve akademik personel verilerine dayanmaktadır. Bu sayfadaki akademik personel sayısı yalnızca kırılımı verilen akademik birimleri kapsar; <strong>üniversite geneli resmî toplam 197</strong>'dir (Yabancı Diller Yüksekokulu ve kırılımı ayrıca verilmeyen birimler dâhil).</div>
     <div style="display:flex;flex-wrap:wrap;align-items:end;gap:14px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px;box-shadow:var(--shadow)">
       <div><label style="display:block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px">Fakülte / Birim</label>
         <select id="dash-fac" class="dash-select" style="min-width:240px"><option value="">Tüm Fakülteler / Birimler</option>${DASH.faculties.map(f=>`<option value="${f.id}">${f.ad}</option>`).join('')}</select></div>
@@ -424,7 +486,7 @@ function renderFakulteBirim(){
     </div>
     <div class="tc-grid" style="margin-bottom:18px">
       <div class="chart-card"><h4>Akademik Unvan Dağılımı</h4><div class="sub">Öğretim elemanı sayısı</div><div class="chart-wrap" style="height:280px"><canvas id="ch-unvan"></canvas></div></div>
-      <div class="chart-card"><h4>Yıllara Göre Değişim</h4><div class="sub">2017-2025, üniversite geneli</div><div class="chart-wrap" style="height:280px"><canvas id="ch-trend"></canvas></div></div>
+      <div class="chart-card"><h4>Yıllara Göre Değişim</h4><div class="sub">2017-2026, üniversite geneli</div><div class="chart-wrap" style="height:280px"><canvas id="ch-trend"></canvas></div></div>
     </div>
     <div class="chart-card" style="padding:0;overflow:hidden">
       <div style="padding:16px 20px;border-bottom:1px solid var(--border)"><h4 style="margin:0">Fakülte / Birim Detayı</h4></div>
