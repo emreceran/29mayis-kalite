@@ -6,3 +6,6 @@ index.backup.*.html
 
 # LibreOffice kilit dosyalari
 .~lock.*#
+
+# Teslim paketleri (tools/paket-olustur.sh ile uretilir)
+teslim/**/*.zip

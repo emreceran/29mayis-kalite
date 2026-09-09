@@ -1,0 +1,51 @@
+KALITE GUVENCE SISTEMI WEB SITESI - KURULUM NOTU
+Istanbul 29 Mayis Universitesi | 9 Eylul 2026
+
+1) NE VAR
+   site/ klasorunun icerigi tum sitedir. Tamamen statiktir:
+   sunucu tarafi kod, veritabani, oturum yonetimi ve gizli anahtar YOKTUR.
+   Kurulum, derleme veya calisma zamani bagimliligi yoktur.
+
+     index.html            Ana site
+     data/site.json        Tum site icerigi (menuler, sayfalar, duyurular)
+     data/dashboard.json   Gosterge panosu verileri
+     dashboard/            Gosterge panosu
+     assets/               Gorseller, logolar, semalar, fotograflar
+
+2) NASIL YAYINLANIR
+   site/ klasorunun icerigi web sunucusunda bir dizine kopyalanir.
+
+     Linux/Apache/Nginx:  /var/www/<dizin>/
+     Windows/IIS:         C:\inetpub\wwwroot\<dizin>\
+
+   Kendi alt alan adi altinda ya da mevcut sitenin alt dizini olarak
+   yayinlanabilir. Site icindeki tum baglantilar GORELIDIR; alt dizinde
+   sorunsuz calisir, herhangi bir yol ayari gerekmez.
+
+3) DIKKAT EDILECEK IKI NOKTA
+   a) Varsayilan belge index.html olmalidir.
+
+   b) .json uzantili dosyalar sunulabilmelidir. Bazi IIS kurulumlarinda
+      .json MIME turu tanimli degildir. Tanimli degilse
+      application/json olarak eklenmelidir.
+
+      ONEMLI: Bu ayar eksikse site acilir ancak ICERIK VE GRAFIKLER
+      BOS GORUNUR. Karsilasilabilecek en olasi ariza budur.
+
+4) KURULUM SONRASI KONTROL
+   - Ana sayfa aciliyor, menu ve duyurular gorunuyor
+   - Birkac ic sayfa aciliyor, icerikleri dolu
+   - /dashboard/ aciliyor, grafikler ciziliyor
+   - Genel Bakis'ta 5.846 ogrenci ve 197 akademik personel yaziyor
+   - Gorsellerde kirik yok
+
+   Grafikler bos cikiyorsa sebep 3-b maddesidir.
+
+5) ICERIK GUNCELLEME
+   Tum icerik data/site.json, pano verileri data/dashboard.json
+   dosyasindadir. Guncelleme, bu dosyalarin yenisiyle degistirilmesinden
+   ibarettir. Bu asamada guncellemeler tarafimizca hazirlanip
+   iletilecektir.
+
+Emre Ceran
+eceran@29mayis.edu.tr

@@ -7,7 +7,7 @@
 
 ## 1) Proje nedir?
 Kalite Güvence Sistemi tanıtım web sitesi. **Tamamen statik** (sunucu/veritabanı yok):
-`index.html` içeriği `data/site.json`'dan okur. Teknik özet için **README.md**.
+`index.html` içeriği `data/site.json`'dan okur. Teknik özet için depo kökündeki **README.md**.
 
 ## 2) Mevcut yayın durumu — ÖNEMLİ
 - Site şu an **Emre'nin kişisel Netlify hesabındaki** "kalite" takımında yayında:
@@ -22,13 +22,19 @@ Kalite Güvence Sistemi tanıtım web sitesi. **Tamamen statik** (sunucu/veritab
 > Karar kurumundur. Önerimiz statik olduğu için **kurum sunucusunda barındırmaktır**
 > (dış servise bağımlılık ve ücret riski olmaz).
 
+> **9 Eylül 2026 güncellemesi:** Site bu aşamada **statik olarak** teslim edilmektedir;
+> yönetim paneli teslim kapsamına dâhil edilmemiştir. Kurumun tercih edeceği içerik
+> yönetim sistemi belirlendiğinde devreye alınacaktır. O tarihe kadar içerik
+> güncellemeleri tarafımızca hazırlanıp iletilecektir. Aşağıdaki 3. madde, panel
+> devreye alındığında geçerli olacaktır.
+
 ## 3) İçerik nasıl güncellenir?
 Kod bilgisi **gerekmez**:
-1. `admin.html` panelini açın → içeriği yükleyin → formlarla düzenleyin →
+1. `arsiv/yonetim-paneli/admin.html` panelini açın → içeriği yükleyin → formlarla düzenleyin →
    **"Değişiklikleri İndir"**.
 2. İnen `site.json`'ı `data/site.json` ile değiştirip siteyi yeniden yayınlayın.
 
-Personel için ayrıntılı kılavuz: **`panel-kullanim-kilavuzu.html`**.
+Personel için ayrıntılı kılavuz: **`arsiv/yonetim-paneli/panel-kullanim-kilavuzu.html`**.
 
 ## 4) Gizli bilgi / hesap durumu
 - Sitede **backend, veritabanı, gizli anahtar YOKTUR.** Devralınacak sır yoktur.
@@ -41,7 +47,7 @@ Personel için ayrıntılı kılavuz: **`panel-kullanim-kilavuzu.html`**.
 |-------|--------|
 | `README.md` | Proje tanıtımı, yapı, içerik güncelleme, yayınlama |
 | `DEVIR.md` | Bu belge |
-| `panel-kullanim-kilavuzu.html` | Yönetim paneli kullanım kılavuzu (personel için) |
+| `arsiv/yonetim-paneli/panel-kullanim-kilavuzu.html` | Yönetim paneli kullanım kılavuzu (panel devreye alındığında) |
 | `Yapilan-Guncellemeler.docx` | Geçmiş güncelleme kayıtları (referans) |
 
 ## 6) Bakım notları
